@@ -1,0 +1,25 @@
+# Files excluded from a distributable theme .zip (WP.org / production).
+# Build-time and development artefacts only — never user-facing theme code.
+# `colophon new` copies this into every generated theme so the line ships clean.
+/.distignore
+/.git
+/.github
+/.gitignore
+/node_modules
+/vendor
+/colophon
+/colophon.json
+/colophon.manifest.json
+/ARCHITECTURE.md
+/DESIGN-UPLIFT.md
+/README.md
+/GUIDE.md
+/THEME-CHECK.md
+/tools
+/composer.json
+/composer.lock
+/phpcs.xml.dist
+/phpstan.neon
+/package.json
+/package-lock.json
+*.zip

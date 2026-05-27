@@ -1,0 +1,11 @@
+{
+	"_comment": "Colophon's own identity record. Every theme generated from Colophon carries a colophon.json like this, but with is_core=false; the CLI reads it to know the theme's namespace/slug/version (re-injected into core files on every sync) and which core paths the theme has deliberately overridden. Colophon's own record sets is_core=true so the CLI never tries to sync Colophon onto itself.",
+	"name": "Colophon",
+	"slug": "colophon",
+	"namespace": "Colophon",
+	"prefix": "cl",
+	"version": "1.0.0",
+	"colophon_version": "1.0.0",
+	"is_core": true,
+	"overrides": []
+}

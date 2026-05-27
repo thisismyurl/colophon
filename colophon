@@ -1,0 +1,514 @@
+#!/usr/bin/env php
+<?php
+/**
+ * colophon — the theme-line generator and core-sync tool.
+ *
+ * One self-contained PHP file, no Composer, no Node. It lives in the Colophon
+ * seed and operates on its sibling theme directories. Two jobs: scaffold a new
+ * theme from the core, and later pull core improvements forward into a theme
+ * without touching its design.
+ *
+ *   php colophon new <slug> [--name="Pretty Name"] [--namespace=StudlyName] [--prefix=xx] [--force]
+ *   php colophon sync <slug> [--dry-run]
+ *   php colophon doctor <slug>
+ *   php colophon list
+ *
+ * The rules it applies are documented in ARCHITECTURE.md — §1 (core vs scaffold)
+ * and §4 (the substitutions). This file is the executable version of that doc;
+ * if the two ever disagree, the doc is the intent and this is the bug.
+ *
+ * @package colophon
+ */
+
+namespace Colophon\CLI;
+
+// ---------------------------------------------------------------------------
+// Paths. This file sits at themes/colophon/colophon, so the seed is its own
+// directory and the themes root is one level up. Sibling themes are there.
+// ---------------------------------------------------------------------------
+define( __NAMESPACE__ . '\\SEED_DIR', __DIR__ );
+define( __NAMESPACE__ . '\\THEMES_DIR', dirname( __DIR__ ) );
+
+// ---------------------------------------------------------------------------
+// Tiny IO helpers.
+// ---------------------------------------------------------------------------
+function out( string $s = '' ): void { fwrite( STDOUT, $s . PHP_EOL ); }
+function fail( string $s ): void { fwrite( STDERR, 'colophon: ' . $s . PHP_EOL ); exit( 1 ); }
+
+function read_file_or_fail( string $path ): string {
+	$c = @file_get_contents( $path );
+	if ( false === $c ) {
+		fail( "could not read $path" );
+	}
+	return $c;
+}
+
+function write_file( string $path, string $contents ): void {
+	$dir = dirname( $path );
+	if ( ! is_dir( $dir ) && ! mkdir( $dir, 0755, true ) && ! is_dir( $dir ) ) {
+		fail( "could not create directory $dir" );
+	}
+	if ( false === file_put_contents( $path, $contents ) ) {
+		fail( "could not write $path" );
+	}
+}
+
+function read_json( string $path ): ?array {
+	if ( ! is_file( $path ) ) {
+		return null;
+	}
+	$data = json_decode( read_file_or_fail( $path ), true );
+	return is_array( $data ) ? $data : null;
+}
+
+function load_manifest(): array {
+	$m = read_json( SEED_DIR . '/colophon.manifest.json' );
+	if ( null === $m ) {
+		fail( 'colophon.manifest.json is missing or invalid' );
+	}
+	return $m;
+}
+
+// ---------------------------------------------------------------------------
+// Identity helpers — turn a slug into a namespace / name / prefix when the
+// caller doesn't pass one explicitly.
+// ---------------------------------------------------------------------------
+function studly( string $slug ): string {
+	$parts = preg_split( '/[-_\s]+/', $slug, -1, PREG_SPLIT_NO_EMPTY );
+	return implode( '', array_map( 'ucfirst', $parts ) );
+}
+
+function titleize( string $slug ): string {
+	$parts = preg_split( '/[-_\s]+/', $slug, -1, PREG_SPLIT_NO_EMPTY );
+	return implode( ' ', array_map( 'ucfirst', $parts ) );
+}
+
+function default_prefix( string $slug ): string {
+	$parts = preg_split( '/[-_\s]+/', $slug, -1, PREG_SPLIT_NO_EMPTY );
+	if ( count( $parts ) > 1 ) {
+		$p = '';
+		foreach ( $parts as $part ) {
+			$p .= substr( $part, 0, 1 );
+		}
+		return strtolower( $p );
+	}
+	return strtolower( substr( $slug, 0, 2 ) );
+}
+
+// ---------------------------------------------------------------------------
+// The substitutions (ARCHITECTURE.md §4). Core rules touch only the
+// uniqueness-critical PHP identity; the leading-single-quote rules deliberately
+// skip prose, so a conceptual mention of "Colophon" in a comment survives.
+// ---------------------------------------------------------------------------
+function core_subs( string $code, array $t ): string {
+	$code = str_replace( 'namespace Colophon;', 'namespace ' . $t['namespace'] . ';', $code );
+	$code = str_replace( "'colophon", "'" . $t['slug'], $code ); // domain literal, hook names, SLUG value
+	$code = str_replace( '@package colophon', '@package ' . $t['slug'], $code );
+	// CSS-class strings (the admin-onboarding classes in inc/admin.php) — the bare
+	// `colophon-` form the quote-anchored rule above can't see. Added v1.1.0 after
+	// Masthead and Margin both shipped stray `colophon-` admin classes. Runs after
+	// the `'colophon` rule so `'colophon-get-started'` is already the slug by now.
+	$code = str_replace( 'colophon-', $t['slug'] . '-', $code );
+	// Hook-name references inside doc comments, e.g. `colophon/get_started_content`,
+	// so a generated theme's comments name its own filters not the core's (the real
+	// apply_filters() calls are already handled by the `'colophon` rule above). Only
+	// the backtick+slash form is rewritten — "built on Colophon" and "colophon sync"
+	// prose is left intact.
+	$code = str_replace( '`colophon/', '`' . $t['slug'] . '/', $code );
+	$code = preg_replace_callback(
+		"/const VERSION = '[^']*';/",
+		static function () use ( $t ) {
+			return "const VERSION = '" . $t['version'] . "';";
+		},
+		$code
+	);
+	return $code;
+}
+
+function scaffold_subs( string $code, array $t, string $rel ): string {
+	$code = core_subs( $code, $t );
+	$code = str_replace( "'Colophon", "'" . $t['name'], $code );          // quoted labels: 'Colophon: Sections'
+	$code = str_replace( 'Slug: colophon/', 'Slug: ' . $t['slug'] . '/', $code ); // pattern slugs
+	$code = str_replace( 'themes/colophon', 'themes/' . $t['slug'], $code );      // theme-home URLs
+	$code = str_replace( '>Colophon</a>', '>' . $t['name'] . '</a>', $code );     // footer credit link text
+
+	if ( 'style.css' === $rel ) {
+		// The header is identity; rewrite the load-bearing lines. Description is
+		// left as Colophon's on purpose — the post-generate checklist tells the
+		// author to rewrite it, because only they know what the theme is.
+		$code = preg_replace_callback(
+			'/^(Theme Name:\s+).*$/m',
+			static function () use ( $t ) {
+				return 'Theme Name:         ' . $t['name'];
+			},
+			$code
+		);
+		$code = preg_replace_callback(
+			'/^(Text Domain:\s+).*$/m',
+			static function () use ( $t ) {
+				return 'Text Domain:        ' . $t['slug'];
+			},
+			$code
+		);
+	}
+
+	return $code;
+}
+
+// ---------------------------------------------------------------------------
+// Commands.
+// ---------------------------------------------------------------------------
+function cmd_new( array $args, array $opts ): void {
+	$slug = $args[0] ?? '';
+	if ( '' === $slug || ! preg_match( '/^[a-z][a-z0-9-]*$/', $slug ) ) {
+		fail( 'new needs a lowercase-hyphenated <slug>, e.g. `php colophon new gazette`' );
+	}
+
+	$target = THEMES_DIR . '/' . $slug;
+	$force  = isset( $opts['force'] );
+	if ( is_dir( $target ) && ! $force ) {
+		$existing = array_diff( scandir( $target ) ?: array(), array( '.', '..' ) );
+		if ( ! empty( $existing ) ) {
+			fail( "themes/$slug already exists and isn't empty (use --force to overwrite)" );
+		}
+	}
+
+	$manifest = load_manifest();
+	$t        = array(
+		'slug'             => $slug,
+		'name'             => $opts['name'] ?? titleize( $slug ),
+		'namespace'        => $opts['namespace'] ?? studly( $slug ),
+		'prefix'           => $opts['prefix'] ?? default_prefix( $slug ),
+		'version'          => '1.0.0',
+		'colophon_version' => (string) ( $manifest['core_version'] ?? '1.0.0' ),
+	);
+
+	$count = 0;
+	foreach ( (array) $manifest['core'] as $rel ) {
+		$src = SEED_DIR . '/' . $rel;
+		if ( ! is_file( $src ) ) {
+			continue;
+		}
+		write_file( $target . '/' . $rel, core_subs( read_file_or_fail( $src ), $t ) );
+		$count++;
+	}
+	foreach ( (array) $manifest['scaffold'] as $rel ) {
+		$src = SEED_DIR . '/' . $rel;
+		if ( ! is_file( $src ) ) {
+			continue;
+		}
+		write_file( $target . '/' . $rel, scaffold_subs( read_file_or_fail( $src ), $t, $rel ) );
+		$count++;
+	}
+	foreach ( (array) ( $manifest['scaffold_dirs'] ?? array() ) as $reldir ) {
+		$srcdir = SEED_DIR . '/' . $reldir;
+		if ( ! is_dir( $srcdir ) ) {
+			continue;
+		}
+		foreach ( scandir( $srcdir ) as $file ) {
+			if ( '.' === $file || '..' === $file ) {
+				continue;
+			}
+			$rel = $reldir . '/' . $file;
+			if ( is_file( $srcdir . '/' . $file ) ) {
+				write_file( $target . '/' . $rel, scaffold_subs( read_file_or_fail( $srcdir . '/' . $file ), $t, $rel ) );
+				$count++;
+			}
+		}
+	}
+
+	// The identity record. is_core=false so sync will operate on it.
+	$record = array(
+		'name'             => $t['name'],
+		'slug'             => $t['slug'],
+		'namespace'        => $t['namespace'],
+		'prefix'           => $t['prefix'],
+		'version'          => $t['version'],
+		'colophon_version' => $t['colophon_version'],
+		'is_core'          => false,
+		'overrides'        => array(),
+	);
+	write_file( $target . '/colophon.json', json_encode( $record, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) . "\n" );
+
+	if ( ! is_dir( $target . '/languages' ) ) {
+		@mkdir( $target . '/languages', 0755, true );
+	}
+
+	out( "Created themes/$slug from Colophon core v{$t['colophon_version']}  ($count files)." );
+	out( "  Name: {$t['name']}   Namespace: {$t['namespace']}   Prefix: {$t['prefix']}-" );
+	out( '' );
+	out( 'Next — the re-skin (the creative half):' );
+	out( "  1. Edit style.css Description, and readme.txt, for $slug." );
+	out( '  2. Re-author theme.json tokens (palette, fonts, sizes) and assets/css/skin.css.' );
+	out( '  3. Drop self-hosted OFL fonts into assets/fonts/, wire them in theme.json + inc/skin.php.' );
+	out( '  4. Re-skin templates/ and parts/, and write your patterns/.' );
+	out( '  5. wp i18n make-pot . languages/' . $slug . '.pot   (then add screenshot.png, 1200x900).' );
+	out( '' );
+	out( "Verify uniqueness:  grep -rn \"colophon\" themes/$slug/inc   # expect zero hits" );
+}
+
+function cmd_sync( array $args, array $opts ): void {
+	$slug = $args[0] ?? '';
+	if ( '' === $slug ) {
+		fail( 'sync needs a <slug>, e.g. `php colophon sync gazette --dry-run`' );
+	}
+	$target = THEMES_DIR . '/' . $slug;
+	$record = read_json( $target . '/colophon.json' );
+	if ( null === $record ) {
+		fail( "themes/$slug has no colophon.json — is it a Colophon theme?" );
+	}
+	if ( ! empty( $record['is_core'] ) ) {
+		fail( "themes/$slug is the core itself; nothing to sync onto it" );
+	}
+
+	$manifest = load_manifest();
+	$dry      = isset( $opts['dry-run'] );
+	$t        = array(
+		'namespace' => $record['namespace'] ?? studly( $slug ),
+		'slug'      => $record['slug'] ?? $slug,
+		'name'      => $record['name'] ?? titleize( $slug ),
+		'version'   => $record['version'] ?? '1.0.0',
+	);
+	$overrides = array_flip( (array) ( $record['overrides'] ?? array() ) );
+
+	$changed = array();
+	$skipped = array();
+	foreach ( (array) $manifest['core'] as $rel ) {
+		if ( isset( $overrides[ $rel ] ) ) {
+			$skipped[] = $rel;
+			continue;
+		}
+		$src = SEED_DIR . '/' . $rel;
+		if ( ! is_file( $src ) ) {
+			continue;
+		}
+		$rendered = core_subs( read_file_or_fail( $src ), $t );
+		$current  = is_file( $target . '/' . $rel ) ? read_file_or_fail( $target . '/' . $rel ) : null;
+
+		if ( $rendered !== $current ) {
+			$changed[] = $rel;
+			if ( ! $dry ) {
+				write_file( $target . '/' . $rel, $rendered );
+			}
+		}
+	}
+
+	$from = $record['colophon_version'] ?? '?';
+	$to   = (string) ( $manifest['core_version'] ?? '?' );
+
+	if ( empty( $changed ) ) {
+		out( "themes/$slug is already in sync with Colophon core v$to." );
+	} else {
+		out( ( $dry ? '[dry-run] would update ' : 'Updated ' ) . count( $changed ) . " core file(s) in themes/$slug  (core v$from -> v$to):" );
+		foreach ( $changed as $rel ) {
+			out( '  ~ ' . $rel );
+		}
+	}
+	if ( ! empty( $skipped ) ) {
+		out( 'Skipped (listed in colophon.json overrides):' );
+		foreach ( $skipped as $rel ) {
+			out( '  - ' . $rel );
+		}
+	}
+
+	if ( ! $dry && ! empty( $changed ) ) {
+		$record['colophon_version'] = $to;
+		write_file( $target . '/colophon.json', json_encode( $record, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) . "\n" );
+		out( '' );
+		out( "Bumped themes/$slug colophon_version -> $to. Your design files were not touched." );
+	}
+}
+
+function get_path( array $a, string $dotted ) {
+	foreach ( explode( '.', $dotted ) as $k ) {
+		if ( is_array( $a ) && array_key_exists( $k, $a ) ) {
+			$a = $a[ $k ];
+		} else {
+			return null;
+		}
+	}
+	return $a;
+}
+
+function cmd_doctor( array $args ): void {
+	$slug = $args[0] ?? '';
+	if ( '' === $slug ) {
+		fail( 'doctor needs a <slug>' );
+	}
+	$target = THEMES_DIR . '/' . $slug;
+	$record = read_json( $target . '/colophon.json' );
+	if ( null === $record ) {
+		fail( "themes/$slug has no colophon.json" );
+	}
+
+	out( "Diagnosing themes/$slug" );
+	out( '' );
+
+	// 1. Stray core identity in the PHP — the WP.org uniqueness check.
+	$strays = array();
+	foreach ( glob( $target . '/inc/*.php' ) ?: array() as $php ) {
+		$code = read_file_or_fail( $php );
+		if ( false !== strpos( $code, 'namespace Colophon;' )
+			|| false !== strpos( $code, "'colophon'" )
+			|| false !== strpos( $code, "'colophon/" )
+			|| false !== strpos( $code, '@package colophon' ) ) {
+			$strays[] = basename( $php );
+		}
+	}
+	if ( empty( $strays ) ) {
+		out( '  [ok]   no stray Colophon identity in inc/*.php (prefix + domain are unique)' );
+	} else {
+		out( '  [FAIL] stray Colophon identity in: ' . implode( ', ', $strays ) . ' — run `colophon sync ' . $slug . '`' );
+	}
+
+	// Broad residual scan (info) — any bare colophon/Colophon in inc/ (class names,
+	// prose). Not a uniqueness risk when the identity check above is [ok], but
+	// surfaced so a green verdict can never again mask an incomplete re-prefix.
+	$residual = 0;
+	foreach ( glob( $target . '/inc/*.php' ) ?: array() as $php ) {
+		$residual += preg_match_all( '/colophon/i', read_file_or_fail( $php ) );
+	}
+	out( '  ' . ( 0 === $residual ? '[ok]  ' : '[info]' ) . " residual 'colophon' string(s) in inc/: $residual" );
+
+	// 2. theme.json core-owned settings drift (reported, never auto-merged).
+	$seed = read_json( SEED_DIR . '/theme.json' );
+	$them = read_json( $target . '/theme.json' );
+	$keys = array(
+		'$schema',
+		'version',
+		'settings.appearanceTools',
+		'settings.useRootPaddingAwareAlignments',
+		'settings.color.defaultPalette',
+		'settings.color.defaultGradients',
+		'settings.color.defaultDuotone',
+		'settings.typography.fluid',
+		'settings.typography.customFontSize',
+		'settings.spacing.customSpacingSize',
+	);
+	$drift = array();
+	if ( $seed && $them ) {
+		foreach ( $keys as $k ) {
+			if ( get_path( $seed, $k ) !== get_path( $them, $k ) ) {
+				$drift[] = $k;
+			}
+		}
+	}
+	if ( empty( $drift ) ) {
+		out( '  [ok]   theme.json core settings match Colophon' );
+	} else {
+		out( '  [warn] theme.json core settings differ from Colophon (review by hand): ' . implode( ', ', $drift ) );
+	}
+
+	// 3. Version + overrides.
+	$core = (string) ( load_manifest()['core_version'] ?? '?' );
+	$at   = (string) ( $record['colophon_version'] ?? '?' );
+	out( '  ' . ( $at === $core ? '[ok]  ' : '[warn]' ) . " colophon_version $at  (core is $core)" );
+	$ovr = (array) ( $record['overrides'] ?? array() );
+	out( '  [info] overrides: ' . ( empty( $ovr ) ? 'none' : implode( ', ', $ovr ) ) );
+}
+
+function cmd_list(): void {
+	$manifest = load_manifest();
+	$core     = (string) ( $manifest['core_version'] ?? '?' );
+	out( "Colophon core v$core — themes in " . THEMES_DIR );
+	out( '' );
+	foreach ( glob( THEMES_DIR . '/*', GLOB_ONLYDIR ) ?: array() as $dir ) {
+		$record = read_json( $dir . '/colophon.json' );
+		if ( null === $record ) {
+			continue;
+		}
+		$slug = basename( $dir );
+		if ( ! empty( $record['is_core'] ) ) {
+			out( sprintf( '  %-16s core (this is Colophon)', $slug ) );
+			continue;
+		}
+		$at   = (string) ( $record['colophon_version'] ?? '?' );
+		$mark = ( $at === $core ) ? 'up to date' : "behind (v$at)";
+		out( sprintf( '  %-16s %s', $slug, $mark ) );
+	}
+}
+
+// ---------------------------------------------------------------------------
+// Contrast — verify a colour pair against the WCAG 2.1 relative-luminance
+// formula. Added v1.1.0: this theme line ships AA claims, and two design specs
+// shipped contrast numbers that were arithmetically wrong. This makes "verify,
+// don't trust the spec's math" a one-command discipline.
+// ---------------------------------------------------------------------------
+function srgb_to_lin( float $c ): float {
+	$c = $c / 255;
+	return $c <= 0.04045 ? $c / 12.92 : pow( ( $c + 0.055 ) / 1.055, 2.4 );
+}
+
+function luminance( string $hex ): float {
+	$hex = ltrim( $hex, '#' );
+	if ( 3 === strlen( $hex ) ) {
+		$hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
+	}
+	return 0.2126 * srgb_to_lin( (float) hexdec( substr( $hex, 0, 2 ) ) )
+		+ 0.7152 * srgb_to_lin( (float) hexdec( substr( $hex, 2, 2 ) ) )
+		+ 0.0722 * srgb_to_lin( (float) hexdec( substr( $hex, 4, 2 ) ) );
+}
+
+function cmd_contrast( array $args ): void {
+	if ( count( $args ) < 2 ) {
+		fail( 'contrast needs two hex colours, e.g. `php colophon contrast 595959 F7F4EE`' );
+	}
+	$fg    = ltrim( $args[0], '#' );
+	$bg    = ltrim( $args[1], '#' );
+	$lf    = luminance( $fg );
+	$lb    = luminance( $bg );
+	$ratio = ( max( $lf, $lb ) + 0.05 ) / ( min( $lf, $lb ) + 0.05 );
+	out( "#$fg on #$bg  =  " . number_format( $ratio, 2 ) . ':1' );
+	out( sprintf(
+		'  AA normal (>=4.5): %s    AA large (>=3.0): %s    AAA normal (>=7.0): %s',
+		$ratio >= 4.5 ? 'PASS' : 'FAIL',
+		$ratio >= 3.0 ? 'PASS' : 'FAIL',
+		$ratio >= 7.0 ? 'PASS' : 'FAIL'
+	) );
+}
+
+// ---------------------------------------------------------------------------
+// Arg parsing + dispatch.
+// ---------------------------------------------------------------------------
+function main( array $argv ): void {
+	$cmd  = $argv[1] ?? '';
+	$args = array();
+	$opts = array();
+	foreach ( array_slice( $argv, 2 ) as $arg ) {
+		if ( 0 === strpos( $arg, '--' ) ) {
+			$kv = explode( '=', substr( $arg, 2 ), 2 );
+			$opts[ $kv[0] ] = $kv[1] ?? true;
+		} else {
+			$args[] = $arg;
+		}
+	}
+
+	switch ( $cmd ) {
+		case 'new':
+			cmd_new( $args, $opts );
+			break;
+		case 'sync':
+			cmd_sync( $args, $opts );
+			break;
+		case 'doctor':
+			cmd_doctor( $args );
+			break;
+		case 'list':
+			cmd_list();
+			break;
+		case 'contrast':
+			cmd_contrast( $args );
+			break;
+		default:
+			out( 'colophon — theme-line generator + core sync' );
+			out( '' );
+			out( '  php colophon new <slug> [--name="Pretty Name"] [--namespace=Studly] [--prefix=xx] [--force]' );
+			out( '  php colophon sync <slug> [--dry-run]' );
+			out( '  php colophon doctor <slug>' );
+			out( '  php colophon list' );
+			out( '  php colophon contrast <fg-hex> <bg-hex>' );
+			exit( '' === $cmd ? 0 : 1 );
+	}
+}
+
+main( $argv );

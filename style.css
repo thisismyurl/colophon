@@ -1,0 +1,20 @@
+/*
+Theme Name:         Colophon
+Theme URI:          https://thisismyurl.com/themes/colophon
+Author:             Christopher Ross
+Author URI:         https://thisismyurl.com
+Description:        The shared starter core behind the This Is My URL free theme line. A deliberately plain, technically exacting full-site-editing base built to be copied and re-skinned — not inherited. Zero front-end JavaScript, self-hostable OFL fonts, WCAG 2.2 AA accessibility scaffolding, a six-layer CSS cascade contract, and a one-file re-prefixing point. The bones; bring your own skin.
+Version:            1.0.0
+Requires at least:  7.0
+Tested up to:       7.0
+Requires PHP:       8.1
+License:            GNU General Public License v2 or later
+License URI:        https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain:        colophon
+Tags:               blog, one-column, two-columns, full-site-editing, block-patterns, editor-style, custom-colors, custom-logo, custom-menu, featured-images, accessibility-ready, translation-ready, rtl-language-support, wide-blocks, threaded-comments
+
+This is the theme HEADER ONLY. Colophon's real styles are enqueued in cascade
+order from inc/assets.php: assets/css/core/* (synced, portable) then
+assets/css/skin.css (this theme's personality). A block theme doesn't auto-load
+style.css on the front end, so keeping it header-only is deliberate, not a gap.
+*/

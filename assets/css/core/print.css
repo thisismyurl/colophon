@@ -1,0 +1,94 @@
+/* =====================================================================
+   [CORE] print.css — a clean ink-on-white reading proof.
+   ---------------------------------------------------------------------
+   Loaded media="print" via inc/assets.php, so it never touches the screen
+   render and sits OUTSIDE the @layer cascade on purpose — print rules
+   should be flat and win without specificity games.
+
+   Everything here keys off stable, theme-independent hooks: core block
+   classes (.wp-block-post-content, .wp-block-navigation, …) and the
+   #main-content skip-target every template carries. So it prints sensibly
+   for any skin in the line without naming a single design class. A skin
+   that needs to hide one more decorative element can add an @media print
+   rule of its own in skin.css; this covers the universal case.
+   ===================================================================== */
+
+:root { color-scheme: light; }
+
+body {
+	background: #fff !important;
+	color: #000 !important;
+	font-size: 12pt;
+	line-height: 1.6;
+}
+
+/* Let the reading column reclaim the full page width for marking up. */
+#main-content {
+	max-width: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+/* Flatten content colour to ink; headings keep their family, lose their hue. */
+.wp-block-post-content,
+.wp-block-post-content :where(h1, h2, h3, h4, h5, h6),
+.wp-block-post-title,
+.wp-block-post-content :where(p, li, blockquote) {
+	color: #000 !important;
+}
+
+/* In-content links: ink, underlined, with the destination revealed after them
+   so a printed proof still carries the URL. Fragment and mailto links skip the
+   trailing URL, where it would just be noise. */
+.wp-block-post-content a {
+	color: #000 !important;
+	text-decoration: underline;
+}
+.wp-block-post-content a[href]::after {
+	content: " (" attr(href) ")";
+	font-size: 0.85em;
+	word-break: break-all;
+}
+.wp-block-post-content a[href^="#"]::after,
+.wp-block-post-content a[href^="mailto:"]::after {
+	content: "";
+}
+
+/* On-screen chrome that has no place on paper. Header and footer template
+   parts render as the top-level <header>/<footer> landmarks under the FSE
+   site root; the rest are core blocks that are pure interaction. */
+.wp-site-blocks > header,
+.wp-site-blocks > footer,
+.skip-link,
+.wp-block-navigation,
+.wp-block-post-comments-form,
+.wp-block-comments,
+.wp-block-post-navigation-link,
+.wp-block-query-pagination,
+.wp-block-button,
+.wp-block-buttons {
+	display: none !important;
+}
+
+/* Featured image may print, but cap its height so it never eats a whole page. */
+.wp-block-post-featured-image img {
+	max-height: 4in;
+	width: auto !important;
+}
+
+/* Generous, symmetric margins for marking up a proof. */
+@page { margin: 2cm; }
+
+/* Keep headings with what follows, and figures whole, across page breaks. */
+:where(h1, h2, h3, h4, h5, h6),
+.wp-block-post-title {
+	break-after: avoid;
+	break-inside: avoid;
+}
+figure,
+.wp-block-image,
+.wp-block-pullquote,
+blockquote,
+.wp-block-quote {
+	break-inside: avoid;
+}

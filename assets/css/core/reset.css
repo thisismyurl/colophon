@@ -1,0 +1,53 @@
+/* =====================================================================
+   [CORE] reset.css — the cascade contract + a design-agnostic reset.
+   ---------------------------------------------------------------------
+   This sheet loads FIRST, and its first line is the most important line
+   in the whole theme: it declares the @layer order once, for everyone.
+   After this, rules can arrive in any file in any order and still cascade
+   by layer — reset loses to base, base loses to layout, and so on down to
+   utilities, which wins. That's the point of layers: order-independence.
+
+   Everything in here is design-neutral. No colours, no type, no spacing
+   values — those are the skin's job. `colophon sync` owns this file, so
+   don't add a theme's personality to it; it lives in skin.css.
+   ===================================================================== */
+@layer reset, base, layout, components, blocks, utilities;
+
+@layer reset {
+
+	*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+	html {
+		scroll-behavior: smooth;
+		-webkit-text-size-adjust: 100%;
+		text-size-adjust: 100%;
+		color-scheme: light;
+		hanging-punctuation: first last;
+	}
+
+	body {
+		min-height: 100dvh;
+		overflow-x: hidden;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		text-rendering: optimizeLegibility;
+	}
+
+	img, video, canvas, audio, iframe, embed, object { display: block; max-width: 100%; }
+	img, video { height: auto; }
+	input, button, textarea, select { font: inherit; }
+	p, h1, h2, h3, h4, h5, h6 { overflow-wrap: break-word; }
+	ol, ul { list-style: none; }
+
+	/* CWV / a11y: the single source of reduced-motion handling for the whole
+	   theme. Any decorative animation a skin adds is neutralised here, so skins
+	   don't each need to remember a guard of their own. */
+	@media (prefers-reduced-motion: reduce) {
+		*, *::before, *::after {
+			animation-duration: 0.01ms !important;
+			animation-iteration-count: 1 !important;
+			transition-duration: 0.01ms !important;
+			scroll-behavior: auto !important;
+		}
+	}
+}

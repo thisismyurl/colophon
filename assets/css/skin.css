@@ -1,0 +1,127 @@
+/* =====================================================================
+   [SKIN] skin.css — Colophon's own personality, and the worked example of
+   how a skin slots into the core cascade.
+   ---------------------------------------------------------------------
+   Two jobs:
+   1. BIND the --cl-* semantic tokens that core/base.css references, drawing
+      from this theme's theme.json palette. These live in an UNLAYERED :root
+      block on purpose — unlayered declarations beat layered ones, so they
+      reliably override the neutral fallbacks core ships. (This is the same
+      cascade-layer rule that bites people when WordPress core's own unlayered
+      CSS wins; here we use it deliberately.)
+   2. POPULATE @layer layout / components / blocks / utilities — the four
+      skin layers in the order reset.css declared. The bones (reset, base) are
+      core; everything you see below is design, and it's yours to rewrite.
+
+   `colophon sync` never touches this file. Make it loud; make it yours.
+   ===================================================================== */
+
+/* ---- 1. Token bindings (unlayered, so they win over core defaults) ---- */
+:root {
+	--cl-focus-ring:         var(--wp--preset--color--accent);
+	--cl-focus-ring-inverse: var(--wp--preset--color--paper);
+	--cl-skip-bg:            var(--wp--preset--color--ink);
+	--cl-skip-fg:            var(--wp--preset--color--paper);
+
+	/* Skin runtime tokens — no theme.json equivalent exists for these. */
+	--cl-gutter:      clamp(1.25rem, 5vw, 3rem);
+	--cl-section-gap: clamp(3rem, 8vw, 6rem);
+	--cl-transition:  200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ---- 2. The skin layers ---- */
+@layer layout {
+
+	.cl-main { isolation: isolate; }
+
+	/* Sticky header. z-index sits below core's mobile nav overlay (100000) so
+	   the menu always paints over a stuck header. */
+	.cl-header {
+		position: sticky;
+		inset-block-start: 0;
+		z-index: 100;
+		background: rgba(255, 255, 255, 0.95);
+		-webkit-backdrop-filter: blur(8px);
+		backdrop-filter: blur(8px);
+		border-block-end: 1px solid var(--wp--preset--color--line, #e3e2de);
+	}
+
+	.cl-section {
+		padding-block: var(--cl-section-gap);
+		padding-inline: var(--cl-gutter);
+	}
+	.cl-section--soft { background: var(--wp--preset--color--paper-soft, #f7f6f3); }
+	.cl-section--ink {
+		background: var(--wp--preset--color--ink-deep, #14181c);
+		color: var(--wp--preset--color--paper, #fff);
+	}
+}
+
+@layer components {
+
+	/* Header nav: ink at rest, accent on interaction. Type comes from theme.json
+	   core/navigation; colour and underline behaviour are skin. */
+	.cl-header .wp-block-navigation a {
+		color: var(--wp--preset--color--ink-soft, #3d3d3d);
+		text-decoration: none;
+	}
+	.cl-header .wp-block-navigation a:hover,
+	.cl-header .wp-block-navigation a:focus {
+		color: var(--wp--preset--color--accent, #34597a);
+	}
+
+	/* Footer sits on the ink-deep band; paper text clears contrast there. */
+	.cl-footer .wp-block-navigation a,
+	.cl-footer__bottom a {
+		color: var(--wp--preset--color--paper, #fff);
+	}
+	.cl-footer .wp-block-navigation a:hover,
+	.cl-footer .wp-block-navigation a:focus,
+	.cl-footer__bottom a:hover,
+	.cl-footer__bottom a:focus {
+		text-decoration: underline;
+		text-underline-offset: 0.15em;
+	}
+
+	/* Tap targets reach the 44px floor: footer nav links and the mobile-nav
+	   open/close toggles. */
+	.cl-footer .wp-block-navigation a {
+		min-block-size: 44px;
+		display: inline-flex;
+		align-items: center;
+	}
+	.wp-block-navigation__responsive-container-open,
+	.wp-block-navigation__responsive-container-close {
+		min-inline-size: 44px;
+		min-block-size: 44px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	/* On dark bands the accent focus ring fails 3:1, so use the inverse token
+	   core left us for exactly this. */
+	.cl-section--ink :where(a, button, input, textarea, select, summary, [tabindex]):focus-visible,
+	.cl-footer :where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+		outline-color: var(--cl-focus-ring-inverse, #fff);
+	}
+
+	/* Card hover — a quiet lift, neutralised for reduced-motion by core/reset. */
+	.cl-card {
+		transition: transform var(--cl-transition);
+	}
+	.cl-card:hover,
+	.cl-card:focus-within {
+		transform: translateY(-4px);
+	}
+}
+
+@layer blocks {
+	/* Reading-column link underline offset. */
+	.cl-main :where(p, li) a { text-underline-offset: 0.15em; }
+}
+
+@layer utilities {
+	.cl-text-center { text-align: center; }
+	.cl-no-motion   { animation: none !important; transition: none !important; }
+}

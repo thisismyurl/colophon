@@ -1,0 +1,17 @@
+/* =====================================================================
+   [SKIN] editor-style.css — the slice of personality the block editor needs
+   that theme.json can't express.
+   ---------------------------------------------------------------------
+   theme.json already gives the editor canvas the palette, type, and global
+   styles, so the editor mirrors the front end for free. This file is only for
+   the ::before/::after flourishes and hover affordances theme.json has no key
+   for. Colophon's default skin is plain, so there's little here — a theme
+   built on it fills this in alongside its skin.css.
+
+   Loaded via add_editor_style() in inc/setup.php.
+   ===================================================================== */
+
+/* The quiet card lift, mirrored so the editor preview matches the front end. */
+.editor-styles-wrapper .cl-card {
+	transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}

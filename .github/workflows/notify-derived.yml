@@ -1,0 +1,51 @@
+name: Notify derived themes of core update
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'assets/css/core/**'
+      - 'inc/bootstrap.php'
+      - 'inc/setup.php'
+      - 'inc/assets.php'
+      - 'inc/bindings.php'
+      - 'inc/admin.php'
+      - 'inc/cli.php'
+      - 'inc/github-updater.php'
+      - 'functions.php'
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Reason for manual sync trigger'
+        required: false
+        default: 'Manual core sync'
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        repo:
+          - colophon-quillwork
+          - colophon-kern
+          - colophon-masthead
+          - colophon-margin
+          # Add each new theme here when its repo is created
+    steps:
+      - name: Dispatch sync to ${{ matrix.repo }}
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.COLOPHON_SYNC_TOKEN }}
+          script: |
+            await github.rest.repos.createDispatchEvent({
+              owner: 'thisismyurl',
+              repo: '${{ matrix.repo }}',
+              event_type: 'colophon-sync',
+              client_payload: {
+                core_sha: context.sha,
+                triggered_by: context.eventName,
+                reason: '${{ inputs.reason || 'Core file updated' }}'
+              }
+            });
+            console.log('Dispatched to ${{ matrix.repo }}');

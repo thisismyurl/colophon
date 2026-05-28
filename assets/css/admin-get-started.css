@@ -60,39 +60,3 @@
 	margin-bottom: 0.15rem;
 }
 
-.colophon-get-started__videos {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-	gap: 1.5rem;
-	margin-top: 1rem;
-}
-
-.colophon-video__title {
-	font-weight: 600;
-	margin-bottom: 0.5rem;
-}
-
-.colophon-video__frame {
-	position: relative;
-	aspect-ratio: 16 / 9;
-	background: #f0f0f1;
-	border: 1px solid #dcdcde;
-}
-
-.colophon-video__frame iframe {
-	position: absolute;
-	inset: 0;
-	width: 100%;
-	height: 100%;
-	border: 0;
-}
-
-.colophon-video__placeholder {
-	position: absolute;
-	inset: 0;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	color: #646970;
-	font-style: italic;
-}

@@ -3,7 +3,7 @@ Contributors: thisismyurl
 Requires at least: 7.0
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 1.6147
+Stable tag: 1.6148
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Tags: blog, one-column, two-columns, full-site-editing, block-patterns, editor-style, custom-colors, custom-logo, custom-menu, featured-images, accessibility-ready, translation-ready, rtl-language-support, wide-blocks, threaded-comments
@@ -46,6 +46,10 @@ reading-first layout. It is meant to be replaced.
 To build your own theme on Colophon, see ARCHITECTURE.md in the theme folder.
 
 == Changelog ==
+
+= 1.6148 =
+* Updated Theme URI to https://thisismyurl.com/colophon.
+* Removed external video iframes from the admin onboarding page for WordPress.org compliance.
 
 = 1.6147 =
 * Unified versioning to the x.Yddd calendar scheme used across the This Is My URL family.

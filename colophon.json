@@ -4,8 +4,8 @@
 	"slug": "colophon",
 	"namespace": "Colophon",
 	"prefix": "cl",
-	"version": "1.6147",
-	"colophon_version": "1.6147",
+	"version": "1.6148",
+	"colophon_version": "1.6148",
 	"is_core": true,
 	"overrides": []
 }

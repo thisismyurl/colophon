@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1200">
+<title>Colophon — Midnight Variant (Dark)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&family=Inter:wght@100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="colophon-preview.css">
+<style>
+  /*
+   * MIDNIGHT PALETTE — deep indigo ground, off-white text, gold accent.
+   * Eight CSS custom property overrides in theme.json; same Colophon chrome.
+   * Suited to podcasts, audio drama, investigation journalism, crime/thriller
+   * publishers — anywhere gravitas and premium night-mode reading are the point.
+   *
+   * Gold (#d4a83c) on midnight (#0c0e1a): 8.1:1 — WCAG AA.
+   */
+  :root {
+    --wp--preset--color--ground:      #0c0e1a;
+    --wp--preset--color--paper:       #101425;
+    --wp--preset--color--white:       #141830;
+    --wp--preset--color--rule:        #252a42;
+    --wp--preset--color--rule-light:  #1a1f36;
+    --wp--preset--color--ink-deep:    #f0ede4;
+    --wp--preset--color--ink-primary: #dcd9d0;
+    --wp--preset--color--ink-secondary:#a8a49c;
+    --wp--preset--color--ink-muted:   #6a6660;
+    --wp--preset--color--ink-faint:   #3d3a36;
+    --wp--preset--color--accent:      #d4a83c;
+    --wp--preset--color--accent-mid:  #b8922e;
+    --wp--preset--color--accent-tint: #1a1408;
+  }
+
+  body { background: #0c0e1a; color: #dcd9d0; }
+  .co-header { background: #0c0e1a; border-color: #252a42; }
+  .co-site-name { color: #f0ede4; }
+  .co-nav a { color: #6a6660; }
+  .co-nav a:hover, .co-nav a.current { color: #dcd9d0; }
+  .co-cta-btn { background: #d4a83c; color: #0c0e1a; }
+  .co-cta-btn:hover { background: #b8922e; }
+  .co-cta-btn--outline { background: transparent; color: #dcd9d0; border-color: #252a42; }
+  .co-hero { background: #101425; border-color: #252a42; }
+  .co-hero__sub { color: #a8a49c; }
+  .co-post-card__category { color: #d4a83c; }
+  .co-post-card__img { background: #1a1f36; color: #3d3a36; }
+  .co-divider { border-color: #252a42; }
+  .co-footer { background: #07080f; }
+  .co-newsletter { background: #101425; border-color: #252a42; }
+  .co-newsletter__heading { color: #f0ede4; }
+</style>
+</head>
+<body>
+
+<header class="co-header">
+  <div class="co-header__inner">
+    <a class="co-site-name" href="#">Darkwater Audio</a>
+    <nav class="co-nav">
+      <a href="#" class="current">Shows</a>
+      <a href="#">Episodes</a>
+      <a href="#">Transcripts</a>
+      <a href="#">About</a>
+    </nav>
+    <a class="co-cta-btn" href="#">Subscribe</a>
+  </div>
+</header>
+
+<section class="co-hero" style="padding-block: 5rem;">
+  <div class="co-hero__inner">
+    <div class="co-eyebrow co-eyebrow--accent" style="font-size: 0.6875rem;">Midnight · Colour Variant</div>
+    <h1 class="co-hero__title" style="font-size: clamp(3rem, 5vw, 5.5rem);">Investigative audio for the patient listener</h1>
+    <p class="co-hero__sub">Long-form narrative podcasts and radio documentaries. Seven shows. Three hundred episodes. Three million listeners. No ads in the feed.</p>
+    <div class="co-hero__actions">
+      <a class="co-cta-btn" href="#">Browse Shows</a>
+      <a class="co-cta-btn co-cta-btn--outline" href="#">Listen Free</a>
+    </div>
+  </div>
+</section>
+
+<!-- Featured shows -->
+<section class="co-section" style="background: #0c0e1a; padding-block: 3rem;">
+  <div class="co-wrap">
+    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2.5rem; padding-bottom: 1rem; border-bottom: 1px solid #252a42;">
+      <h2 style="font-family: var(--wp--preset--font-family--serif); font-size: 1.25rem; font-weight: 400; color: #f0ede4;">Featured Shows</h2>
+      <a href="#" style="font-family: var(--wp--preset--font-family--sans); font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; color: #6a6660;">All Shows →</a>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; padding-bottom: 2.5rem; border-bottom: 1px solid #252a42; margin-bottom: 2.5rem;">
+      <div>
+        <div style="background: #1a1f36; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; font-family: var(--wp--preset--font-family--sans); font-size: 0.6875rem; color: #3d3a36; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem;">Show Cover Art</div>
+        <a class="co-post-card__category" href="#" style="font-size: 0.5625rem; display: block; margin-bottom: 0.5rem;">True Crime · Season 3</a>
+        <a class="co-post-card__title" href="#" style="font-size: 2rem; color: #f0ede4; display: block; line-height: 1.15; margin-bottom: 0.875rem;">The Long Water</a>
+        <p style="font-family: var(--wp--preset--font-family--sans); font-size: 0.9375rem; line-height: 1.65; color: #a8a49c; margin-bottom: 1rem;">A twelve-episode investigation into the disappearance of a water rights attorney in rural British Columbia, and the two-decade legal battle that followed.</p>
+        <div style="font-family: var(--wp--preset--font-family--sans); font-size: 0.75rem; color: #6a6660; display: flex; gap: 1rem;">
+          <span>12 episodes</span>
+          <span style="color: #3d3a36;">·</span>
+          <span>Season complete</span>
+          <span style="color: #3d3a36;">·</span>
+          <span style="color: #d4a83c;">★ 4.9</span>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 1.75rem;">
+        <div>
+          <div style="background: #1a1f36; aspect-ratio: 16/9; margin-bottom: 0.875rem; display: flex; align-items: center; justify-content: center; font-size: 0.625rem; color: #3d3a36; font-family: sans-serif; text-transform: uppercase; letter-spacing: 0.08em;">Cover</div>
+          <a class="co-post-card__category" href="#" style="font-size: 0.5rem; display: block; margin-bottom: 0.25rem;">Investigation · Ongoing</a>
+          <a class="co-post-card__title co-post-card__title--sm" href="#" style="color: #f0ede4; display: block;">The Mineral Rights</a>
+          <div style="font-family: var(--wp--preset--font-family--sans); font-size: 0.6875rem; color: #6a6660; margin-top: 0.25rem;">8 eps · Season 1</div>
+        </div>
+        <hr class="co-divider" style="margin-block: 0;">
+        <div>
+          <div style="background: #1a1f36; aspect-ratio: 16/9; margin-bottom: 0.875rem; display: flex; align-items: center; justify-content: center; font-size: 0.625rem; color: #3d3a36; font-family: sans-serif; text-transform: uppercase; letter-spacing: 0.08em;">Cover</div>
+          <a class="co-post-card__category" href="#" style="font-size: 0.5rem; display: block; margin-bottom: 0.25rem;">Political · Complete</a>
+          <a class="co-post-card__title co-post-card__title--sm" href="#" style="color: #f0ede4; display: block;">Inside the Room</a>
+          <div style="font-family: var(--wp--preset--font-family--sans); font-size: 0.6875rem; color: #6a6660; margin-top: 0.25rem;">24 eps · Seasons 1–3</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3-col smaller grid -->
+    <div class="co-cols-3">
+      <div class="co-post-card">
+        <div class="co-post-card__img co-post-card__img--sq" style="margin-bottom: 0.875rem; min-height: 120px;"></div>
+        <a class="co-post-card__category" href="#">Environment</a>
+        <a class="co-post-card__title co-post-card__title--sm" href="#" style="color: #f0ede4;">The Stillwater Files</a>
+        <div class="co-post-card__meta" style="color: #6a6660;"><span>6 episodes</span></div>
+      </div>
+      <div class="co-post-card">
+        <div class="co-post-card__img co-post-card__img--sq" style="margin-bottom: 0.875rem; min-height: 120px;"></div>
+        <a class="co-post-card__category" href="#">Health</a>
+        <a class="co-post-card__title co-post-card__title--sm" href="#" style="color: #f0ede4;">The Consent Study</a>
+        <div class="co-post-card__meta" style="color: #6a6660;"><span>10 episodes</span></div>
+      </div>
+      <div class="co-post-card">
+        <div class="co-post-card__img co-post-card__img--sq" style="margin-bottom: 0.875rem; min-height: 120px;"></div>
+        <a class="co-post-card__category" href="#">Labour</a>
+        <a class="co-post-card__title co-post-card__title--sm" href="#" style="color: #f0ede4;">Dispatch</a>
+        <div class="co-post-card__meta" style="color: #6a6660;"><span>Ongoing</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Palette note -->
+<div style="padding: 1.5rem; background: #101425; border-top: 1px solid #252a42; border-inline-start: 4px solid #d4a83c; margin: 0;">
+  <div style="font-family: var(--wp--preset--font-family--sans); font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #d4a83c; margin-bottom: 0.5rem;">About this palette</div>
+  <p style="font-family: var(--wp--preset--font-family--sans); font-size: 0.875rem; line-height: 1.65; color: #6a6660; max-width: 65ch;">
+    <strong style="color: #a8a49c;">Midnight</strong> — ground: #0c0e1a (deep indigo) · ink-primary: #dcd9d0 · accent: #d4a83c (gold). Eight CSS custom property overrides in theme.json. Source Serif 4 and Inter unchanged. Demonstrates how Colophon serves audio publishers, investigation journalism, and premium dark-mode reading experiences without any template edits.
+  </p>
+</div>
+
+<footer class="co-footer" style="background: #07080f;">
+  <div class="co-footer__inner">
+    <div>
+      <div class="co-footer__name">Darkwater Audio</div>
+      <p class="co-footer__desc">Investigative audio journalism and narrative podcasts. Independent since 2016.</p>
+    </div>
+    <div>
+      <div class="co-footer__heading">Shows</div>
+      <nav class="co-footer__links">
+        <a href="#">True Crime</a>
+        <a href="#">Investigation</a>
+        <a href="#">Political</a>
+        <a href="#">Environment</a>
+      </nav>
+    </div>
+    <div>
+      <div class="co-footer__heading">Company</div>
+      <nav class="co-footer__links">
+        <a href="#">About</a>
+        <a href="#">Subscribe</a>
+        <a href="#">Contact</a>
+      </nav>
+    </div>
+  </div>
+  <div class="co-footer__bottom" style="color: rgba(250,250,250,0.25);">
+    <span>&copy; 2025 Darkwater Audio</span>
+    <span>Built with WordPress &amp; <a href="#" style="color: rgba(250,250,250,0.35);">Colophon</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

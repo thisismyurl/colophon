@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1200">
+<title>Colophon — Warm Slate Variant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&family=Inter:wght@100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="colophon-preview.css">
+<style>
+  /*
+   * WARM SLATE PALETTE — parchment ground, deep sienna accent.
+   * Eight CSS custom property overrides in theme.json; same Colophon chrome.
+   * Suited to literary journals, authors, craft publishers, booksellers —
+   * anywhere a warm tactile quality reads as authority, not decoration.
+   *
+   * Sienna (#7c3d28) on parchment (#f7f2e8): 5.4:1 — WCAG AA.
+   */
+  :root {
+    --wp--preset--color--ground:      #f7f2e8;
+    --wp--preset--color--paper:       #f2ece0;
+    --wp--preset--color--white:       #faf7f0;
+    --wp--preset--color--rule:        #ddd7c8;
+    --wp--preset--color--rule-light:  #e9e4d8;
+    --wp--preset--color--ink-deep:    #1a1208;
+    --wp--preset--color--ink-primary: #2d2218;
+    --wp--preset--color--ink-secondary:#5a4a38;
+    --wp--preset--color--ink-muted:   #8a7a68;
+    --wp--preset--color--ink-faint:   #b8a898;
+    --wp--preset--color--accent:      #7c3d28;
+    --wp--preset--color--accent-mid:  #9a4f35;
+    --wp--preset--color--accent-tint: #f5ece6;
+  }
+
+  .co-cta-btn { background: #7c3d28; }
+  .co-cta-btn:hover { background: #5e2c1c; }
+  .co-footer { background: #1a1208; }
+  .co-header { background: #faf7f0; border-color: #ddd7c8; }
+</style>
+</head>
+<body style="background: #f7f2e8;">
+
+<header class="co-header">
+  <div class="co-header__inner">
+    <a class="co-site-name" href="#" style="color: #1a1208;">The Inland Press</a>
+    <nav class="co-nav">
+      <a href="#" class="current" style="color: #2d2218;">Journal</a>
+      <a href="#">Books</a>
+      <a href="#">Contributors</a>
+      <a href="#">About</a>
+    </nav>
+    <a class="co-cta-btn" href="#">Subscribe</a>
+  </div>
+</header>
+
+<section class="co-hero" style="background: #faf7f0; border-color: #ddd7c8; padding-block: 5rem;">
+  <div class="co-hero__inner">
+    <div class="co-eyebrow co-eyebrow--accent" style="font-size: 0.6875rem;">Warm Slate · Colour Variant</div>
+    <h1 class="co-hero__title" style="font-size: clamp(3rem, 5vw, 5.5rem); color: #1a1208;">An independent literary journal for the long form</h1>
+    <p class="co-hero__sub" style="color: #5a4a38;">Essays, fiction, and criticism for readers who believe that good prose is worth the time it takes to write it well. Published from Victoria, British Columbia, since 2011.</p>
+    <div class="co-hero__actions">
+      <a class="co-cta-btn" href="#">Read the Journal</a>
+      <a class="co-cta-btn co-cta-btn--outline" href="#" style="border-color: #ddd7c8; color: #2d2218;">Subscribe — $36/year</a>
+    </div>
+  </div>
+</section>
+
+<!-- Current issue -->
+<section class="co-section" style="background: #f2ece0; border-bottom: 1px solid #ddd7c8; padding-block: 2rem;">
+  <div class="co-wrap">
+    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.75rem; padding-bottom: 0.875rem; border-bottom: 1px solid #ddd7c8;">
+      <h2 style="font-family: var(--wp--preset--font-family--serif); font-size: 1.125rem; font-weight: 400; letter-spacing: -0.01em; color: #1a1208;">Current Issue — Vol. XIV, No. 2</h2>
+      <a href="#" style="font-family: var(--wp--preset--font-family--sans); font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; color: #8a7a68;">All Issues →</a>
+    </div>
+    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 3rem;">
+      <div class="co-post-card">
+        <div class="co-post-card__img co-post-card__img--3-2" style="background: #e9e4d8; color: #b8a898;">Feature Image</div>
+        <a class="co-post-card__category" href="#" style="color: #7c3d28;">Essay</a>
+        <a class="co-post-card__title co-post-card__title--lg" href="#" style="color: #1a1208; font-size: 2.25rem;">The Grammar of Arriving: Notes on Landscape and Belonging</a>
+        <p class="co-post-card__excerpt" style="color: #5a4a38;">A meditation on the language we inherit for places we did not grow up in, and what it costs to use it honestly.</p>
+        <div class="co-post-card__meta" style="color: #8a7a68;"><span>Rachel Tsang</span><span class="sep" style="color: #b8a898;">·</span><span>28 min</span></div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 1.75rem;">
+        <div class="co-post-card">
+          <a class="co-post-card__category" href="#" style="color: #7c3d28;">Fiction</a>
+          <a class="co-post-card__title co-post-card__title--sm" href="#" style="color: #1a1208;">The Houseguest</a>
+          <div class="co-post-card__meta" style="color: #8a7a68;"><span>David Osei</span></div>
+        </div>
+        <hr class="co-divider" style="border-color: #ddd7c8;">
+        <div class="co-post-card">
+          <a class="co-post-card__category" href="#" style="color: #7c3d28;">Criticism</a>
+          <a class="co-post-card__title co-post-card__title--sm" href="#" style="color: #1a1208;">On the Uses of Ambiguity: Reading Thomas King Again</a>
+          <div class="co-post-card__meta" style="color: #8a7a68;"><span>M. Bélanger</span></div>
+        </div>
+        <hr class="co-divider" style="border-color: #ddd7c8;">
+        <div class="co-post-card">
+          <a class="co-post-card__category" href="#" style="color: #7c3d28;">Poetry</a>
+          <a class="co-post-card__title co-post-card__title--sm" href="#" style="color: #1a1208;">Three Poems from the Interior</a>
+          <div class="co-post-card__meta" style="color: #8a7a68;"><span>Ingrid Paulette</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Palette note -->
+<div style="background: #f2ece0; border-top: 1px solid #ddd7c8; border-inline-start: 4px solid #7c3d28; padding: 1.5rem; margin: 0;">
+  <div style="font-family: var(--wp--preset--font-family--sans); font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #7c3d28; margin-bottom: 0.5rem;">About this palette</div>
+  <p style="font-family: var(--wp--preset--font-family--sans); font-size: 0.875rem; line-height: 1.65; color: #8a7a68; max-width: 65ch;">
+    <strong style="color: #2d2218;">Warm Slate</strong> — ground: #f7f2e8 · ink-primary: #2d2218 · accent: #7c3d28 (sienna). Eight CSS custom property overrides in theme.json. Source Serif 4 and Inter are unchanged; only the colour tokens shift. Demonstrates how Colophon serves literary journals, booksellers, and authors who need warmth and tactile authority over coolness.
+  </p>
+</div>
+
+<footer class="co-footer" style="background: #1a1208;">
+  <div class="co-footer__inner">
+    <div>
+      <div class="co-footer__name">The Inland Press</div>
+      <p class="co-footer__desc">An independent literary journal published from Victoria, BC, since 2011.</p>
+    </div>
+    <div>
+      <div class="co-footer__heading">Journal</div>
+      <nav class="co-footer__links">
+        <a href="#">Current Issue</a>
+        <a href="#">Archive</a>
+        <a href="#">Contributors</a>
+      </nav>
+    </div>
+    <div>
+      <div class="co-footer__heading">Press</div>
+      <nav class="co-footer__links">
+        <a href="#">Books</a>
+        <a href="#">Subscribe</a>
+        <a href="#">About</a>
+      </nav>
+    </div>
+  </div>
+  <div class="co-footer__bottom">
+    <span>&copy; 2025 The Inland Press</span>
+    <span>Built with WordPress &amp; <a href="#">Colophon</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

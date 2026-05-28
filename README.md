@@ -89,7 +89,7 @@ Every file in a generated theme is one of three kinds:
 
 Colophon is the core. The finished themes are:
 
-- **[Quillwork](https://github.com/thisismyurl/thisismyurl-colophon-quillwork)** — portfolio and editorial; Cormorant Garamond headlines, Newsreader body, deep-teal/warm-ochre palette
+- **[Quillwork](https://github.com/thisismyurl/colophon-quillwork)** — portfolio and editorial; Cormorant Garamond headlines, Newsreader body, deep-teal/warm-ochre palette
 - **Masthead** — broadsheet newspaper; three-column print grid, CSS-only breaking-news ticker, Playfair Display/Libre Baskerville/Barlow Condensed
 - **Margin** — financial trade publication; ink-on-paper, DM Sans/Fraunces/Source Serif 4, static market band with signed change values
 

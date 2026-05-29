@@ -140,9 +140,8 @@ function get_footer_credit_value(): string {
 		$credit,
 		array(
 			'a' => array(
-				'href'   => array(),
-				'rel'    => array(),
-				'target' => array(),
+				'href' => array(),
+				'rel'  => array(),
 			),
 		)
 	);

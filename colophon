@@ -8,7 +8,7 @@
  * theme from the core, and later pull core improvements forward into a theme
  * without touching its design.
  *
- *   php colophon new <slug> [--name="Pretty Name"] [--namespace=StudlyName] [--prefix=xx] [--force]
+ *   php colophon new <slug> [--name="Pretty Name"] [--namespace=slug] [--prefix=xx] [--force]
  *   php colophon sync <slug> [--dry-run]
  *   php colophon doctor <slug>
  *   php colophon list
@@ -115,6 +115,12 @@ function core_subs( string $code, array $t ): string {
 	// the backtick+slash form is rewritten — "built on Colophon" and "colophon sync"
 	// prose is left intact.
 	$code = str_replace( '`colophon/', '`' . $t['slug'] . '/', $code );
+	// WP-CLI docblock examples: `wp colophon version` → `wp margin version`. The
+	// leading-quote rule above can't see the bare `wp colophon ` form. Added v1.6150
+	// after inc/cli.php was promoted to core and its @example lines were left with
+	// the seed slug. The trailing space is intentional — it anchors the replacement
+	// to the command token, not prose like "built on Colophon" or "colophon sync".
+	$code = str_replace( 'wp colophon ', 'wp ' . $t['slug'] . ' ', $code );
 	$code = preg_replace_callback(
 		"/const VERSION = '[^']*';/",
 		static function () use ( $t ) {
@@ -177,7 +183,7 @@ function cmd_new( array $args, array $opts ): void {
 	$t        = array(
 		'slug'             => $slug,
 		'name'             => $opts['name'] ?? titleize( $slug ),
-		'namespace'        => $opts['namespace'] ?? studly( $slug ),
+		'namespace'        => $opts['namespace'] ?? $slug,
 		'prefix'           => $opts['prefix'] ?? default_prefix( $slug ),
 		'version'          => '1.0.0',
 		'colophon_version' => (string) ( $manifest['core_version'] ?? '1.0.0' ),
@@ -264,7 +270,7 @@ function cmd_sync( array $args, array $opts ): void {
 	$manifest = load_manifest();
 	$dry      = isset( $opts['dry-run'] );
 	$t        = array(
-		'namespace' => $record['namespace'] ?? studly( $slug ),
+		'namespace' => $record['namespace'] ?? $slug,
 		'slug'      => $record['slug'] ?? $slug,
 		'name'      => $record['name'] ?? titleize( $slug ),
 		'version'   => $record['version'] ?? '1.0.0',
@@ -502,7 +508,7 @@ function main( array $argv ): void {
 		default:
 			out( 'colophon — theme-line generator + core sync' );
 			out( '' );
-			out( '  php colophon new <slug> [--name="Pretty Name"] [--namespace=Studly] [--prefix=xx] [--force]' );
+			out( '  php colophon new <slug> [--name="Pretty Name"] [--namespace=slug] [--prefix=xx] [--force]' );
 			out( '  php colophon sync <slug> [--dry-run]' );
 			out( '  php colophon doctor <slug>' );
 			out( '  php colophon list' );

@@ -178,7 +178,8 @@ function render_welcome_notice(): void {
 			<a class="button button-primary" href="<?php echo esc_url( $page_url ); ?>">
 				<?php
 				/* translators: %s: theme name. */
-				printf( esc_html__( 'Set up %s →', 'colophon' ), esc_html( $theme ) );
+				printf( esc_html__( 'Set up %s', 'colophon' ), esc_html( $theme ) );
+				?> <span aria-hidden="true">→</span><?php
 				?>
 			</a>
 			<a class="colophon-welcome-notice__dismiss" href="<?php echo esc_url( $dismiss ); ?>">
@@ -337,9 +338,9 @@ function render_get_started_page(): void {
 				$dev  = $content['developers'];
 				$link = '<a href="' . esc_url( $dev['url'] ?? '' ) . '" target="_blank" rel="noopener noreferrer">'
 					. esc_html( $dev['label'] ?? '' ) . '</a>';
-				// The text carries one %s for the link; everything else is escaped,
-				// and the link itself is built from escaped parts above.
-				printf( esc_html( $dev['text'] ), $link ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				// The text carries one %s for the link. wp_kses preserves the
+				// placeholder for sprintf substitution and allows the anchor built above.
+				printf( wp_kses( $dev['text'], $cl_inline ), $link );
 				?>
 			</p>
 		<?php endif; ?>

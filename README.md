@@ -1,6 +1,6 @@
 # Colophon
 
-The shared starter core behind the [This Is My URL](https://thisismyurl.com) free theme line — and the tool that generates themes from it.
+The shared starter core behind the [Christopher Ross](https://thisismyurl.com) free theme line — and the tool that generates themes from it.
 
 Colophon is a **development-time core**, not a runtime parent. You build *from* it (copy + re-skin), not *on* it (no `Template:` header, no cross-theme `get_template_part`, no shared runtime state). Each theme in the line ships as a fully self-contained WordPress install; Colophon is where the bones evolve.
 
@@ -124,9 +124,9 @@ If one of them saves you time, here are the genuine ways to help:
 - **Found a bug or want a feature?** Open an issue on the [Issues](../../issues) tab.
 - **Have a question?** Start a thread on the [Discussions](../../discussions) tab.
 
-## About This Is My URL
+## About Christopher Ross
 
-This theme is built and maintained by [This Is My URL](https://thisismyurl.com/), the WordPress development and technical SEO practice of Christopher Ross. I help teams build WordPress sites that stay secure, fast, and maintainable, and I build a small, free theme line for people who want a real accessibility and performance floor without starting from scratch.
+This theme is built and maintained by [Christopher Ross](https://thisismyurl.com/), the WordPress development and technical SEO practice of Christopher Ross. I help teams build WordPress sites that stay secure, fast, and maintainable, and I build a small, free theme line for people who want a real accessibility and performance floor without starting from scratch.
 
 ### My background
 

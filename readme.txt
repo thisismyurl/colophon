@@ -8,7 +8,7 @@ License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Tags: blog, one-column, two-columns, full-site-editing, block-patterns, editor-style, custom-colors, custom-logo, custom-menu, featured-images, accessibility-ready, translation-ready, rtl-language-support, wide-blocks, threaded-comments
 
-A literary full-site-editing theme — warm type, classical proportions, zero front-end JavaScript — and the documented starter core behind the This Is My URL free theme line.
+A literary full-site-editing theme — warm type, classical proportions, zero front-end JavaScript — and the documented starter core behind the Christopher Ross free theme line.
 
 == Description ==
 
@@ -96,7 +96,7 @@ To build your own theme on Colophon, see GUIDE.md in the theme folder.
 * Removed external video iframes from the admin onboarding page for WordPress.org compliance.
 
 = 1.6147 =
-* Unified versioning to the x.Yddd calendar scheme used across the This Is My URL family.
+* Unified versioning to the x.Yddd calendar scheme used across the Christopher Ross family.
 * Confirmed compatibility with WordPress 7.0.
 
 = 1.0.0 =

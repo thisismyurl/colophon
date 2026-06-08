@@ -1,35 +1,17 @@
-<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+<!-- Page template for Colophon.
+     Standard WordPress page: About, Services, Contact, etc.
+     Content constrained to 720px for readable prose. -->
 
-<!-- wp:group {"tagName":"main","className":"cl-main","metadata":{"name":"Main"},"layout":{"type":"constrained","contentSize":"720px"},"style":{"spacing":{"padding":{"top":"var:preset|spacing|8","bottom":"var:preset|spacing|16"}}}} -->
-<main id="main-content" class="wp-block-group cl-main" style="padding-top:var(--wp--preset--spacing--8);padding-bottom:var(--wp--preset--spacing--16)">
+<!-- wp:template-part {"slug":"header"} /-->
 
-	<!-- wp:group {"tagName":"article","className":"cl-page","layout":{"type":"default"},"style":{"spacing":{"blockGap":"var:preset|spacing|6"}}} -->
-	<article class="wp-block-group cl-page">
-		<!-- wp:post-title {"level":1,"fontSize":"2xl"} /-->
-		<!-- wp:post-featured-image {"aspectRatio":"16/9","align":"wide"} /-->
-		<!-- wp:post-content {"layout":{"type":"constrained","contentSize":"720px"}} /-->
-	</article>
-	<!-- /wp:group -->
+<!-- wp:group {"tagName":"main","id":"main-content","className":"colophon-main colophon-page","layout":{"type":"constrained","contentSize":"720px"},"style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|20","left":"var:preset|spacing|5","right":"var:preset|spacing|5"}}}} -->
+<main id="main-content" class="wp-block-group colophon-main colophon-page" style="padding-top:var(--wp--preset--spacing--10);padding-bottom:var(--wp--preset--spacing--20);padding-left:var(--wp--preset--spacing--5);padding-right:var(--wp--preset--spacing--5)">
 
-	<!-- wp:comments {"className":"cl-comments","style":{"spacing":{"margin":{"top":"var:preset|spacing|12"}}}} -->
-	<div class="wp-block-comments cl-comments" style="margin-top:var(--wp--preset--spacing--12)">
-		<!-- wp:comments-title /-->
-		<!-- wp:comment-template -->
-			<!-- wp:group {"layout":{"type":"default"}} -->
-			<div class="wp-block-group">
-				<!-- wp:avatar {"size":40} /-->
-				<!-- wp:comment-author-name /-->
-				<!-- wp:comment-date /-->
-				<!-- wp:comment-content /-->
-				<!-- wp:comment-reply-link /-->
-			</div>
-			<!-- /wp:group -->
-		<!-- /wp:comment-template -->
-		<!-- wp:post-comments-form /-->
-	</div>
-	<!-- /wp:comments -->
+	<!-- wp:post-title {"level":1,"style":{"spacing":{"margin":{"bottom":"var:preset|spacing|8"}}}} /-->
+
+	<!-- wp:post-content {"layout":{"type":"constrained","contentSize":"720px"}} /-->
 
 </main>
 <!-- /wp:group -->
 
-<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
+<!-- wp:template-part {"slug":"footer"} /-->

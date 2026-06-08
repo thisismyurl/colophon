@@ -1,31 +1,33 @@
-<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+<!-- 404 template for Colophon.
+     Clear orientation: what happened, what to do next.
+     Pillar 6 (Resilience): the 404 is an experience, not an empty page. -->
 
-<!-- wp:group {"tagName":"main","className":"cl-main","metadata":{"name":"Main"},"layout":{"type":"constrained","contentSize":"720px"},"style":{"spacing":{"padding":{"top":"var:preset|spacing|16","bottom":"var:preset|spacing|16"},"blockGap":"var:preset|spacing|5"},"dimensions":{"minHeight":"60dvh"}}} -->
-<main id="main-content" class="wp-block-group cl-main" style="min-height:60dvh;padding-top:var(--wp--preset--spacing--16);padding-bottom:var(--wp--preset--spacing--16)">
+<!-- wp:template-part {"slug":"header"} /-->
 
-	<!-- wp:paragraph {"className":"is-style-cl-eyebrow cl-eyebrow"} -->
-	<p class="is-style-cl-eyebrow cl-eyebrow">Error 404</p>
-	<!-- /wp:paragraph -->
+<!-- wp:group {"tagName":"main","id":"main-content","className":"colophon-main colophon-404","layout":{"type":"constrained","contentSize":"720px"},"style":{"spacing":{"padding":{"top":"var:preset|spacing|20","bottom":"var:preset|spacing|20","left":"var:preset|spacing|5","right":"var:preset|spacing|5"}}}} -->
+<main id="main-content" class="wp-block-group colophon-main colophon-404" style="padding-top:var(--wp--preset--spacing--20);padding-bottom:var(--wp--preset--spacing--20);padding-left:var(--wp--preset--spacing--5);padding-right:var(--wp--preset--spacing--5)">
 
-	<!-- wp:heading {"level":1,"fontSize":"2xl"} -->
-	<h1 class="wp-block-heading has-2-xl-font-size">We couldn't find that page.</h1>
+	<!-- wp:heading {"level":1,"style":{"typography":{"fontSize":"var:preset|font-size|display","letterSpacing":"-0.03em","lineHeight":"1"},"color":{"text":"var:preset|color|base-rule"}}} -->
+	<h1 class="wp-block-heading has-base-rule-color has-text-color" style="font-size:var(--wp--preset--font-size--display);letter-spacing:-0.03em;line-height:1">404</h1>
 	<!-- /wp:heading -->
 
-	<!-- wp:paragraph {"fontSize":"md"} -->
-	<p class="has-md-font-size">The link may be old, or the page may have moved. Try a search, or head back to the start.</p>
-	<!-- /wp:paragraph -->
+	<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|6","padding":{"top":"var:preset|spacing|8"}}},"layout":{"type":"default"}} -->
+	<div class="wp-block-group" style="padding-top:var(--wp--preset--spacing--8)">
 
-	<!-- wp:search {"label":"Search","showLabel":false,"placeholder":"Search the site…","buttonText":"Search","buttonPosition":"button-inside"} /-->
+		<!-- wp:paragraph {"style":{"color":{"text":"var:preset|color|base-mid"}}} -->
+		<p class="has-base-mid-color has-text-color">This page doesn't exist. Try searching, or return to the front page.</p>
+		<!-- /wp:paragraph -->
 
-	<!-- wp:buttons {"style":{"spacing":{"margin":{"top":"var:preset|spacing|6"}}}} -->
-	<div class="wp-block-buttons" style="margin-top:var(--wp--preset--spacing--6)">
-		<!-- wp:button -->
-		<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/">Back to home</a></div>
-		<!-- /wp:button -->
+		<!-- wp:search {"label":"Search","buttonText":"Search","buttonUseIcon":true} /-->
+
+		<!-- wp:paragraph {"style":{"typography":{"fontSize":"var:preset|font-size|sm"},"color":{"text":"var:preset|color|base-mid"}}} -->
+		<p class="has-base-mid-color has-text-color" style="font-size:var(--wp--preset--font-size--sm)"><!-- wp:home-link {"label":"← Back to start"} /--></p>
+		<!-- /wp:paragraph -->
+
 	</div>
-	<!-- /wp:buttons -->
+	<!-- /wp:group -->
 
 </main>
 <!-- /wp:group -->
 
-<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
+<!-- wp:template-part {"slug":"footer"} /-->

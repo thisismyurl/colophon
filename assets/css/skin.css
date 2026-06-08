@@ -1,243 +1,145 @@
 /* =====================================================================
-   [SKIN] skin.css — Colophon's own personality, and the worked example of
-   how a skin slots into the core cascade.
+   [SKIN] skin.css — Colophon's layout, components, and utilities.
    ---------------------------------------------------------------------
-   Two jobs:
-   1. BIND the --cl-* semantic tokens that core/base.css references, drawing
-      from this theme's theme.json palette. These live in an UNLAYERED :root
-      block on purpose — unlayered declarations beat layered ones, so they
-      reliably override the neutral fallbacks core ships. (This is the same
-      cascade-layer rule that bites people when WordPress core's own unlayered
-      CSS wins; here we use it deliberately.)
-   2. POPULATE @layer layout / components / blocks / utilities — the four
-      skin layers in the order reset.css declared. The bones (reset, base) are
-      core; everything you see below is design, and it's yours to rewrite.
+   This is the starter skin. Derived themes replace this file entirely
+   with their own design personality. The reset and base sheets are the
+   same for every theme in the Colophon collection; this sheet is what
+   makes Colophon a minimal starter and not a finished product.
 
-   `colophon sync` never touches this file. Make it loud; make it yours.
+   Architecture: CSS @layers, declared in reset.css. Rules here live in
+   the appropriate layer based on their scope:
+     @layer layout     — structural containers
+     @layer components — reusable UI patterns
+     @layer blocks     — WordPress block-specific overrides
+     @layer utilities  — single-purpose helpers
+
+   To build your own skin:
+   1. Keep the @layer structure.
+   2. Bind the --cl-* semantic tokens to your palette colours (below).
+   3. Add your layout, component, block, and utility rules.
+   4. The reset and base sheets don't need editing — they're the floor.
    ===================================================================== */
 
-/* ---- 1. Token bindings (unlayered, so they win over core defaults) ---- */
-:root {
-	--cl-focus-ring:         var(--wp--preset--color--accent);
-	--cl-focus-ring-inverse: var(--wp--preset--color--paper);
-	--cl-skip-bg:            var(--wp--preset--color--ink);
-	--cl-skip-fg:            var(--wp--preset--color--paper);
-
-	/* Skin runtime tokens — no theme.json equivalent exists for these. */
-	--cl-gutter:      clamp(1.25rem, 5vw, 3rem);
-	--cl-section-gap: clamp(3rem, 8vw, 6rem);
-	--cl-transition:  200ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* ---- 2. The skin layers ---- */
+/* =====================================================================
+   LAYER: layout
+   ===================================================================== */
 @layer layout {
 
-	.cl-main { isolation: isolate; }
-
-	/* Sticky header: warm paper tint with frosted-glass blur.
-	   rgba(250, 249, 246) is paper (#faf9f6) at 95% opacity — pure white
-	   would fight the warm literary palette. z-index sits below core's
-	   mobile-nav overlay (100000) so the menu always paints over the header. */
-	.cl-header {
-		position: sticky;
-		inset-block-start: 0;
-		z-index: 100;
-		background: rgba(250, 249, 246, 0.95);
-		-webkit-backdrop-filter: blur(8px);
-		backdrop-filter: blur(8px);
-		border-block-end: 1px solid var(--wp--preset--color--line, #dedad3);
+	/* Root padding binding — matches useRootPaddingAwareAlignments in theme.json */
+	:root {
+		--wp--style--root--padding-top:    var(--wp--preset--spacing--4);
+		--wp--style--root--padding-right:  var(--wp--preset--spacing--5);
+		--wp--style--root--padding-bottom: var(--wp--preset--spacing--4);
+		--wp--style--root--padding-left:   var(--wp--preset--spacing--5);
 	}
 
-	.cl-section {
-		padding-block: var(--cl-section-gap);
-		padding-inline: var(--cl-gutter);
+	/* Colophon is a light-only theme by default.
+	   Derived themes that support dark mode declare color-scheme: light dark here. */
+	:root {
+		color-scheme: light;
 	}
-	.cl-section--soft { background: var(--wp--preset--color--paper-soft, #f2f0eb); }
-	.cl-section--ink {
-		background: var(--wp--preset--color--ink-deep, #0f0d0c);
-		color: var(--wp--preset--color--paper, #faf9f6);
+
+	/* Bind the semantic focus-ring and skip-link tokens to Colophon's palette */
+	:root {
+		--cl-focus-ring:         var(--wp--preset--color--base-accent);
+		--cl-focus-ring-inverse: var(--wp--preset--color--base-paper);
+		--cl-skip-bg:            var(--wp--preset--color--base-accent);
+		--cl-skip-fg:            var(--wp--preset--color--base-paper);
+	}
+
+	/* Site shell — ensures footer hugs the viewport bottom even on short pages */
+	.wp-site-blocks {
+		display: flex;
+		flex-direction: column;
+		min-height: 100dvh;
+	}
+
+	.colophon-main {
+		flex: 1;
+	}
+
+	/* Site header — border below to separate from content */
+	.colophon-site-header {
+		border-bottom: 1px solid var(--wp--preset--color--base-rule);
 	}
 }
 
+/* =====================================================================
+   LAYER: components
+   ===================================================================== */
 @layer components {
 
-	/* Header nav: ink at rest, accent on interaction. Type comes from theme.json
-	   core/navigation; colour and underline behaviour are skin. */
-	.cl-header .wp-block-navigation a {
-		color: var(--wp--preset--color--ink-soft, #433e3b);
-		text-decoration: none;
-	}
-	.cl-header .wp-block-navigation a:hover,
-	.cl-header .wp-block-navigation a:focus {
-		color: var(--wp--preset--color--accent, #3d6b5e);
+	/* Eyebrow label style — small, tracked, muted.
+	   Registered as a block style in skin.php. */
+	.is-style-colophon-eyebrow {
+		font-size: var(--wp--preset--font-size--xs);
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--wp--preset--color--base-mid);
 	}
 
-	/* Footer sits on the ink-deep band; paper text clears contrast there. */
-	.cl-footer .wp-block-navigation a,
-	.cl-footer__bottom a {
-		color: var(--wp--preset--color--paper, #faf9f6);
-	}
-	.cl-footer .wp-block-navigation a:hover,
-	.cl-footer .wp-block-navigation a:focus,
-	.cl-footer__bottom a:hover,
-	.cl-footer__bottom a:focus {
-		text-decoration: underline;
-		text-underline-offset: 0.15em;
-	}
-
-	/* Tap targets reach the 44px floor: footer nav links and the mobile-nav
-	   open/close toggles. */
-	.cl-footer .wp-block-navigation a {
-		min-block-size: 44px;
-		display: inline-flex;
-		align-items: center;
-	}
-	.wp-block-navigation__responsive-container-open,
-	.wp-block-navigation__responsive-container-close {
-		min-inline-size: 44px;
-		min-block-size: 44px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	/* On dark bands the accent focus ring fails 3:1, so use the inverse token
-	   core left us for exactly this. */
-	.cl-section--ink :where(a, button, input, textarea, select, summary, [tabindex]):focus-visible,
-	.cl-footer :where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
-		outline-color: var(--cl-focus-ring-inverse, #faf9f6);
-	}
-
-	/* Card hover — a quiet lift, neutralised for reduced-motion by core/reset. */
-	.cl-card {
-		transition: transform var(--cl-transition);
-	}
-	.cl-card:hover,
-	.cl-card:focus-within {
-		transform: translateY(-4px);
+	/* Full-bleed band — background fills the viewport.
+	   Registered as a block style in skin.php. */
+	.is-style-colophon-band {
+		background-color: var(--wp--preset--color--base-ground);
 	}
 }
 
+/* =====================================================================
+   LAYER: blocks
+   WordPress block-specific overrides
+   ===================================================================== */
 @layer blocks {
 
-	/* Reading-column link underline offset. */
-	.cl-main :where(p, li) a { text-underline-offset: 0.15em; }
-
-	/* ------------------------------------------------------------------ */
-	/* LITERARY READING REFINEMENTS                                         */
-	/* theme.json expresses typefaces, weights, and sizes. CSS handles the  */
-	/* micro-typographic features theme.json has no key for: font-variant-* */
-	/* properties, text-wrap, hanging punctuation, and the paragraph indent  */
-	/* convention. These are the details that make body text feel like a     */
-	/* book rather than a web page.                                          */
-	/* ------------------------------------------------------------------ */
-
-	/* OpenType features and reading comfort for prose columns.
-	   common-ligatures gives fi/fl/ff joins; oldstyle-nums drops numerals
-	   below the baseline like lowercase letters — both are Garamond-school
-	   conventions that Spectral was designed to support. */
-	.cl-prose :is(p, li) {
-		font-variant-ligatures: common-ligatures;
-		font-variant-numeric:   oldstyle-nums;
-		text-wrap:              pretty;             /* multi-line orphan prevention */
-		hanging-punctuation:    first allow-end last;
+	/* Site title — no default underline on hover */
+	.wp-block-site-title a {
+		text-decoration: none;
 	}
 
-	/* Paragraph rhythm: indent continuation paragraphs instead of spacing them.
-	   This is the printed-prose convention used in literary magazines (n+1,
-	   Ploughshares, NYRB). The first paragraph after a heading is never indented
-	   — only genuine continuation paragraphs.
-	   To revert to the more common margin-gap approach: remove the p+p block. */
-	.cl-prose p {
-		text-indent: 0;
-	}
-	.cl-prose p + p {
-		text-indent:        1.5em;
-		margin-block-start: 0;
-	}
-	.cl-prose :is(h2, h3, h4, h5, h6) + p {
-		text-indent: 0;
-	}
-	/* Blockquotes and list items never inherit the indent. */
-	.cl-prose blockquote p,
-	.cl-prose li > p {
-		text-indent: 0;
+	/* Post title — remove default margin when used as a heading in a list */
+	.wp-block-post-list-item .wp-block-post-title {
+		margin: 0;
 	}
 
-	/* Drop cap: the first letter of the opening paragraph on single posts.
-	   EB Garamond's classical cut needs the 0.05em block-start nudge to
-	   sit its baseline flush with the body text — a quirk of the font's
-	   cap-height proportion.
-	   The .no-dropcap class on .cl-prose suppresses it when a post opens
-	   with a heading or when the design calls for a plain open. */
-	.single .cl-prose:not(.no-dropcap) > .wp-block-post-content > p:first-of-type::first-letter,
-	.cl-prose.cl-dropcap > p:first-of-type::first-letter {
-		font-family:        var(--wp--preset--font-family--eb-garamond), Georgia, serif;
-		font-size:          3.4em;
-		font-weight:        500;
-		line-height:        0.78;
-		float:              left;
-		margin-inline-end:  0.06em;
-		margin-block-start: 0.05em;
-		color:              var(--wp--preset--color--ink);
+	/* Navigation — remove default list markers */
+	.wp-block-navigation__container {
+		list-style: none;
+		margin: 0;
+		padding: 0;
 	}
 
-	/* Pull quote: the magazine standout — centred, EB Garamond italic,
-	   bracketed by rules at the weight of a separator, not a border. */
-	.wp-block-pullquote {
-		border-block:  2px solid var(--wp--preset--color--line);
-		padding-block: var(--wp--preset--spacing--8);
-		text-align:    center;
-	}
-	.wp-block-pullquote blockquote p {
-		font-family:            var(--wp--preset--font-family--eb-garamond), Georgia, serif;
-		font-style:             italic;
-		font-size:              clamp(1.25rem, 2.5vw, 1.75rem);
-		line-height:            1.35;
-		font-variant-ligatures: common-ligatures;
-		text-indent:            0; /* reset the p+p convention inside pull quotes */
-	}
-	.wp-block-pullquote cite {
-		display:        block;
-		margin-top:     0.75em;
-		font-size:      0.8125rem;
-		font-style:     normal;
-		letter-spacing: 0.06em;
-		text-transform: uppercase;
-		color:          var(--wp--preset--color--ink-muted);
-	}
-
-	/* Story card: the atom of every index and archive loop. */
-	.cl-story {
-		padding-block-end: var(--wp--preset--spacing--8);
-		border-block-end:  1px solid var(--wp--preset--color--line);
-	}
-
-	/* Byline strip: the author name and date cap under a post title. */
-	.cl-byline .wp-block-post-author__name {
-		font-size:      0.875rem;
-		letter-spacing: 0.02em;
-		color:          var(--wp--preset--color--ink-soft);
-	}
-	.cl-byline .wp-block-post-date {
-		font-size: 0.875rem;
-		color:     var(--wp--preset--color--ink-muted);
-	}
-
-	/* Eyebrow label: the small uppercase line above a section heading.
-	   Registered as a block style (core/paragraph → is-style-cl-eyebrow)
-	   so editors can apply it from the block toolbar. */
-	.is-style-cl-eyebrow,
-	.cl-eyebrow {
-		font-size:      0.75rem;
-		font-weight:    400;
-		letter-spacing: 0.12em;
-		text-transform: uppercase;
-		color:          var(--wp--preset--color--ink-muted);
+	/* Separator — consistent treatment */
+	.wp-block-separator {
+		border-color: var(--wp--preset--color--base-rule);
 	}
 }
 
+/* =====================================================================
+   LAYER: utilities
+   Single-purpose helpers
+   ===================================================================== */
 @layer utilities {
-	.cl-text-center { text-align: center; }
-	.cl-no-motion   { animation: none !important; transition: none !important; }
+
+	/* Visually mute secondary text (captions, meta) */
+	.colophon-muted {
+		color: var(--wp--preset--color--base-mid);
+	}
+}
+
+@media print {
+	.wp-block-navigation,
+	.wp-block-site-logo,
+	.wp-site-blocks > footer,
+	[data-wp-interactive] { display: none !important; }
+	body, .wp-site-blocks {
+		font-size: 12pt;
+		color: #000 !important;
+		background: #fff !important;
+		max-width: 100% !important;
+	}
+	a[href^="http"]::after {
+		content: " (" attr(href) ")";
+		font-size: 9pt;
+		color: #555;
+	}
 }

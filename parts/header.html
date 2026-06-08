@@ -1,20 +1,18 @@
-<!-- wp:group {"tagName":"div","className":"cl-header","metadata":{"name":"Header"},"layout":{"type":"constrained","contentSize":"1100px"},"style":{"spacing":{"padding":{"top":"var:preset|spacing|5","bottom":"var:preset|spacing|5","left":"var:preset|spacing|5","right":"var:preset|spacing|5"}}}} -->
-<div class="wp-block-group cl-header" style="padding-top:var(--wp--preset--spacing--5);padding-bottom:var(--wp--preset--spacing--5);padding-left:var(--wp--preset--spacing--5);padding-right:var(--wp--preset--spacing--5)">
+<!-- Header template part for Colophon.
+     Design principle: the starter header is minimal and functional.
+     Site title + navigation. No decorative elements.
+     Derived themes replace this with their own header personality. -->
 
-	<!-- wp:group {"className":"cl-header__inner","layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between","verticalAlignment":"center"}} -->
-	<div class="wp-block-group cl-header__inner">
+<!-- wp:html -->
+<a class="skip-link screen-reader-text" href="#main-content">Skip to content</a>
+<!-- /wp:html -->
 
-		<!-- wp:group {"className":"cl-header__branding","layout":{"type":"flex","verticalAlignment":"center"}} -->
-		<div class="wp-block-group cl-header__branding">
-			<!-- wp:site-logo {"width":48} /-->
-			<!-- wp:site-title {"level":0,"isLink":true} /-->
-		</div>
-		<!-- /wp:group -->
+<!-- wp:group {"tagName":"header","className":"colophon-site-header","style":{"spacing":{"padding":{"top":"var:preset|spacing|5","bottom":"var:preset|spacing|5","left":"var:preset|spacing|5","right":"var:preset|spacing|5"}}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between","verticalAlignment":"center"}} -->
+<header class="wp-block-group colophon-site-header" style="padding-top:var(--wp--preset--spacing--5);padding-bottom:var(--wp--preset--spacing--5);padding-left:var(--wp--preset--spacing--5);padding-right:var(--wp--preset--spacing--5)">
 
-		<!-- wp:navigation {"label":"Primary","overlayMenu":"mobile","layout":{"type":"flex","justifyContent":"right","flexWrap":"wrap"}} /-->
+	<!-- wp:site-title {"level":0,"isLink":true} /-->
 
-	</div>
-	<!-- /wp:group -->
+	<!-- wp:navigation {"layout":{"type":"flex","justifyContent":"right"}} /-->
 
-</div>
+</header>
 <!-- /wp:group -->

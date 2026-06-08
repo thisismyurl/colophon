@@ -1,36 +1,54 @@
 /* =====================================================================
    [CORE] base.css — accessibility scaffolding + the semantic-token contract.
    ---------------------------------------------------------------------
-   This is the WCAG 2.2 AA floor every theme in the line stands on: a skip
-   link, a real focus ring, a screen-reader utility, and balanced headings.
+   This is the WCAG 2.2 AA floor every theme in the Colophon line stands
+   on: a skip link, a real focus ring, a screen-reader utility, and
+   balanced headings.
 
-   The trick that lets core style these without knowing a skin's palette is
-   the --cl-* SEMANTIC TOKENS below. Core never references --wp--preset--
-   --color--teal (that's a Quillwork word); it references --cl-focus-ring,
-   and each skin.css BINDS that token to whatever colour clears contrast in
-   its own palette. The fallbacks here are neutral and AA-safe, so the floor
-   holds even before a skin binds anything.
+   The trick that lets core style these without knowing Kern's palette is
+   the --cl-* SEMANTIC TOKENS below. Core never references
+   --wp--preset--color--studio-press (that's a Kern word); it references
+   --cl-focus-ring, and skin.css BINDS that token to whatever colour
+   clears contrast in Kern's own palette. The fallbacks here are neutral
+   and AA-safe, so the floor holds even before skin.css binds anything.
 
-   `colophon sync` owns this file. Skins bind the tokens; they don't edit here.
+   `colophon sync` owns this file. Skins bind the tokens; they don't
+   edit here. If you need to add an a11y feature to every theme in the
+   collection, edit this file and sync.
+
+   Pillar 5 (Safe by Default): the a11y floor is CORE. It cannot be
+   accidentally removed by a re-skin.
+   Pillar 9 (Archaeological Records): [CORE] tag marks CLI ownership.
    ===================================================================== */
 @layer base {
 
 	:root {
-		/* The contract. A skin overrides each of these in skin.css with a value
-		   drawn from its own theme.json palette. Names are stable across the line
-		   (like --wp--preset--*), so they're never re-prefixed by the CLI. */
-		--cl-focus-ring:         #1a1a1a; /* focus outline on light grounds — skin sets ≥3:1 on its bg  */
-		--cl-focus-ring-inverse: #ffffff; /* focus outline on dark bands (footer, ink sections)         */
-		--cl-skip-bg:            #1a1a1a; /* skip-link background                                        */
-		--cl-skip-fg:            #ffffff; /* skip-link text — must clear 4.5:1 on --cl-skip-bg           */
+		/*
+		 * The semantic-token contract. skin.css overrides each of these with a
+		 * value drawn from Kern's own theme.json palette. Names are stable across
+		 * the entire collection (like --wp--preset--*), so the CLI never
+		 * re-prefixes them.
+		 *
+		 * Fallbacks here are neutral and AA-compliant on white — they hold even if
+		 * a skin forgets to bind them.
+		 */
+		--cl-focus-ring:         #1a2f52; /* Kern: studio-press on studio-ground: > 7:1 */
+		--cl-focus-ring-inverse: #ffffff; /* On dark bands (footer, press sections)      */
+		--cl-skip-bg:            #1a2f52; /* Skip link background                        */
+		--cl-skip-fg:            #ffffff; /* Skip link text — 4.5:1+ on skip-bg          */
 	}
 
-	/* Skip link — WCAG 2.4.1 (Bypass Blocks). Off-screen until focused, then it
-	   lands in the top-left. Targets #main-content, which every template carries. */
+	/*
+	 * Skip link — WCAG 2.4.1 (Bypass Blocks).
+	 * Hidden off-screen until focused, then visible in the top-left corner.
+	 * Targets #main-content, which every template's <main> carries as an id.
+	 *
+	 * Pillar 5 (Safe by Default): keyboard users get this for free.
+	 */
 	.skip-link {
 		position: absolute;
-		inset-inline-start: -9999px;
-		inset-block-start: 0;
+		left: -9999px;
+		top: 0;
 		z-index: 10000;
 		padding: 0.75rem 1.25rem;
 		background: var(--cl-skip-bg);
@@ -39,20 +57,26 @@
 		text-decoration: none;
 	}
 	.skip-link:focus {
-		inset-inline-start: 0.75rem;
-		inset-block-start: 0.75rem;
-		text-decoration: underline;
+		left: 0.75rem;
+		top: 0.75rem;
 	}
 
-	/* Visible focus — WCAG 2.4.7. Never removed without a replacement; this IS
-	   the replacement, applied uniformly to everything focusable. */
+	/*
+	 * Visible focus ring — WCAG 2.4.7.
+	 * Never removed without a replacement; this IS the replacement. Applied
+	 * uniformly to everything focusable via :where() (zero specificity) so any
+	 * skin can override per-component without a specificity fight.
+	 */
 	:where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
 		outline: 2px solid var(--cl-focus-ring);
 		outline-offset: 2px;
 	}
 
-	/* WordPress-conventional screen-reader utility. Named .screen-reader-text so
-	   it matches core and other themes — one less surprise for the next dev. */
+	/*
+	 * Screen-reader utility — WordPress convention (.screen-reader-text).
+	 * Matches core and other themes so there's one less surprise for the next
+	 * developer.
+	 */
 	.screen-reader-text {
 		position: absolute;
 		width: 1px;
@@ -67,8 +91,8 @@
 	}
 	.screen-reader-text:focus {
 		position: fixed;
-		inset-block-start: 0.75rem;
-		inset-inline-start: 0.75rem;
+		top: 0.75rem;
+		left: 0.75rem;
 		width: auto;
 		height: auto;
 		clip: auto;
@@ -78,8 +102,27 @@
 		z-index: 100000;
 	}
 
-	/* Typographic balance — even headline ragging, no orphaned last words in
-	   body copy. Progressive enhancement; ignored where unsupported. */
-	:where(h1, h2, h3, .wp-block-heading) { text-wrap: balance; }
-	:where(p) { text-wrap: pretty; }
+	/*
+	 * Typographic balance.
+	 * text-wrap: balance prevents orphaned last words in headings. Pillar 8
+	 * (Kodawari): the tiny detail that makes a headline feel considered.
+	 */
+	h1, h2, h3, h4 {
+		text-wrap: balance;
+	}
+	p {
+		text-wrap: pretty; /* Avoids single-word orphans in body paragraphs */
+	}
+
+	/* Prevent tables from overflowing their container */
+	table {
+		border-collapse: collapse;
+		width: 100%;
+	}
+
+	/* Ensure media in content columns respects the layout */
+	.wp-block-image img,
+	.wp-block-cover img {
+		height: auto;
+	}
 }

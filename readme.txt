@@ -5,7 +5,7 @@ Tags: blog, full-site-editing, block-patterns, custom-colors, custom-logo, custo
 Requires at least: 6.7
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 1.6148
+Stable tag: 1.6163.2212
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,19 @@ Register them in the skin_block_styles() function in inc/skin.php and add the CS
 Colophon is a block theme built for the WordPress Site Editor. Page builders that support the block editor work alongside it; legacy drag-and-drop builders that bypass the block system are not supported.
 
 == Changelog ==
+
+= 1.6163.2212 =
+* Accessibility (WCAG 2.1 1.3.1): every template now resolves to exactly one h1.
+  Front-page and page-blank carry an empty, editor-fillable h1; index and archive
+  promote the query-title to h1; search renders its query-title as the h1 and drops
+  the redundant eyebrow label.
+* Hardened comment-form attribute injection: the field rewrite now uses a guarded
+  preg_replace (single replacement, null-check, no-match fallback) instead of a naive
+  str_replace, so it can't double-inject or mangle markup.
+* Content width for oEmbeds now reads from theme.json contentSize (pixel-validated,
+  720px fallback) instead of a hardcoded literal.
+* The developer-guide URL on the Get started screen is now filterable via
+  `colophon/developer_guide_url` for child themes pointing at custom docs.
 
 = 1.6148 =
 * Initial release.

@@ -216,6 +216,21 @@ add_action( 'admin_post_' . DISMISS_ACTION, __NAMESPACE__ . '\\handle_welcome_di
  * filter in inc/skin.php — that is where each theme's voice lives, kept out of
  * this synced file.
  *
+ * Available hooks:
+ *
+ * Admin page filters:
+ * - `colophon/onboarding_capability` (string) — capability required to view onboarding.
+ *   Default: 'edit_theme_options'. Use to restrict onboarding to site admins only.
+ * - `colophon/developer_guide_url` (string) — URL for the developer-guide link.
+ *   Default: 'https://thisismyurl.com/colophon'. Override in child themes to point to custom docs.
+ * - `colophon/get_started_content` (array) — entire Get-started page content.
+ *   Override in inc/skin.php to provide theme-specific onboarding text.
+ *
+ * Footer binding filters (documented in inc/bindings.php):
+ * - `colophon/copyright_date_format` — PHP date format for the copyright year.
+ * - `colophon/copyright_text` — complete copyright sentence.
+ * - `colophon/footer_credit` — footer credit line HTML.
+ *
  * @return array{lead:string,steps:array<int,array{title:string,body:string}>,optimize:string[],credit:string,developers:array{text:string,url:string,label:string}} The page content.
  */
 function get_started_content(): array {
@@ -253,7 +268,7 @@ function get_started_content(): array {
 		'developers' => array(
 			/* translators: %s: linked developer-guide anchor. */
 			'text'  => __( 'Colophon is designed to be built on. The %s walks through the CORE/SKIN architecture, how to add fonts, register block styles, and ship your own theme on this foundation.', 'colophon' ),
-			'url'   => 'https://thisismyurl.com/colophon',
+			'url'   => apply_filters( SLUG . '/developer_guide_url', 'https://thisismyurl.com/colophon' ), // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 			'label' => __( 'developer guide', 'colophon' ),
 		),
 	);

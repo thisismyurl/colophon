@@ -32,9 +32,12 @@
 		<hr class="wp-block-separator has-base-rule-background-color has-background" style="margin-bottom:var(--wp--preset--spacing--8)" />
 		<!-- /wp:separator -->
 
-		<!-- wp:post-navigation-link {"type":"previous","label":"Previous","showTitle":true,"linkLabel":true} /-->
+		<!-- Post navigation without a custom label: with showTitle + linkLabel, core
+		     prepends its own translated "Previous:" / "Next:" prefix to the post title,
+		     so the navigation reads correctly in every locale. -->
+		<!-- wp:post-navigation-link {"type":"previous","showTitle":true,"linkLabel":true} /-->
 
-		<!-- wp:post-navigation-link {"type":"next","label":"Next","showTitle":true,"linkLabel":true,"textAlign":"right"} /-->
+		<!-- wp:post-navigation-link {"type":"next","showTitle":true,"linkLabel":true,"textAlign":"right"} /-->
 
 	</div>
 	<!-- /wp:group -->

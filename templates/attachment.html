@@ -1,38 +1,50 @@
-<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+<!-- Attachment (media) template for Colophon.
+     Eyebrow → media title (h1) → date → the attachment content, followed by
+     previous/next navigation. Matches the typographic treatment of single.html. -->
 
-<!-- wp:group {"tagName":"main","className":"cl-main","metadata":{"name":"Main"},"layout":{"type":"constrained","contentSize":"1100px"},"style":{"spacing":{"padding":{"top":"var:preset|spacing|12","bottom":"var:preset|spacing|16"}}}} -->
-<main id="main-content" class="wp-block-group cl-main" style="padding-top:var(--wp--preset--spacing--12);padding-bottom:var(--wp--preset--spacing--16)">
+<!-- wp:template-part {"slug":"header"} /-->
 
-	<!-- wp:group {"tagName":"article","className":"cl-attachment","layout":{"type":"default"},"style":{"spacing":{"blockGap":"var:preset|spacing|6"}}} -->
-	<article class="wp-block-group cl-attachment">
+<!-- wp:group {"tagName":"main","id":"main-content","className":"colophon-main colophon-attachment","layout":{"type":"constrained","contentSize":"720px"},"style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|20","left":"var:preset|spacing|5","right":"var:preset|spacing|5"}}}} -->
+<main id="main-content" class="wp-block-group colophon-main colophon-attachment" style="padding-top:var(--wp--preset--spacing--10);padding-bottom:var(--wp--preset--spacing--20);padding-left:var(--wp--preset--spacing--5);padding-right:var(--wp--preset--spacing--5)">
 
-		<!-- wp:group {"className":"cl-attachment__header","layout":{"type":"constrained","contentSize":"720px"},"style":{"spacing":{"blockGap":"var:preset|spacing|3"}}} -->
-		<div class="wp-block-group cl-attachment__header">
-			<!-- wp:paragraph {"className":"is-style-cl-eyebrow cl-eyebrow"} -->
-			<p class="is-style-cl-eyebrow cl-eyebrow">Media</p>
+	<!-- wp:group {"tagName":"article","layout":{"type":"default"},"style":{"spacing":{"blockGap":"var:preset|spacing|6"}}} -->
+	<article class="wp-block-group">
+
+		<!-- Media header: eyebrow → title (the page's single h1) → date. -->
+		<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|3","padding":{"bottom":"var:preset|spacing|8"}}},"layout":{"type":"default"}} -->
+		<div class="wp-block-group" style="padding-bottom:var(--wp--preset--spacing--8)">
+			<!-- wp:paragraph {"className":"is-style-colophon-eyebrow","style":{"color":{"text":"var:preset|color|base-mid"}}} -->
+			<p class="is-style-colophon-eyebrow has-base-mid-color has-text-color">Media</p>
 			<!-- /wp:paragraph -->
-			<!-- wp:post-title {"level":1,"fontSize":"xl"} /-->
-			<!-- wp:post-date /-->
+			<!-- wp:post-title {"level":1} /-->
+			<!-- wp:post-date {"style":{"typography":{"fontSize":"var:preset|font-size|xs"},"color":{"text":"var:preset|color|base-mid"}}} /-->
 		</div>
 		<!-- /wp:group -->
 
-		<!-- wp:group {"className":"cl-prose","layout":{"type":"constrained","contentSize":"720px"}} -->
-		<div class="wp-block-group cl-prose">
-			<!-- wp:post-content /-->
-		</div>
-		<!-- /wp:group -->
+		<!-- wp:post-content {"layout":{"type":"constrained","contentSize":"720px"}} /-->
 
 	</article>
 	<!-- /wp:group -->
 
-	<!-- wp:group {"className":"cl-postnav","layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap"},"style":{"spacing":{"margin":{"top":"var:preset|spacing|10"}}}} -->
-	<div class="wp-block-group cl-postnav" style="margin-top:var(--wp--preset--spacing--10)">
-		<!-- wp:post-navigation-link {"type":"previous","showTitle":true,"label":"Previous"} /-->
-		<!-- wp:post-navigation-link {"showTitle":true,"label":"Next"} /-->
+	<!-- Attachment navigation -->
+	<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|10"},"blockGap":"0"}},"layout":{"type":"constrained","contentSize":"720px"}} -->
+	<div class="wp-block-group" style="padding-top:var(--wp--preset--spacing--10)">
+
+		<!-- wp:separator {"backgroundColor":"base-rule","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|8"}}}} -->
+		<hr class="wp-block-separator has-base-rule-background-color has-background" style="margin-bottom:var(--wp--preset--spacing--8)" />
+		<!-- /wp:separator -->
+
+		<!-- Post navigation without a custom label: with showTitle + linkLabel, core
+		     prepends its own translated "Previous:" / "Next:" prefix to the post title,
+		     so the navigation reads correctly in every locale. -->
+		<!-- wp:post-navigation-link {"type":"previous","showTitle":true,"linkLabel":true} /-->
+
+		<!-- wp:post-navigation-link {"type":"next","showTitle":true,"linkLabel":true,"textAlign":"right"} /-->
+
 	</div>
 	<!-- /wp:group -->
 
 </main>
 <!-- /wp:group -->
 
-<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
+<!-- wp:template-part {"slug":"footer"} /-->

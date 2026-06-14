@@ -22,7 +22,10 @@
 			<div class="wp-block-group" style="padding-bottom:var(--wp--preset--spacing--8);margin-bottom:var(--wp--preset--spacing--8);border-bottom:1px solid var(--wp--preset--color--base-rule)">
 				<!-- wp:post-date {"style":{"typography":{"fontSize":"var:preset|font-size|xs"},"color":{"text":"var:preset|color|base-mid"}}} /-->
 				<!-- wp:post-title {"isLink":true,"style":{"typography":{"textDecoration":"none"},"color":{"text":"var:preset|color|base-black"}}} /-->
-				<!-- wp:post-excerpt {"moreText":"Read more"} /-->
+				<!-- Excerpt without a custom moreText: the post-title above is the link to
+				     the full post, and a hardcoded "Read more" string can't be translated.
+				     Omitting moreText keeps this template language-neutral. -->
+				<!-- wp:post-excerpt /-->
 			</div>
 			<!-- /wp:group -->
 
@@ -32,7 +35,9 @@
 		<!-- wp:query-no-results -->
 			<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|8","bottom":"var:preset|spacing|8"},"blockGap":"var:preset|spacing|6"}},"layout":{"type":"default"}} -->
 			<div class="wp-block-group" style="padding-top:var(--wp--preset--spacing--8);padding-bottom:var(--wp--preset--spacing--8)">
-				<!-- wp:search {"label":"Search","buttonText":"Search","buttonUseIcon":true} /-->
+				<!-- Search block with no custom label/buttonText: core supplies the
+				     translated "Search" default for both, so no English ships to other locales. -->
+				<!-- wp:search {"buttonUseIcon":true} /-->
 			</div>
 			<!-- /wp:group -->
 		<!-- /wp:query-no-results -->

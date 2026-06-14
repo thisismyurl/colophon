@@ -1,39 +1,41 @@
-<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+<!-- Singular template for Colophon.
+     The shared template for any single post or post type without a more specific
+     match. Category → title (h1) → byline → featured image → content → tags →
+     author box → navigation → comments. Matches single.html's reading rhythm. -->
 
-<!-- wp:group {"tagName":"main","className":"cl-main","metadata":{"name":"Main"},"layout":{"type":"constrained","contentSize":"720px"},"style":{"spacing":{"padding":{"top":"var:preset|spacing|12","bottom":"var:preset|spacing|16"}}}} -->
-<main id="main-content" class="wp-block-group cl-main" style="padding-top:var(--wp--preset--spacing--12);padding-bottom:var(--wp--preset--spacing--16)">
+<!-- wp:template-part {"slug":"header"} /-->
 
-	<!-- wp:group {"tagName":"article","className":"cl-article","layout":{"type":"default"},"style":{"spacing":{"blockGap":"var:preset|spacing|6"}}} -->
-	<article class="wp-block-group cl-article">
+<!-- wp:group {"tagName":"main","id":"main-content","className":"colophon-main colophon-singular","layout":{"type":"constrained","contentSize":"720px"},"style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|20","left":"var:preset|spacing|5","right":"var:preset|spacing|5"}}}} -->
+<main id="main-content" class="wp-block-group colophon-main colophon-singular" style="padding-top:var(--wp--preset--spacing--10);padding-bottom:var(--wp--preset--spacing--20);padding-left:var(--wp--preset--spacing--5);padding-right:var(--wp--preset--spacing--5)">
 
-		<!-- wp:post-terms {"term":"category"} /-->
-		<!-- wp:post-title {"level":1,"fontSize":"3xl"} /-->
+	<!-- wp:group {"tagName":"article","layout":{"type":"default"},"style":{"spacing":{"blockGap":"var:preset|spacing|6"}}} -->
+	<article class="wp-block-group">
 
-		<!-- wp:group {"className":"cl-byline","layout":{"type":"flex","flexWrap":"wrap","verticalAlignment":"center"},"style":{"spacing":{"blockGap":"var:preset|spacing|3"}}} -->
-		<div class="wp-block-group cl-byline">
-			<!-- wp:post-author {"showAvatar":true,"avatarSize":32,"showBio":false,"isLink":true} /-->
-			<!-- wp:post-date /-->
+		<!-- Post header: category → title (the page's single h1) → byline. -->
+		<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|3","padding":{"bottom":"var:preset|spacing|8"}}},"layout":{"type":"default"}} -->
+		<div class="wp-block-group" style="padding-bottom:var(--wp--preset--spacing--8)">
+			<!-- wp:post-terms {"term":"category","style":{"typography":{"fontSize":"var:preset|font-size|xs"}}} /-->
+			<!-- wp:post-title {"level":1} /-->
+			<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|3"}},"layout":{"type":"flex","flexWrap":"wrap","verticalAlignment":"center"}} -->
+			<div class="wp-block-group">
+				<!-- wp:post-author {"showAvatar":true,"avatarSize":32,"showBio":false,"isLink":true} /-->
+				<!-- wp:post-date {"style":{"typography":{"fontSize":"var:preset|font-size|xs"},"color":{"text":"var:preset|color|base-mid"}}} /-->
+			</div>
+			<!-- /wp:group -->
 		</div>
 		<!-- /wp:group -->
 
-		<!-- wp:separator {"className":"is-style-wide","backgroundColor":"line"} -->
-		<hr class="wp-block-separator has-text-color has-line-color has-alpha-channel-opacity has-line-background-color has-background is-style-wide"/>
-		<!-- /wp:separator -->
+		<!-- wp:post-featured-image {"isLink":false,"align":"wide","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|10"}}}} /-->
 
-		<!-- wp:post-featured-image {"aspectRatio":"16/9","align":"wide"} /-->
+		<!-- wp:post-content {"layout":{"type":"constrained","contentSize":"720px"}} /-->
 
-		<!-- wp:group {"className":"cl-prose","layout":{"type":"constrained","contentSize":"720px"}} -->
-		<div class="wp-block-group cl-prose">
-			<!-- wp:post-content {"layout":{"type":"constrained","contentSize":"720px"}} /-->
-		</div>
-		<!-- /wp:group -->
+		<!-- Article footer: tags + author box, separated by a rule. -->
+		<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|6","margin":{"top":"var:preset|spacing|12"},"padding":{"top":"var:preset|spacing|8"}},"border":{"top":{"color":"var:preset|color|base-rule","style":"solid","width":"1px"}}},"layout":{"type":"default"}} -->
+		<div class="wp-block-group" style="border-top:1px solid var(--wp--preset--color--base-rule);margin-top:var(--wp--preset--spacing--12);padding-top:var(--wp--preset--spacing--8)">
+			<!-- wp:post-terms {"term":"post_tag","prefix":"Tags: ","style":{"typography":{"fontSize":"var:preset|font-size|sm"},"color":{"text":"var:preset|color|base-mid"}}} /-->
 
-		<!-- wp:group {"className":"cl-article__footer","style":{"spacing":{"margin":{"top":"var:preset|spacing|12"},"padding":{"top":"var:preset|spacing|8"}},"border":{"top":{"color":"var:preset|color|line","width":"1px"}}},"layout":{"type":"default"}} -->
-		<div class="wp-block-group cl-article__footer" style="border-top-color:var(--wp--preset--color--line);border-top-width:1px;margin-top:var(--wp--preset--spacing--12);padding-top:var(--wp--preset--spacing--8)">
-			<!-- wp:post-terms {"term":"post_tag","prefix":"Tags: "} /-->
-
-			<!-- wp:group {"className":"cl-author-box","style":{"spacing":{"margin":{"top":"var:preset|spacing|8"}}},"layout":{"type":"default"}} -->
-			<div class="wp-block-group cl-author-box" style="margin-top:var(--wp--preset--spacing--8)">
+			<!-- wp:group {"style":{"spacing":{"margin":{"top":"var:preset|spacing|8"}}},"layout":{"type":"default"}} -->
+			<div class="wp-block-group" style="margin-top:var(--wp--preset--spacing--8)">
 				<!-- wp:post-author {"showAvatar":true,"avatarSize":56,"showBio":true,"isLink":true} /-->
 			</div>
 			<!-- /wp:group -->
@@ -43,17 +45,28 @@
 	</article>
 	<!-- /wp:group -->
 
-	<!-- wp:group {"className":"cl-postnav","layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap"},"style":{"spacing":{"margin":{"top":"var:preset|spacing|10"}}}} -->
-	<div class="wp-block-group cl-postnav" style="margin-top:var(--wp--preset--spacing--10)">
-		<!-- wp:post-navigation-link {"type":"previous","showTitle":true} /-->
-		<!-- wp:post-navigation-link {"showTitle":true} /-->
+	<!-- Post navigation -->
+	<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|10"},"blockGap":"0"}},"layout":{"type":"constrained","contentSize":"720px"}} -->
+	<div class="wp-block-group" style="padding-top:var(--wp--preset--spacing--10)">
+
+		<!-- wp:separator {"backgroundColor":"base-rule","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|8"}}}} -->
+		<hr class="wp-block-separator has-base-rule-background-color has-background" style="margin-bottom:var(--wp--preset--spacing--8)" />
+		<!-- /wp:separator -->
+
+		<!-- Post navigation without a custom label: with showTitle + linkLabel, core
+		     prepends its own translated "Previous:" / "Next:" prefix to the post title,
+		     so the navigation reads correctly in every locale. -->
+		<!-- wp:post-navigation-link {"type":"previous","showTitle":true,"linkLabel":true} /-->
+
+		<!-- wp:post-navigation-link {"type":"next","showTitle":true,"linkLabel":true,"textAlign":"right"} /-->
+
 	</div>
 	<!-- /wp:group -->
 
-	<!-- wp:comments {"className":"cl-comments","style":{"spacing":{"margin":{"top":"var:preset|spacing|12"}}}} -->
-	<div class="wp-block-comments cl-comments" style="margin-top:var(--wp--preset--spacing--12)">
+	<!-- wp:comments {"style":{"spacing":{"margin":{"top":"var:preset|spacing|12"}}}} -->
+	<div class="wp-block-comments" style="margin-top:var(--wp--preset--spacing--12)">
 		<!-- A static section heading always precedes the comment list, so the
-		     document outline never jumps H1 → H3 on a post with no comments. -->
+		     document outline never jumps h1 → h3 on a post with no comments. -->
 		<!-- wp:heading {"level":2,"fontSize":"lg"} -->
 		<h2 class="wp-block-heading has-lg-font-size">Responses</h2>
 		<!-- /wp:heading -->
@@ -80,4 +93,4 @@
 </main>
 <!-- /wp:group -->
 
-<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
+<!-- wp:template-part {"slug":"footer"} /-->

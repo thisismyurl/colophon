@@ -1,6 +1,17 @@
 <!-- Page (no header/footer) template for Colophon.
      Bare page — no site chrome. Use for landing pages, splash pages,
-     or any page that provides its own header and footer within the content. -->
+     or any page that provides its own header and footer within the content.
+
+     Documented structural variation (WCAG navigation exception):
+     This template intentionally omits the header and footer template parts.
+     The omission is deliberate and surfaced to editors in the template title
+     ("Page (no header/footer)") so it is never a silent navigation gap. The
+     WCAG scaffold the exception path requires is still intact:
+       - the skip-link target #main-content is present (the <main> below),
+       - exactly one h1 is present (the empty, editor-fillable heading below),
+       - wp_body_open still fires the translatable skip link before this main.
+     A full-bleed page that wants the site footer back should use page-wide
+     or the default page template instead of this one. -->
 
 <!-- wp:group {"tagName":"main","id":"main-content","className":"colophon-main colophon-page-blank","layout":{"type":"constrained","contentSize":"1200px"}} -->
 <main id="main-content" class="wp-block-group colophon-main colophon-page-blank">

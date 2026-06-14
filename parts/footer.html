@@ -26,8 +26,11 @@
 		<!-- wp:paragraph {"className":"colophon-copyright","style":{"typography":{"fontSize":"var:preset|font-size|xs"},"color":{"text":"var:preset|color|base-mid"}},"metadata":{"bindings":{"content":{"source":"colophon/copyright"}}}} -->
 		<p class="colophon-copyright has-base-mid-color has-text-color" style="font-size:var(--wp--preset--font-size--xs)"></p>
 		<!-- /wp:paragraph -->
-		<!-- wp:paragraph {"style":{"typography":{"fontSize":"var:preset|font-size|xs"},"color":{"text":"var:preset|color|base-mid"}}} -->
-		<p class="has-base-mid-color has-text-color" style="font-size:var(--wp--preset--font-size--xs)">Built with <a href="https://wordpress.org" style="color:inherit">WordPress</a> &amp; Colophon</p>
+		<!-- Footer credit: bound to the colophon/footer-credit source (inc/bindings.php),
+		     which composes a translatable "Built with the {Theme} theme." line from the
+		     style.css header. Filterable via colophon/footer_credit; return '' to drop it. -->
+		<!-- wp:paragraph {"className":"colophon-credit","style":{"typography":{"fontSize":"var:preset|font-size|xs"},"color":{"text":"var:preset|color|base-mid"}},"metadata":{"bindings":{"content":{"source":"colophon/footer-credit"}}}} -->
+		<p class="colophon-credit has-base-mid-color has-text-color" style="font-size:var(--wp--preset--font-size--xs)"></p>
 		<!-- /wp:paragraph -->
 	</div>
 	<!-- /wp:group -->

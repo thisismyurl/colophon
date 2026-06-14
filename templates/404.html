@@ -7,21 +7,24 @@
 <!-- wp:group {"tagName":"main","id":"main-content","className":"colophon-main colophon-404","layout":{"type":"constrained","contentSize":"720px"},"style":{"spacing":{"padding":{"top":"var:preset|spacing|20","bottom":"var:preset|spacing|20","left":"var:preset|spacing|5","right":"var:preset|spacing|5"}}}} -->
 <main id="main-content" class="wp-block-group colophon-main colophon-404" style="padding-top:var(--wp--preset--spacing--20);padding-bottom:var(--wp--preset--spacing--20);padding-left:var(--wp--preset--spacing--5);padding-right:var(--wp--preset--spacing--5)">
 
-	<!-- wp:heading {"level":1,"style":{"typography":{"fontSize":"var:preset|font-size|display","letterSpacing":"-0.03em","lineHeight":"1"},"color":{"text":"var:preset|color|base-rule"}}} -->
-	<h1 class="wp-block-heading has-base-rule-color has-text-color" style="font-size:var(--wp--preset--font-size--display);letter-spacing:-0.03em;line-height:1">404</h1>
+	<!-- wp:heading {"level":1,"style":{"typography":{"fontSize":"var:preset|font-size|display","letterSpacing":"-0.03em","lineHeight":"1"},"color":{"text":"var:preset|color|base-mid"}}} -->
+	<h1 class="wp-block-heading has-base-mid-color has-text-color" style="font-size:var(--wp--preset--font-size--display);letter-spacing:-0.03em;line-height:1">404</h1>
 	<!-- /wp:heading -->
 
 	<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|6","padding":{"top":"var:preset|spacing|8"}}},"layout":{"type":"default"}} -->
 	<div class="wp-block-group" style="padding-top:var(--wp--preset--spacing--8)">
 
-		<!-- wp:paragraph {"style":{"color":{"text":"var:preset|color|base-mid"}}} -->
-		<p class="has-base-mid-color has-text-color">This page doesn't exist. Try searching, or return to the front page.</p>
-		<!-- /wp:paragraph -->
+		<!-- Heading (the "404" h1 above) plus the search form and home link are
+		     sufficient orientation. No prose explanation: hardcoded visitor prose
+		     can't be translated, and removing it keeps this template language-neutral. -->
+		<!-- Search block with no custom label/buttonText: core supplies the
+		     translated "Search" default for both, so no English ships to other locales. -->
+		<!-- wp:search {"buttonUseIcon":true} /-->
 
-		<!-- wp:search {"label":"Search","buttonText":"Search","buttonUseIcon":true} /-->
-
+		<!-- Home link with no custom label: core renders the translated "Home"
+		     default. The previous "← Back to start" copy could not be translated. -->
 		<!-- wp:paragraph {"style":{"typography":{"fontSize":"var:preset|font-size|sm"},"color":{"text":"var:preset|color|base-mid"}}} -->
-		<p class="has-base-mid-color has-text-color" style="font-size:var(--wp--preset--font-size--sm)"><!-- wp:home-link {"label":"← Back to start"} /--></p>
+		<p class="has-base-mid-color has-text-color" style="font-size:var(--wp--preset--font-size--sm)"><!-- wp:home-link /--></p>
 		<!-- /wp:paragraph -->
 
 	</div>

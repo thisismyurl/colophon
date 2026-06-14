@@ -1,0 +1,211 @@
+# Copyright (C) 2026 Christopher Ross
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Colophon 1.6164.1500\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/colophon\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-06-13T00:00:00+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: Colophon theme i18n\n"
+"X-Domain: colophon\n"
+
+#. translators: %s: theme name.
+#: inc/admin.php:72 inc/admin.php:322
+msgid "%s: Get started"
+msgstr ""
+
+#. translators: %s: theme name.
+#: inc/admin.php:172
+msgid "Welcome to %s."
+msgstr ""
+
+#: inc/admin.php:175
+msgid "Thanks for giving it a home. A few small steps will have your site reading the way it should."
+msgstr ""
+
+#. translators: %s: theme name.
+#: inc/admin.php:181
+msgid "Set up %s →"
+msgstr ""
+
+#: inc/admin.php:185
+msgid "Dismiss"
+msgstr ""
+
+#: inc/admin.php:201
+msgid "You do not have permission to do that."
+msgstr ""
+
+#. translators: %s: theme name.
+#: inc/admin.php:242
+msgid "%s is a free, full-site-editing theme built to get out of the way of your content. Here is how to make it yours."
+msgstr ""
+
+#: inc/admin.php:247
+msgid "Choose what people land on."
+msgstr ""
+
+#: inc/admin.php:248
+msgid "A visitor's first second decides whether they stay. Set a static front page under Settings → Reading, and give your posts a page of their own."
+msgstr ""
+
+#: inc/admin.php:251
+msgid "Give people a way around."
+msgstr ""
+
+#: inc/admin.php:252
+msgid "A site without a menu is a room without doors. Open the Site Editor, edit the header, and assign your menu to Primary Navigation."
+msgstr ""
+
+#: inc/admin.php:255
+msgid "Start from a pattern, not a blank page."
+msgstr ""
+
+#: inc/admin.php:256
+msgid "In any page or post, open the block inserter, choose Patterns, and find this theme's group. Drop one in and change the words."
+msgstr ""
+
+#: inc/admin.php:259
+msgid "Make it sound like you."
+msgstr ""
+
+#: inc/admin.php:260
+msgid "In the Site Editor, open Styles to change colours and typefaces. Nothing you do there can break the theme — experiment freely."
+msgstr ""
+
+#: inc/admin.php:264
+msgid "This theme is already fast by design: zero front-end JavaScript, system fonts that load instantly, and a cascade-ordered stylesheet that puts nothing on the critical path it doesn't need to."
+msgstr ""
+
+#: inc/admin.php:265
+msgid "It meets WCAG 2.2 AA — real focus outlines, a skip link, sensible heading order, and motion that respects a reduce-motion setting. Keep your own copy and images to that bar and the whole site stays welcoming."
+msgstr ""
+
+#: inc/admin.php:267
+msgid "There's a small credit in your footer. It's a thank-you, not a tax — remove it in two clicks in the Site Editor → Footer, or filter it out in code. No hard feelings either way."
+msgstr ""
+
+#. translators: %s: linked developer-guide anchor.
+#: inc/admin.php:270
+msgid "Colophon is designed to be built on. The %s walks through the CORE/SKIN architecture, how to add fonts, register block styles, and ship your own theme on this foundation."
+msgstr ""
+
+#: inc/admin.php:272
+msgid "developer guide"
+msgstr ""
+
+#: inc/admin.php:331
+msgid "Set up"
+msgstr ""
+
+#: inc/admin.php:343
+msgid "Optimize"
+msgstr ""
+
+#: inc/admin.php:350
+msgid "The footer credit"
+msgstr ""
+
+#: inc/admin.php:355
+msgid "For developers"
+msgstr ""
+
+#: inc/setup.php:71
+msgid "Primary Navigation"
+msgstr ""
+
+#: inc/setup.php:72
+msgid "Footer Navigation"
+msgstr ""
+
+#: inc/setup.php:214
+msgid "Skip to content"
+msgstr ""
+
+#: inc/bindings.php:40
+msgid "Copyright line"
+msgstr ""
+
+#: inc/bindings.php:49
+msgid "Footer credit line"
+msgstr ""
+
+#. translators: 1: four-digit year, 2: site title.
+#: inc/bindings.php:82
+msgid "© %1$s %2$s. All rights reserved."
+msgstr ""
+
+#. translators: %s: theme name.
+#: inc/bindings.php:123
+msgid "Built with the %s theme."
+msgstr ""
+
+#: inc/skin.php:54
+msgid "Eyebrow label"
+msgstr ""
+
+#: inc/skin.php:63
+msgid "Full-bleed band"
+msgstr ""
+
+#: inc/skin.php:78
+msgid "Colophon"
+msgstr ""
+
+#: inc/skin.php:93
+msgid "Colophon is a minimal, accessible WordPress theme that works on its own — and also serves as the foundation for a collection of niche editorial themes. Here is how to make it yours."
+msgstr ""
+
+#: patterns/site-footer.php:22 patterns/site-footer.php:82
+msgid "Site Name"
+msgstr ""
+
+#: patterns/site-footer.php:26
+msgid "A short tagline that says what this site is about in a single, plain sentence."
+msgstr ""
+
+#: patterns/site-footer.php:34
+msgid "Explore"
+msgstr ""
+
+#: patterns/site-footer.php:39
+msgid "Home"
+msgstr ""
+
+#: patterns/site-footer.php:43
+msgid "Articles"
+msgstr ""
+
+#: patterns/site-footer.php:47
+msgid "About"
+msgstr ""
+
+#: patterns/site-footer.php:51
+msgid "Archive"
+msgstr ""
+
+#: patterns/site-footer.php:60
+msgid "Contact"
+msgstr ""
+
+#: patterns/site-footer.php:64
+msgid "hello@example.com"
+msgstr ""
+
+#: patterns/site-footer.php:64
+msgid "123 Example Street"
+msgstr ""
+
+#: patterns/site-footer.php:64
+msgid "City, Region"
+msgstr ""
+
+#. translators: 1: four-digit copyright year, 2: site name.
+#: patterns/site-footer.php:80
+msgid "&copy; %1$s %2$s. All rights reserved."
+msgstr ""

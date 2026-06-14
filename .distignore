@@ -4,9 +4,11 @@
 # Internal CLI tooling — not for distribution
 inc/github-updater.php
 inc/cli.php
+colophon
 
 # Internal tooling manifests
 colophon.json
+colophon.manifest.json
 .distignore
 
 # Developer tooling

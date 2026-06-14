@@ -3,11 +3,11 @@ Theme Name:         Colophon
 Theme URI:          https://thisismyurl.com/colophon/
 Author:             Christopher Ross
 Author URI:         https://thisismyurl.com/
-Description:        A minimal WordPress FSE starter theme. The shared foundation beneath Kern, Masthead, Parcel, and Wake — four niche editorial themes built on it. Use it as-is for a clean, accessible start, or build on the CORE/SKIN architecture to make your own themed version without touching the portable core files.
-Version:            1.6163.2212
+Description:        The FSE starter you build a theme line on. CORE/SKIN architecture: all the portable infrastructure (a11y, bindings, WooCommerce, onboarding) lives in one layer; your entire theme personality lives in one file. Kern, Masthead, Parcel, and Wake are all the same CORE with a different skin. Use it as-is for a clean, fast, accessible blog — or fork it and ship your own skin without ever touching the scaffolding.
+Version:            1.6165.0919
 Requires at least:  6.7
-Requires PHP:       8.1
-Tested up to:       7.0
+Requires PHP:       7.4
+Tested up to:       6.8
 License:            GNU General Public License v2 or later
 License URI:        https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain:        colophon

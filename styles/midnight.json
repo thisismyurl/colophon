@@ -6,7 +6,7 @@
 		"custom": {
 			"colophon-light": "#0d0d0d",
 			"colophon-dark": "#ece8e0",
-			"colophon-accent": "#4a7aaa"
+			"colophon-accent": "#6a9ace"
 		},
 		"color": {
 			"palette": [
@@ -16,7 +16,7 @@
 				{ "slug": "base-rule", "color": "#333333", "name": "Base Rule" },
 				{ "slug": "base-ground", "color": "#1a1a1a", "name": "Base Ground" },
 				{ "slug": "base-paper", "color": "#0d0d0d", "name": "Base Paper" },
-				{ "slug": "base-accent", "color": "#4a7aaa", "name": "Base Accent" },
+				{ "slug": "base-accent", "color": "#6a9ace", "name": "Base Accent" },
 				{ "slug": "base-accent-tint", "color": "#1a2a3a", "name": "Base Accent Tint" }
 			]
 		}

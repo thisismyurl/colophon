@@ -12,7 +12,7 @@
 			"palette": [
 				{ "slug": "base-black", "color": "#0e1418", "name": "Base Black" },
 				{ "slug": "base-ink", "color": "#1e2630", "name": "Base Ink" },
-				{ "slug": "base-mid", "color": "#6a7888", "name": "Base Mid" },
+				{ "slug": "base-mid", "color": "#586572", "name": "Base Mid" },
 				{ "slug": "base-rule", "color": "#ccd4de", "name": "Base Rule" },
 				{ "slug": "base-ground", "color": "#e4e8f0", "name": "Base Ground" },
 				{ "slug": "base-paper", "color": "#f2f4f7", "name": "Base Paper" },

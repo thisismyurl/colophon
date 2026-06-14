@@ -74,6 +74,62 @@
 					"name": "Monospace",
 					"slug": "mono",
 					"fontFamily": "ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace"
+				},
+				{
+					"name": "EB Garamond",
+					"slug": "eb-garamond",
+					"fontFamily": "'EB Garamond', Georgia, 'Times New Roman', Times, serif",
+					"fontFace": [
+						{
+							"fontFamily": "EB Garamond",
+							"fontStyle": "normal",
+							"fontWeight": "400 700",
+							"fontDisplay": "swap",
+							"src": [ "file:./assets/fonts/eb-garamond/eb-garamond-normal.woff2" ]
+						},
+						{
+							"fontFamily": "EB Garamond",
+							"fontStyle": "italic",
+							"fontWeight": "400 700",
+							"fontDisplay": "swap",
+							"src": [ "file:./assets/fonts/eb-garamond/eb-garamond-italic.woff2" ]
+						}
+					]
+				},
+				{
+					"name": "Spectral",
+					"slug": "spectral",
+					"fontFamily": "Spectral, Georgia, 'Times New Roman', Times, serif",
+					"fontFace": [
+						{
+							"fontFamily": "Spectral",
+							"fontStyle": "normal",
+							"fontWeight": "300",
+							"fontDisplay": "swap",
+							"src": [ "file:./assets/fonts/spectral/spectral-300.woff2" ]
+						},
+						{
+							"fontFamily": "Spectral",
+							"fontStyle": "normal",
+							"fontWeight": "400",
+							"fontDisplay": "swap",
+							"src": [ "file:./assets/fonts/spectral/spectral-400.woff2" ]
+						},
+						{
+							"fontFamily": "Spectral",
+							"fontStyle": "italic",
+							"fontWeight": "400",
+							"fontDisplay": "swap",
+							"src": [ "file:./assets/fonts/spectral/spectral-400-italic.woff2" ]
+						},
+						{
+							"fontFamily": "Spectral",
+							"fontStyle": "normal",
+							"fontWeight": "600",
+							"fontDisplay": "swap",
+							"src": [ "file:./assets/fonts/spectral/spectral-600.woff2" ]
+						}
+					]
 				}
 			],
 			"fontSizes": [

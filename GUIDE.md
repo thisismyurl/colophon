@@ -91,6 +91,75 @@ add_filter( 'colophon/github_updater_repo', static fn () => 'owner/repo' );
 
 The release needs a real `.zip` asset whose name starts with the theme slug (e.g. `colophon-1.3.0.zip`). And the headline feature is the off-switch: **delete the one file and it's gone** — the loader is `file_exists`-guarded, so nothing else needs touching. Do delete it before a WordPress.org submission, because .org supplies updates there and a self-updater gets a theme rejected.
 
+## A worked example: Masthead in two files
+
+The fastest way to believe the CORE/SKIN claim is to read a sibling. Here is
+Masthead — the newspaper skin — reduced to the only two files that differ from
+Colophon. Everything else (templates, accessibility scaffolding, bindings,
+onboarding, the WooCommerce guard) is inherited verbatim.
+
+**`inc/bootstrap.php`** — the single re-prefix point. Three lines carry the whole
+identity; renaming the namespace re-points every hook and asset handle at once:
+
+```php
+namespace Masthead;
+
+const SLUG    = 'masthead';      // text domain + asset handles + pattern prefix
+const VERSION = '1.0.0';
+```
+
+**`inc/skin.php`** — the personality. Same function names as Colophon's skin, new
+content. A newspaper wants a wider hero crop, a self-hosted display face, an
+editorial block style, and its own onboarding voice:
+
+```php
+namespace Masthead;
+
+defined( 'ABSPATH' ) || exit;
+
+// Masthead runs a wide 3:1 banner crop for front-page leads.
+function skin_image_sizes(): void {
+	add_image_size( 'masthead-banner', 1800, 600, true );
+}
+add_action( 'after_setup_theme', __NAMESPACE__ . '\\skin_image_sizes' );
+
+// Preload the LCP-critical display face Masthead ships in assets/fonts/.
+add_filter(
+	'masthead/preload_fonts',
+	static function ( array $fonts ): array {
+		$fonts[] = get_template_directory_uri() . '/assets/fonts/masthead-display.woff2';
+		return $fonts;
+	}
+);
+
+// A drop-cap lead paragraph — the one block style a newspaper actually needs.
+function skin_block_styles(): void {
+	register_block_style(
+		'core/paragraph',
+		array(
+			'name'  => 'masthead-lead',
+			'label' => __( 'Drop-cap lead', 'masthead' ),
+		)
+	);
+}
+add_action( 'init', __NAMESPACE__ . '\\skin_block_styles' );
+
+// Onboarding in Masthead's own voice.
+add_filter(
+	'masthead/get_started_content',
+	static function ( array $content ): array {
+		$content['lead'] = __( 'Masthead is a digital-newspaper theme built on the Colophon core. Set your sections, drop in your lead story, and publish.', 'masthead' );
+		return $content;
+	}
+);
+```
+
+That is the entire delta. The skin's design tokens live in `theme.json` and its
+CSS treatment in `assets/css/skin.css`; neither needs the core touched. Run
+`colophon sync` and Masthead inherits every accessibility, security, and i18n fix
+Colophon ships, without a merge. Two files of personality on top of one shared
+core is the whole promise — and now you have read it, not just been told it.
+
 ## About the footer credit
 
 A theme built on Colophon leaves a small credit in its footer. I'd be glad if your users kept it, and I've made it genuinely easy to remove, because a credit you're forced to keep isn't a thank-you, it's a tax. Two clicks does it: open the Site Editor, edit the footer part, delete the line. Or filter `colophon/footer_credit` to an empty string in code. Either way — and this matters — a credit that's easy to remove is the one people actually leave up.

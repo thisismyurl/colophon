@@ -188,16 +188,30 @@ function comment_form_field_attributes( array $fields ): array {
 }
 add_filter( 'comment_form_default_fields', __NAMESPACE__ . '\\comment_form_field_attributes' );
 
-/*
- * Skip link — NOT registered here.
+/**
+ * Render the single skip link immediately after the opening <body> tag.
  *
- * Every theme template carries the skip link in its header template part
- * (parts/header.html), rendered via wp:html. Registering a second one here
- * via wp_body_open produced a duplicate in the rendered DOM — two visible
- * "Skip to content" links on Tab keypress, one of which targeted a
- * non-existent anchor. The template-part approach is correct: it is always
- * in the rendered markup, it is in the right DOM position, and there is
- * exactly one of it.
+ * The skip link is the first focusable element on the page (canonical position:
+ * directly after <body>, before the header), targets #main-content, and uses
+ * the .screen-reader-text utility so it only becomes visible on focus.
  *
- * See parts/header.html for the authoritative skip link.
+ * It is rendered here in PHP — not in parts/header.html — for one reason: the
+ * text must be translatable. A wp:html block in a template part ships English
+ * to every locale until an editor translates the part in the Site Editor, so a
+ * visitor on a non-English site sees "Skip to content" in English on first
+ * load. esc_html_e() resolves the string against the active locale's catalog
+ * at render time, so the link is correct in every language with zero editor work.
+ *
+ * There is exactly one skip link in the rendered DOM: this one. The header
+ * template part carries no skip link, so the duplicate-link regression that an
+ * earlier dual-source layout produced cannot recur.
+ *
+ * Pillar 5 (Safe by Default): accessibility text is translatable by default.
  */
+function render_skip_link(): void {
+	printf(
+		'<a class="skip-link screen-reader-text" href="#main-content">%s</a>',
+		esc_html__( 'Skip to content', 'colophon' )
+	);
+}
+add_action( 'wp_body_open', __NAMESPACE__ . '\\render_skip_link' );

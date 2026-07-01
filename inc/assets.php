@@ -2,20 +2,25 @@
 /**
  * [CORE] Asset enqueue — the cascade, in order.
  *
- * Block themes do not auto-load CSS on the front end, so the stylesheets are
- * enqueued explicitly here. They load in cascade order: the reset sheet first
- * (it declares the @layer order for the whole theme), then the core base, then
- * the skin. Because the layer order is declared once up front, rule arrival
- * order is actually irrelevant to the cascade — but each sheet still hangs off
- * the previous one as a dependency so the <link> order in the page is
- * deterministic and easy to read in View Source.
+ * Block themes do not auto-load CSS on the front end, so stylesheets are
+ * enqueued explicitly here in cascade order. The order is: reset (declares the
  *
- * Fonts load via theme.json @font-face (no render-blocking <link>), so there is
- * no font enqueue here — only an optional preload for the largest-paint glyph.
+ * @layer order for the whole theme), then core base (a11y scaffolding), then
+ * the skin (Colophon's personality). Each sheet depends on the previous so the
+ * <link> order in the page is deterministic.
+ *
+ * Fonts load via theme.json @font-face declarations — no render-blocking <link>
+ * for fonts. An optional preload for the LCP-critical font fires separately via
+ * the colophon/preload_fonts filter (registered in inc/skin.php).
  *
  * Portable: every handle derives from the SLUG constant, so a re-skin needs no
- * edit. The list of sheets is fixed core; the skin sheet's CONTENT is the
- * theme's, but its path is stable.
+ * edit. The sheet list is fixed [CORE]; the skin sheet's content is the theme's,
+ * but its path is stable.
+ *
+ * Pillar 8 (Kodawari): cache-busting by file mtime, not VERSION, means a CSS
+ * edit invalidates caches on the next save during development — no version bumps
+ * required mid-iteration.
+ * Pillar 9 (Archaeological Records): [CORE] tag marks what the CLI owns.
  *
  * @package colophon
  */
@@ -27,21 +32,17 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Enqueue the front-end stylesheets in cascade order.
  *
- * Cache-buster is each file's modification time, not the VERSION constant, so a
- * CSS edit busts caches immediately during iteration without a version bump.
+ * Pillar 6 (Resilience): file_exists() guard means a missing sheet skips
+ * gracefully rather than producing a broken 404 asset in the waterfall.
  */
 function enqueue_assets(): void {
 	$dir = get_template_directory();
 	$uri = get_template_directory_uri();
 
-	// Screen sheets, in cascade order. core/* is owned by Colophon and synced;
-	// skin.css is the theme's own layout/components/blocks/utilities + its
-	// binding of the --cl-* semantic tokens. Each depends on the previous so
-	// the link order is deterministic.
 	$sheets = array(
-		'reset' => 'assets/css/core/reset.css', // [CORE] @layer order declaration + reset.
-		'base'  => 'assets/css/core/base.css',  // [CORE] a11y scaffolding + semantic-token contract.
-		'skin'  => 'assets/css/skin.css',       // [SKIN] this theme's personality.
+		'reset' => 'assets/css/core/reset.css', // [CORE] @layer declaration + reset.
+		'base'  => 'assets/css/core/base.css',  // [CORE] a11y scaffolding + --cl-* token contract.
+		'skin'  => 'assets/css/skin.css',       // [SKIN] Colophon's layout, components, blocks, utilities.
 	);
 
 	$deps = array();
@@ -53,12 +54,10 @@ function enqueue_assets(): void {
 
 		$handle = SLUG . '-' . $name;
 		wp_enqueue_style( $handle, $uri . '/' . $rel, $deps, (string) filemtime( $path ) );
-		$deps = array( $handle ); // Next sheet loads after this one.
+		$deps = array( $handle );
 	}
 
-	// Print proof — media="print" so it never touches the screen render or the
-	// @layer cascade. Browsers fetch print sheets lazily, so it adds no screen
-	// cost. Its own filemtime cache-buster, same iteration story.
+	// Print proof — media="print" never touches the screen render path.
 	$print = $dir . '/assets/css/core/print.css';
 	if ( file_exists( $print ) ) {
 		wp_enqueue_style(
@@ -73,33 +72,29 @@ function enqueue_assets(): void {
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\\enqueue_assets' );
 
 /**
- * Preload the LCP-critical font, if the theme names one.
+ * Preload the LCP-critical font.
  *
- * Preloading the font that paints the largest headline shaves the swap-in.
- * Which font that is depends on the design, so core preloads nothing by default
- * and lets each theme declare its LCP font through the filter below (inc/skin.php
- * is the conventional home for that one-line opt-in). crossorigin is required
- * even for same-origin font fetches — fonts are always CORS-fetched.
+ * The font that paints the largest headline is the LCP-critical font; preloading
+ * its WOFF2 shaves the swap-in flash. Which font that is depends on the design,
+ * so core declares nothing by default and each skin opts in via the filter below.
+ * inc/skin.php adds the LCP font via this filter once the skin registers fonts.
  *
- * Entries are theme-root-relative paths (no leading slash); non-string and
- * off-origin entries are dropped so a filter can never become an injection or
- * an off-origin fetch.
+ * crossorigin is required even for same-origin font fetches — browsers fetch
+ * fonts via CORS regardless of origin.
  */
 function preload_fonts(): void {
 	/**
 	 * Filters the list of fonts preloaded in the document head.
 	 *
-	 * Each entry is a theme-root-relative WOFF2 path (e.g.
-	 * 'assets/fonts/family/file.woff2'). Default is empty — a theme opts in.
+	 * Each entry is a theme-root-relative WOFF2 path. Default is empty.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @param string[] $fonts Theme-root-relative WOFF2 paths to preload.
+	 * @param string[] $fonts Theme-root-relative WOFF2 paths.
 	 */
-	$fonts = (array) apply_filters( 'colophon/preload_fonts', array() );
+	$fonts = (array) apply_filters( 'colophon/preload_fonts', array() ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
 	foreach ( $fonts as $font ) {
-		if ( ! is_string( $font ) || '' === $font || str_contains( $font, '://' ) ) {
+		if ( ! is_string( $font ) || '' === $font || false !== strpos( $font, '://' ) ) {
 			continue;
 		}
 

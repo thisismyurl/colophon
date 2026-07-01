@@ -1,16 +1,24 @@
 <?php
 /**
- * [SKIN] The skin layer — the one PHP file the `colophon` CLI never overwrites.
+ * [SKIN] The skin layer — the one PHP file `colophon sync` never overwrites.
  *
- * Everything theme-specific that needs PHP lives here: which image crops to
- * register, which font to preload for the largest paint, the block styles and
- * pattern categories that make up this theme's editor vocabulary, and any
- * Get-started copy you want to override. The core inc/ files stay portable
- * because none of this leaks into them — that's the whole point of the split.
+ * Colophon's PHP-side personality: a minimal skin that ships the theme working
+ * out of the box. Derived themes (Kern, Masthead, Parcel, Wake) replace this
+ * file with their own — adding image crops, font preloads, block styles, and
+ * onboarding copy that match their specific design.
  *
- * When the CLI generates a theme, it copies this file and rewrites the
- * `Colophon`/`colophon`/`cl-` tokens to the new theme's, then leaves it alone
- * forever after. Edit it freely.
+ * For Colophon itself, the skin is intentionally minimal: one generic image
+ * size, no bundled font preload (system fonts load instantly without one), and
+ * a single pattern category so the Patterns panel has a home.
+ *
+ * To build your own theme on Colophon:
+ *   1. Add your font files to assets/fonts/ and register them in theme.json.
+ *   2. Add a preload filter here for the LCP-critical font.
+ *   3. Register your block styles here.
+ *   4. Override the get_started_content filter with your onboarding copy.
+ *   5. Everything else (a11y, WooCommerce guard, bindings, admin) is CORE — leave it.
+ *
+ * Pillar 9 (Archaeological Records): [SKIN] tag marks what belongs to Colophon.
  *
  * @package colophon
  */
@@ -20,110 +28,70 @@ namespace Colophon;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Register this theme's image crop sizes.
+ * Register Colophon's image crop sizes.
  *
- * Hooked on after_setup_theme (not the core setup() function) so a re-skin
- * changes crops here without touching inc/setup.php.
+ * One generic hero crop at 16:9, sufficient for a starter. Derived themes
+ * add their own sizes here without editing any CORE file.
  */
 function skin_image_sizes(): void {
-	add_image_size( 'cl-wide', 1600, 900, true ); // 16:9 wide/hero crop.
-	add_image_size( 'cl-card', 720, 480, true );  // 3:2 card crop.
-
-	/**
-	 * Fires after the theme registers its image crop sizes.
-	 *
-	 * Companion plugins and re-skins hook here to add their own sizes
-	 * without editing this file.
-	 *
-	 * @since 1.6150
-	 */
-	do_action( 'colophon/register_image_sizes' );
+	add_image_size( 'colophon-hero', 1440, 810, true ); // 16:9 page-hero crop.
 }
 add_action( 'after_setup_theme', __NAMESPACE__ . '\\skin_image_sizes' );
 
 /**
- * Register this theme's block styles (the is-style-{name} options in the editor).
+ * Register Colophon's block styles.
  *
- * Colophon's defaults are deliberately few — a generic card group and an
- * eyebrow paragraph. A real theme adds the styles its patterns lean on. The CSS
- * for each lives in assets/css/skin.css @layer components.
+ * A minimal set that gives editors something to work with in the Styles panel
+ * without locking in any personality. Derived themes extend this list.
  */
 function skin_block_styles(): void {
-	register_block_style(
-		'core/group',
-		array(
-			'name'  => 'cl-card',
-			'label' => __( 'Card', 'colophon' ),
-		)
-	);
 
+	// Paragraph as an eyebrow label — small, tracked, muted. Useful above headings.
 	register_block_style(
 		'core/paragraph',
 		array(
-			'name'  => 'cl-eyebrow',
-			'label' => __( 'Eyebrow', 'colophon' ),
+			'name'  => 'colophon-eyebrow',
+			'label' => __( 'Eyebrow label', 'colophon' ),
 		)
 	);
 
-	/**
-	 * Fires after the theme registers its block styles.
-	 *
-	 * Hook here to add is-style-* options to any block without touching
-	 * this file. The CSS for each style lives in assets/css/skin.css.
-	 *
-	 * @since 1.6150
-	 */
-	do_action( 'colophon/register_block_styles' );
+	// Group as a full-bleed band — background colour fills the viewport width.
+	register_block_style(
+		'core/group',
+		array(
+			'name'  => 'colophon-band',
+			'label' => __( 'Full-bleed band', 'colophon' ),
+		)
+	);
 }
 add_action( 'init', __NAMESPACE__ . '\\skin_block_styles' );
 
 /**
- * Register this theme's pattern categories.
+ * Register the Colophon pattern category.
  *
- * Prefixed with SLUG so a theme installed beside its siblings never collides.
- * Pattern files in /patterns/*.php declare which category they slot into.
+ * Derived themes register their own category (e.g., 'kern') and may remove
+ * this one. The Patterns panel needs at least one category to show a group.
  */
 function skin_pattern_categories(): void {
 	register_block_pattern_category(
-		SLUG . '-sections',
-		array(
-			'label'       => __( 'Colophon: Sections', 'colophon' ),
-			'description' => __( 'Section patterns for building pages.', 'colophon' ),
-		)
+		'colophon',
+		array( 'label' => __( 'Colophon', 'colophon' ) )
 	);
-
-	/**
-	 * Fires after the theme registers its pattern categories.
-	 *
-	 * Hook here to register additional categories alongside the theme's
-	 * own, so all categories appear grouped in the block inserter.
-	 *
-	 * @since 1.6150
-	 */
-	do_action( 'colophon/register_pattern_categories' );
 }
 add_action( 'init', __NAMESPACE__ . '\\skin_pattern_categories' );
 
-/*
- * Opt this theme into GitHub-release self-updates from its own repo.
+/**
+ * Override the Get-started page content with Colophon-specific copy.
  *
- * The updater (inc/github-updater.php) is dormant until this filter returns a
- * non-empty 'owner/name'. Each theme points it at its own repo here, in the one
- * file the CLI never overwrites. Remove this filter (or delete the updater file)
- * before a WordPress.org submission — .org supplies updates there.
+ * Colophon's onboarding speaks to both end users and developers, since the
+ * theme is explicitly designed to be extended. The CORE default covers end
+ * users; this filter adds the developer context that makes Colophon distinct.
  */
-add_filter( 'colophon/github_updater_repo', static function () {
-	return 'thisismyurl/thisismyurl-colophon';
-} );
+add_filter(
+	'colophon/get_started_content', // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
+	static function ( array $content ): array {
+		$content['lead'] = __( 'Colophon is a minimal, accessible WordPress theme that works on its own — and also serves as the foundation for a collection of niche editorial themes. Here is how to make it yours.', 'colophon' );
 
-/*
- * Preload the LCP font — EB Garamond is the display serif used for headings,
- * so it is the Largest Contentful Paint candidate on single posts and landing
- * pages. Only the latin-subset file is preloaded (the smaller of the two);
- * the browser fetches the latin-ext file separately and only when the page
- * content actually requires those glyphs.
- */
-add_filter( 'colophon/preload_fonts', static function ( array $fonts ): array {
-	$fonts[] = 'assets/fonts/eb-garamond/eb-garamond-normal.woff2';
-	return $fonts;
-} );
+		return $content;
+	}
+);

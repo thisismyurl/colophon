@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schemas.wp.org/wp/6.7/theme.json",
+	"version": 3,
+	"title": "Forest",
+	"settings": {
+		"custom": {
+			"colophon-light": "#f0f4ee",
+			"colophon-dark": "#1a2818",
+			"colophon-accent": "#2a6a3a"
+		},
+		"color": {
+			"palette": [
+				{ "slug": "base-black", "color": "#0c1a0a", "name": "Base Black" },
+				{ "slug": "base-ink", "color": "#1a2818", "name": "Base Ink" },
+				{ "slug": "base-mid", "color": "#5a7855", "name": "Base Mid" },
+				{ "slug": "base-rule", "color": "#c4d4be", "name": "Base Rule" },
+				{ "slug": "base-ground", "color": "#e0ead8", "name": "Base Ground" },
+				{ "slug": "base-paper", "color": "#f0f4ee", "name": "Base Paper" },
+				{ "slug": "base-accent", "color": "#2a6a3a", "name": "Base Accent" },
+				{ "slug": "base-accent-tint", "color": "#d4ecd8", "name": "Base Accent Tint" }
+			]
+		}
+	},
+	"styles": {
+		"color": {
+			"background": "var(--wp--preset--color--base-paper)",
+			"text": "var(--wp--preset--color--base-ink)"
+		}
+	}
+}

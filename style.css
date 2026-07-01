@@ -3,20 +3,15 @@ Theme Name:         Colophon
 Theme URI:          https://thisismyurl.com/colophon/
 Author:             Christopher Ross
 Author URI:         https://thisismyurl.com/
-Description:        The shared starter core behind the This Is My URL free theme line. A deliberately plain, technically exacting full-site-editing base built to be copied and re-skinned — not inherited. Zero front-end JavaScript, self-hostable OFL fonts, WCAG 2.2 AA accessibility scaffolding, a six-layer CSS cascade contract, and a one-file re-prefixing point. The bones; bring your own skin.
-Version:            1.6150
-Requires at least:  7.0
-Tested up to:       7.0
+Description:        A minimal WordPress FSE starter theme. The shared foundation beneath Kern, Masthead, Parcel, and Wake — four niche editorial themes built on it. Use it as-is for a clean, accessible start, or build on the CORE/SKIN architecture to make your own themed version without touching the portable core files.
+Version:            1.6159.0900
+Requires at least:  6.7
 Requires PHP:       8.1
+Tested up to:       7.0
 License:            GNU General Public License v2 or later
 License URI:        https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain:        colophon
-Tags:               blog, one-column, two-columns, full-site-editing, block-patterns, editor-style, custom-colors, custom-logo, custom-menu, featured-images, translation-ready, rtl-language-support, wide-blocks, threaded-comments
-
-This is the theme HEADER ONLY. Colophon's real styles are enqueued in cascade
-order from inc/assets.php: assets/css/core/* (synced, portable) then
-assets/css/skin.css (this theme's personality). A block theme doesn't auto-load
-style.css on the front end, so keeping it header-only is deliberate, not a gap.
+Tags:               blog, full-site-editing, block-patterns, custom-colors, custom-logo, custom-menu, editor-style, featured-images, rtl-language-support, translation-ready, wide-blocks
 */
 
 /* Copyright (C) 2026 Christopher Ross — https://thisismyurl.com/

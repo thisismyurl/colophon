@@ -70,11 +70,11 @@ function get_copyright_value(): string {
 	 * for a year range. The value is passed to current_time() so the result
 	 * follows the site's timezone setting.
 	 *
-	 * @since 1.6150
+	 * @since 1.6148
 	 *
 	 * @param string $format PHP date format string, or a literal string.
 	 */
-	$format = (string) apply_filters( 'colophon/copyright_date_format', 'Y' );
+	$format = (string) apply_filters( SLUG . '/copyright_date_format', 'Y' ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 	$year   = (string) current_time( $format );
 
 	$copyright = sprintf(
@@ -94,7 +94,7 @@ function get_copyright_value(): string {
 	 *
 	 * @param string $copyright The composed "© {year} {site}. All rights reserved." line.
 	 */
-	return (string) apply_filters( 'colophon/copyright_text', $copyright );
+	return (string) apply_filters( SLUG . '/copyright_text', $copyright ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 }
 
 /**
@@ -134,14 +134,15 @@ function get_footer_credit_value(): string {
 	 *
 	 * @param string $credit The default "Built with the {Theme} theme." markup.
 	 */
-	$credit = (string) apply_filters( 'colophon/footer_credit', $credit );
+	$credit = (string) apply_filters( SLUG . '/footer_credit', $credit ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
 	return wp_kses(
 		$credit,
 		array(
 			'a' => array(
-				'href' => array(),
-				'rel'  => array(),
+				'href'   => array(),
+				'rel'    => array(),
+				'target' => array(),
 			),
 		)
 	);

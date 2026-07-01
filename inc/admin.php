@@ -4,7 +4,7 @@
  *
  * This is the mechanism, and it's portable. Every theme in the line inherits a
  * WordPress.org-compliant onboarding flow for free; the WORDS on the page come
- * from the theme, supplied through the `colophon/get_started_content` filter
+ * from the theme, supplied through the `SLUG . '/get_started_content'` filter
  * (inc/skin.php is the conventional home for it). Core ships a plain, honest default so the page is coherent even
  * before a theme writes its own copy.
  *
@@ -28,12 +28,12 @@ defined( 'ABSPATH' ) || exit;
  * An option, not a transient: it must survive an object-cache flush and clear
  * deterministically. Stored autoload=no — it is read only on wp-admin requests.
  */
-const WELCOME_FLAG = 'colophon_welcome_notice';
+const WELCOME_FLAG = 'colophon_welcome_notice'; // hardcoded slug — CLI rewrites on re-skin.
 
 /**
- * admin_post action + nonce action string for dismissing the welcome notice.
+ * Admin-post action and nonce action string for dismissing the welcome notice.
  */
-const DISMISS_ACTION = 'colophon_dismiss_welcome';
+const DISMISS_ACTION = 'colophon_dismiss_welcome'; // hardcoded slug — CLI rewrites on re-skin.
 
 /**
  * Admin-menu slug for the Get-started page.
@@ -43,7 +43,7 @@ const GET_STARTED_SLUG = 'colophon-get-started';
 /**
  * Raise the one-time welcome flag when the theme becomes active.
  *
- * after_switch_theme fires once, on the activating request — the correct hook
+ * The after_switch_theme hook fires once, on the activating request — the correct hook
  * for a one-time cue. autoload=no keeps it off the front-end option bundle.
  */
 function flag_welcome_notice(): void {
@@ -64,7 +64,7 @@ function clear_welcome_notice(): void {
  *
  * The required capability comes from get_onboarding_capability() — default is
  * edit_theme_options (users who can switch themes and configure global styles),
- * filterable via colophon/onboarding_capability.
+ * filterable via SLUG . '/onboarding_capability'.
  */
 function register_get_started_page(): void {
 	add_theme_page(
@@ -108,7 +108,7 @@ function get_onboarding_capability(): string {
 	 *
 	 * @param string $capability WordPress capability slug.
 	 */
-	return (string) apply_filters( 'colophon/onboarding_capability', 'edit_theme_options' );
+	return (string) apply_filters( SLUG . '/onboarding_capability', 'edit_theme_options' ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 }
 
 /**
@@ -160,9 +160,9 @@ function render_welcome_notice(): void {
 		return;
 	}
 
-	$page_url  = admin_url( 'themes.php?page=' . GET_STARTED_SLUG );
-	$theme     = get_theme_name();
-	$dismiss   = wp_nonce_url( admin_url( 'admin-post.php?action=' . DISMISS_ACTION ), DISMISS_ACTION );
+	$page_url = admin_url( 'themes.php?page=' . GET_STARTED_SLUG );
+	$theme    = get_theme_name();
+	$dismiss  = wp_nonce_url( admin_url( 'admin-post.php?action=' . DISMISS_ACTION ), DISMISS_ACTION );
 	?>
 	<div class="notice notice-info is-dismissible colophon-welcome-notice">
 		<p>
@@ -178,8 +178,7 @@ function render_welcome_notice(): void {
 			<a class="button button-primary" href="<?php echo esc_url( $page_url ); ?>">
 				<?php
 				/* translators: %s: theme name. */
-				printf( esc_html__( 'Set up %s', 'colophon' ), esc_html( $theme ) );
-				?> <span aria-hidden="true">→</span><?php
+				printf( esc_html__( 'Set up %s →', 'colophon' ), esc_html( $theme ) );
 				?>
 			</a>
 			<a class="colophon-welcome-notice__dismiss" href="<?php echo esc_url( $dismiss ); ?>">
@@ -213,7 +212,7 @@ add_action( 'admin_post_' . DISMISS_ACTION, __NAMESPACE__ . '\\handle_welcome_di
  * The Get-started page content.
  *
  * Core supplies a plain, honest default so the page is coherent out of the box.
- * A theme overrides any part of it through the `colophon/get_started_content`
+ * A theme overrides any part of it through the `SLUG . '/get_started_content'`
  * filter in inc/skin.php — that is where each theme's voice lives, kept out of
  * this synced file.
  *
@@ -223,12 +222,12 @@ function get_started_content(): array {
 	$theme = get_theme_name();
 
 	$default = array(
-		'lead'     => sprintf(
+		'lead'       => sprintf(
 			/* translators: %s: theme name. */
 			__( '%s is a free, full-site-editing theme built to get out of the way of your content. Here is how to make it yours.', 'colophon' ),
 			$theme
 		),
-		'steps'    => array(
+		'steps'      => array(
 			array(
 				'title' => __( 'Choose what people land on.', 'colophon' ),
 				'body'  => __( "A visitor's first second decides whether they stay. Set a static front page under Settings → Reading, and give your posts a page of their own.", 'colophon' ),
@@ -246,14 +245,14 @@ function get_started_content(): array {
 				'body'  => __( 'In the Site Editor, open Styles to change colours and typefaces. Nothing you do there can break the theme — experiment freely.', 'colophon' ),
 			),
 		),
-		'optimize' => array(
-			__( "This theme is already fast by design: zero front-end JavaScript, self-hosted fonts that don't phone home, and tuning against the Core Web Vitals search engines actually measure.", 'colophon' ),
+		'optimize'   => array(
+			__( "This theme is already fast by design: zero front-end JavaScript, system fonts that load instantly, and a cascade-ordered stylesheet that puts nothing on the critical path it doesn't need to.", 'colophon' ),
 			__( 'It meets WCAG 2.2 AA — real focus outlines, a skip link, sensible heading order, and motion that respects a reduce-motion setting. Keep your own copy and images to that bar and the whole site stays welcoming.', 'colophon' ),
 		),
-		'credit'   => __( "There's a small credit in your footer. It's a thank-you, not a tax — remove it in two clicks in the Site Editor → Footer, or filter it out in code. No hard feelings either way.", 'colophon' ),
+		'credit'     => __( "There's a small credit in your footer. It's a thank-you, not a tax — remove it in two clicks in the Site Editor → Footer, or filter it out in code. No hard feelings either way.", 'colophon' ),
 		'developers' => array(
 			/* translators: %s: linked developer-guide anchor. */
-			'text'  => __( 'This theme is built on Colophon, a small documented core meant to be reused. The %s walks through how to build your own theme on it.', 'colophon' ),
+			'text'  => __( 'Colophon is designed to be built on. The %s walks through the CORE/SKIN architecture, how to add fonts, register block styles, and ship your own theme on this foundation.', 'colophon' ),
 			'url'   => 'https://thisismyurl.com/colophon',
 			'label' => __( 'developer guide', 'colophon' ),
 		),
@@ -269,7 +268,7 @@ function get_started_content(): array {
 	 *
 	 * @param array $default The default page content.
 	 */
-	return (array) apply_filters( 'colophon/get_started_content', $default );
+	return (array) apply_filters( SLUG . '/get_started_content', $default ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 }
 
 /**
@@ -292,7 +291,13 @@ function render_get_started_page(): void {
 	// destinations (a theme links its setup steps to Settings, the Site Editor,
 	// and so on), so they render through a link-only kses allow-list rather than
 	// esc_html. Step titles stay plain text.
-	$cl_inline = array( 'a' => array( 'href' => array(), 'target' => array(), 'rel' => array() ) );
+	$cl_inline = array(
+		'a' => array(
+			'href'   => array(),
+			'target' => array(),
+			'rel'    => array(),
+		),
+	);
 	?>
 	<div class="wrap colophon-get-started">
 
@@ -338,9 +343,20 @@ function render_get_started_page(): void {
 				$dev  = $content['developers'];
 				$link = '<a href="' . esc_url( $dev['url'] ?? '' ) . '" target="_blank" rel="noopener noreferrer">'
 					. esc_html( $dev['label'] ?? '' ) . '</a>';
-				// The text carries one %s for the link. wp_kses preserves the
-				// placeholder for sprintf substitution and allows the anchor built above.
-				printf( wp_kses( $dev['text'], $cl_inline ), $link );
+				// sprintf builds the composed string; wp_kses then sanitizes the
+				// result against the minimal anchor allow-list. Both the format
+				// string and the link are escaped before composition, and the
+				// composed output is filtered after — belt-and-braces, no suppression.
+				echo wp_kses(
+					sprintf( esc_html( $dev['text'] ?? '' ), $link ),
+					array(
+						'a' => array(
+							'href'   => array(),
+							'target' => array(),
+							'rel'    => array(),
+						),
+					)
+				);
 				?>
 			</p>
 		<?php endif; ?>

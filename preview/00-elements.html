@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>Colophon — All Elements</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&family=Inter:wght@100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="colophon-preview.css">
+<style>
+  /* Page-local scaffolding for the element reference — not part of the theme. */
+  .el-pagenav {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 200;
+    background: var(--wp--preset--color--ink-deep);
+    padding: 0.625rem var(--co-gutter);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    align-items: center;
+  }
+  .el-pagenav a {
+    font-family: var(--wp--preset--font-family--sans);
+    font-size: var(--wp--preset--font-size--2xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(250,250,250,0.65);
+  }
+  .el-pagenav a:hover { color: #fff; }
+  .el-pagenav strong { color: #fff; font-family: var(--wp--preset--font-family--serif); font-weight: 400; letter-spacing: -0.01em; text-transform: none; font-size: var(--wp--preset--font-size--sm); margin-inline-end: auto; }
+
+  .el-section { padding-block: var(--wp--preset--spacing--10); padding-inline: var(--co-gutter); }
+  .el-section__inner { max-width: var(--co-max); margin-inline: auto; }
+  .el-section + .el-section { border-top: 1px solid var(--wp--preset--color--rule); }
+  .el-section__label {
+    font-family: var(--wp--preset--font-family--sans);
+    font-size: var(--wp--preset--font-size--2xs);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--wp--preset--color--accent);
+    margin-bottom: var(--wp--preset--spacing--7);
+  }
+  .el-type-row { display: flex; align-items: baseline; gap: 1.5rem; padding-block: 0.5rem; border-bottom: 1px solid var(--wp--preset--color--rule-light); }
+  .el-type-row__tag { flex: 0 0 5rem; font-family: var(--wp--preset--font-family--mono); font-size: var(--wp--preset--font-size--2xs); color: var(--wp--preset--color--ink-faint); letter-spacing: 0.06em; }
+  .el-swatches { display: flex; flex-wrap: wrap; gap: 1rem; }
+  .el-swatch { width: 8.5rem; }
+  .el-swatch__chip { height: 4.5rem; border: 1px solid var(--wp--preset--color--rule); }
+  .el-swatch__name { margin-top: 0.4rem; font-family: var(--wp--preset--font-family--mono); font-size: var(--wp--preset--font-size--2xs); color: var(--wp--preset--color--ink-muted); }
+  .el-btn-row { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+  .co-cta-btn.is-disabled { opacity: 0.4; pointer-events: none; }
+  .el-stack-list ul, .el-stack-list ol { margin-block: 0.75rem; padding-inline-start: 1.5rem; }
+  .el-stack-list ul li { list-style: disc; margin-block: 0.35rem; line-height: 1.6; }
+  .el-stack-list ol li { list-style: decimal; margin-block: 0.35rem; line-height: 1.6; }
+  code.el-inline { background: var(--wp--preset--color--ground); padding: 0.1rem 0.35rem; border-radius: 3px; font-size: 0.9em; }
+  pre.el-code {
+    background: var(--wp--preset--color--ink-deep);
+    color: var(--wp--preset--color--ground);
+    font-family: var(--wp--preset--font-family--mono);
+    font-size: var(--wp--preset--font-size--sm);
+    line-height: 1.7;
+    padding: var(--wp--preset--spacing--6);
+    overflow-x: auto;
+  }
+  .el-card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--wp--preset--spacing--7); }
+</style>
+</head>
+<body>
+
+<nav class="el-pagenav">
+  <strong>Colophon — All Elements</strong>
+  <a href="#type">Type</a>
+  <a href="#color">Color</a>
+  <a href="#buttons">Buttons</a>
+  <a href="#links">Links &amp; Lists</a>
+  <a href="#quote">Blockquote</a>
+  <a href="#code">Code</a>
+  <a href="#rule">Separator</a>
+  <a href="#cards">Cards</a>
+</nav>
+
+<header class="co-header">
+  <div class="co-header__inner">
+    <a class="co-site-name" href="#">Adrienne Holloway</a>
+    <nav class="co-nav">
+      <a href="#" class="current">Writing</a>
+      <a href="#">Projects</a>
+      <a href="#">Talks</a>
+      <a href="#">About</a>
+    </nav>
+    <a class="co-cta-btn" href="#">Get in Touch</a>
+  </div>
+</header>
+
+<section class="el-section" id="type">
+  <div class="el-section__inner">
+    <p class="el-section__label">Typography Scale</p>
+    <div class="el-type-row"><span class="el-type-row__tag">Display</span><span class="co-hero__title" style="margin:0;max-width:none;">Plain language at scale</span></div>
+    <div class="el-type-row"><span class="el-type-row__tag">H1</span><h1>The colophon names the maker</h1></div>
+    <div class="el-type-row"><span class="el-type-row__tag">H2</span><h2>A clean foundation to build on</h2></div>
+    <div class="el-type-row"><span class="el-type-row__tag">H3</span><h3>Editorial typography, no ornament</h3></div>
+    <div class="el-type-row"><span class="el-type-row__tag">H4</span><h4>Supporting heading in sans</h4></div>
+    <div class="el-type-row"><span class="el-type-row__tag">H5</span><h5>Small uppercase label</h5></div>
+    <div class="el-type-row"><span class="el-type-row__tag">H6</span><h6>Smallest label tier</h6></div>
+    <p style="margin-top:1.5rem;max-width:var(--co-measure);">This is a body paragraph set in the theme's sans-serif at the base size. It carries the long-form reading work, with a measure tuned for comfortable line length and generous leading.</p>
+    <p class="co-eyebrow" style="margin-top:1.25rem;">Eyebrow label · caption tier</p>
+    <p style="font-size:var(--wp--preset--font-size--xs);color:var(--wp--preset--color--ink-muted);">Small text and captions sit here, one step below body, for metadata and asides.</p>
+  </div>
+</section>
+
+<section class="el-section" id="color">
+  <div class="el-section__inner">
+    <p class="el-section__label">Color Palette</p>
+    <div class="el-swatches">
+      <div class="el-swatch"><div class="el-swatch__chip" style="background:var(--wp--preset--color--ink-deep)"></div><div class="el-swatch__name">ink-deep</div></div>
+      <div class="el-swatch"><div class="el-swatch__chip" style="background:var(--wp--preset--color--ink-primary)"></div><div class="el-swatch__name">ink-primary</div></div>
+      <div class="el-swatch"><div class="el-swatch__chip" style="background:var(--wp--preset--color--ink-secondary)"></div><div class="el-swatch__name">ink-secondary</div></div>
+      <div class="el-swatch"><div class="el-swatch__chip" style="background:var(--wp--preset--color--ink-muted)"></div><div class="el-swatch__name">ink-muted</div></div>
+      <div class="el-swatch"><div class="el-swatch__chip" style="background:var(--wp--preset--color--ink-faint)"></div><div class="el-swatch__name">ink-faint</div></div>
+      <div class="el-swatch"><div class="el-swatch__chip" style="background:var(--wp--preset--color--rule)"></div><div class="el-swatch__name">rule</div></div>
+      <div class="el-swatch"><div class="el-swatch__chip" style="background:var(--wp--preset--color--ground)"></div><div class="el-swatch__name">ground</div></div>
+      <div class="el-swatch"><div class="el-swatch__chip" style="background:var(--wp--preset--color--paper)"></div><div class="el-swatch__name">paper</div></div>
+      <div class="el-swatch"><div class="el-swatch__chip" style="background:var(--wp--preset--color--accent)"></div><div class="el-swatch__name">accent</div></div>
+      <div class="el-swatch"><div class="el-swatch__chip" style="background:var(--wp--preset--color--accent-mid)"></div><div class="el-swatch__name">accent-mid</div></div>
+      <div class="el-swatch"><div class="el-swatch__chip" style="background:var(--wp--preset--color--accent-tint)"></div><div class="el-swatch__name">accent-tint</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="el-section" id="buttons">
+  <div class="el-section__inner">
+    <p class="el-section__label">Buttons</p>
+    <div class="el-btn-row">
+      <a class="co-cta-btn" href="#">Primary action</a>
+      <a class="co-cta-btn co-cta-btn--outline" href="#">Secondary action</a>
+      <a class="co-cta-btn is-disabled" href="#" aria-disabled="true">Disabled</a>
+    </div>
+  </div>
+</section>
+
+<section class="el-section" id="links">
+  <div class="el-section__inner el-stack-list">
+    <p class="el-section__label">Links &amp; Lists</p>
+    <p style="max-width:var(--co-measure);">A paragraph carries <a href="#">an inline link</a> the way a reader expects it — underlined, in the accent colour, with a second <a href="#">link further along</a> to prove the pattern holds across a line of running text.</p>
+    <ul>
+      <li>Research notes and field reporting</li>
+      <li>Long-form essays on infrastructure</li>
+      <li>Interviews with practitioners</li>
+      <li>Annotated reading lists</li>
+      <li>Occasional photo sets</li>
+    </ul>
+    <ol>
+      <li>Draft the outline in plain language</li>
+      <li>Report it out with primary sources</li>
+      <li>Edit for the reader, not the writer</li>
+      <li>Publish, then revise in the open</li>
+    </ol>
+  </div>
+</section>
+
+<section class="el-section" id="quote">
+  <div class="el-section__inner">
+    <p class="el-section__label">Blockquote</p>
+    <div class="co-article">
+      <blockquote>
+        The best interface is the one that disappears — it does its job and gets out of the reader's way.
+        <footer style="font-style:normal;font-family:var(--wp--preset--font-family--sans);font-size:var(--wp--preset--font-size--xs);color:var(--wp--preset--color--ink-muted);margin-top:0.75rem;">— Adrienne Holloway, <cite>On Quiet Design</cite></footer>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<section class="el-section" id="code">
+  <div class="el-section__inner">
+    <p class="el-section__label">Code</p>
+    <p style="max-width:var(--co-measure);">Register the block with <code class="el-inline">register_block_type()</code> and let the build output drive the markup.</p>
+    <pre class="el-code"><code>add_action( 'init', static function () {
+    register_block_type( __DIR__ . '/build/notice' );
+} );</code></pre>
+  </div>
+</section>
+
+<section class="el-section" id="rule">
+  <div class="el-section__inner">
+    <p class="el-section__label">Separator</p>
+    <hr class="co-divider">
+  </div>
+</section>
+
+<section class="el-section" id="cards">
+  <div class="el-section__inner">
+    <p class="el-section__label">Cards</p>
+    <div class="el-card-grid">
+      <article class="co-post-card">
+        <div class="co-post-card__img co-post-card__img--3-2">Image</div>
+        <a class="co-post-card__category" href="#">Reporting</a>
+        <a class="co-post-card__title" href="#">When the grid meets the neighbourhood</a>
+        <p class="co-post-card__excerpt">A field report on how transmission planning lands in the places it crosses.</p>
+        <div class="co-post-card__meta">May 14, 2026 <span class="sep">·</span> 9 min read</div>
+      </article>
+      <article class="co-post-card">
+        <div class="co-post-card__img co-post-card__img--3-2">Image</div>
+        <a class="co-post-card__category" href="#">Essay</a>
+        <a class="co-post-card__title" href="#">The quiet cost of fast software</a>
+        <p class="co-post-card__excerpt">Speed is a feature until it becomes the only one anyone measures.</p>
+        <div class="co-post-card__meta">Apr 30, 2026 <span class="sep">·</span> 6 min read</div>
+      </article>
+      <article class="co-post-card">
+        <div class="co-post-card__img co-post-card__img--3-2">Image</div>
+        <a class="co-post-card__category" href="#">Interview</a>
+        <a class="co-post-card__title" href="#">A conversation about open data</a>
+        <p class="co-post-card__excerpt">What public records can and cannot tell us about a city's plumbing.</p>
+        <div class="co-post-card__meta">Apr 12, 2026 <span class="sep">·</span> 11 min read</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer class="co-footer">
+  <div class="co-footer__inner">
+    <div>
+      <p class="co-footer__name">Adrienne Holloway</p>
+      <p class="co-footer__desc">Writing and research at the edge of technology and policy. Built on Colophon.</p>
+    </div>
+    <div>
+      <p class="co-footer__heading">Sections</p>
+      <div class="co-footer__links">
+        <a href="#">Writing</a>
+        <a href="#">Projects</a>
+        <a href="#">Talks</a>
+      </div>
+    </div>
+    <div>
+      <p class="co-footer__heading">Elsewhere</p>
+      <div class="co-footer__links">
+        <a href="#">Newsletter</a>
+        <a href="#">RSS</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </div>
+  <div class="co-footer__bottom">
+    <span>© 2026 Adrienne Holloway</span>
+    <a href="#">Built with Colophon</a>
+  </div>
+</footer>
+
+</body>
+</html>

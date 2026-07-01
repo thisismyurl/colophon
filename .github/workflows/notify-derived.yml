@@ -27,11 +27,13 @@ jobs:
       fail-fast: false
       matrix:
         repo:
-          - colophon-quillwork
-          - colophon-kern
-          - colophon-masthead
-          - colophon-margin
-          # Add each new theme here when its repo is created
+          # Derived-theme repos (unprefixed since the June 2026 rename).
+          # Add each new theme here when its repo is created.
+          - quillwork
+          - kern
+          - masthead
+          - parcel
+          - wake
     steps:
       - name: Dispatch sync to ${{ matrix.repo }}
         uses: actions/github-script@v7

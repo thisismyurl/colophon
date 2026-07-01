@@ -1,6 +1,6 @@
 /*
 Theme Name:         Colophon
-Theme URI:          https://thisismyurl.com/colophon/?utm_source=wordpress.org&utm_medium=theme-directory&utm_campaign=colophon-collection&utm_content=colophon
+Theme URI:          https://thisismyurl.com/colophon/
 Author:             Christopher Ross
 Author URI:         https://thisismyurl.com/
 Description:        The shared starter core behind the This Is My URL free theme line. A deliberately plain, technically exacting full-site-editing base built to be copied and re-skinned — not inherited. Zero front-end JavaScript, self-hostable OFL fonts, WCAG 2.2 AA accessibility scaffolding, a six-layer CSS cascade contract, and a one-file re-prefixing point. The bones; bring your own skin.
@@ -18,3 +18,9 @@ order from inc/assets.php: assets/css/core/* (synced, portable) then
 assets/css/skin.css (this theme's personality). A block theme doesn't auto-load
 style.css on the front end, so keeping it header-only is deliberate, not a gap.
 */
+
+/* Copyright (C) 2026 Christopher Ross — https://thisismyurl.com/
+   Colophon is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 2 of the License, or
+   (at your option) any later version. */

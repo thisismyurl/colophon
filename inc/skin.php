@@ -23,8 +23,6 @@
  * @package colophon
  */
 
-namespace Colophon;
-
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -33,10 +31,10 @@ defined( 'ABSPATH' ) || exit;
  * One generic hero crop at 16:9, sufficient for a starter. Derived themes
  * add their own sizes here without editing any CORE file.
  */
-function skin_image_sizes(): void {
+function colophon_skin_image_sizes(): void {
 	add_image_size( 'colophon-hero', 1440, 810, true ); // 16:9 page-hero crop.
 }
-add_action( 'after_setup_theme', __NAMESPACE__ . '\\skin_image_sizes' );
+add_action( 'after_setup_theme', 'colophon_skin_image_sizes' );
 
 /**
  * Register Colophon's block styles.
@@ -44,14 +42,14 @@ add_action( 'after_setup_theme', __NAMESPACE__ . '\\skin_image_sizes' );
  * A minimal set that gives editors something to work with in the Styles panel
  * without locking in any personality. Derived themes extend this list.
  */
-function skin_block_styles(): void {
+function colophon_skin_block_styles(): void {
 
 	// Paragraph as an eyebrow label — small, tracked, muted. Useful above headings.
 	register_block_style(
 		'core/paragraph',
 		array(
 			'name'  => 'colophon-eyebrow',
-			'label' => __( 'Eyebrow label', 'colophon' ),
+			'label' => esc_html__( 'Eyebrow label', 'colophon' ),
 		)
 	);
 
@@ -60,11 +58,11 @@ function skin_block_styles(): void {
 		'core/group',
 		array(
 			'name'  => 'colophon-band',
-			'label' => __( 'Full-bleed band', 'colophon' ),
+			'label' => esc_html__( 'Full-bleed band', 'colophon' ),
 		)
 	);
 }
-add_action( 'init', __NAMESPACE__ . '\\skin_block_styles' );
+add_action( 'init', 'colophon_skin_block_styles' );
 
 /**
  * Register the Colophon pattern category.
@@ -72,13 +70,13 @@ add_action( 'init', __NAMESPACE__ . '\\skin_block_styles' );
  * Derived themes register their own category (e.g., 'kern') and may remove
  * this one. The Patterns panel needs at least one category to show a group.
  */
-function skin_pattern_categories(): void {
+function colophon_skin_pattern_categories(): void {
 	register_block_pattern_category(
 		'colophon',
-		array( 'label' => __( 'Colophon', 'colophon' ) )
+		array( 'label' => esc_html__( 'Colophon', 'colophon' ) )
 	);
 }
-add_action( 'init', __NAMESPACE__ . '\\skin_pattern_categories' );
+add_action( 'init', 'colophon_skin_pattern_categories' );
 
 /**
  * Override the Get-started page content with Colophon-specific copy.
@@ -90,7 +88,7 @@ add_action( 'init', __NAMESPACE__ . '\\skin_pattern_categories' );
 add_filter(
 	'colophon/get_started_content', // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 	static function ( array $content ): array {
-		$content['lead'] = __( 'Colophon is a minimal, accessible WordPress theme that works on its own — and also serves as the foundation for a collection of niche editorial themes. Here is how to make it yours.', 'colophon' );
+		$content['lead'] = esc_html__( 'Colophon is a minimal, accessible WordPress theme that works on its own — and also serves as the foundation for a collection of niche editorial themes. Here is how to make it yours.', 'colophon' );
 
 		return $content;
 	}

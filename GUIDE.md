@@ -64,16 +64,16 @@ The rule of thumb the in-file comments lean on: *if changing it changes how the 
 
 WordPress.org won't accept a theme that reuses another theme's function prefix or text domain, and rightly so. Most theme lines solve this by find-and-replacing a prefix across a dozen files and every hook string — exactly the job where one missed string silently breaks a hook in production.
 
-Colophon uses a PHP namespace instead and concentrates the whole identity into `inc/bootstrap.php`:
+Colophon concentrates the whole identity into `inc/bootstrap.php` and rewrites three prefix forms:
 
 ```php
-namespace Colophon;
-
-const SLUG    = 'colophon';   // text domain + asset handles + pattern prefix
-const VERSION = '1.0.0';
+define( 'COLOPHON_SLUG',    'colophon' );   // text domain + asset handles + pattern prefix
+define( 'COLOPHON_VERSION', '1.0.0' );
 ```
 
-Callbacks register as `__NAMESPACE__ . '\\setup'`, so renaming the namespace at the top of each file carries every hook along with it. There's no second list of callback strings to keep in sync, because there's no list at all — the namespace *is* the prefix. The CLI does this rename for you; this is just so you know what it's doing.
+Functions are `colophon_setup()`, constants are `COLOPHON_*`, the one class is `Colophon_CLI_Command`. The CLI rewrites `colophon_` → `{slug}_`, `COLOPHON_` → `{SLUG}_`, and `Colophon_` → `{Studly}_` on the way into your theme, so there is still no list of callback strings to keep in sync by hand.
+
+This used to be a PHP namespace — `namespace Colophon;` — with callbacks registered as `__NAMESPACE__ . '\setup'`, so one line carried every hook. It was a nice property and WordPress.org does not accept it. On ticket #280625 the Theme Review Team closed a theme in this line as not-approved and explained why: a namespace is acceptable only at the **class** level, because a WordPress site loads a large number of vendor functions into the global scope, so a bare `function setup()` inside a namespace still reads as unprefixed to their tooling. Every function, constant and class in the global scope needs a real per-theme prefix, no abbreviations. If you are building on Colophon, keep it that way — this is the rule that gets a theme rejected.
 
 ## Where "tidy" is a bug
 

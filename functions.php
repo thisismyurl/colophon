@@ -4,10 +4,10 @@
  *
  * All behaviour lives in inc/, split one concern per file, so this file stays a
  * table of contents you can read in five seconds. The single re-prefixing point
- * is inc/bootstrap.php (the namespace + the SLUG/VERSION constants).
+ * is inc/bootstrap.php (the `colophon_` function prefix + the COLOPHON_* constants).
  *
- * [CORE] This is the portable loader. The `colophon` CLI rewrites the namespace
- * and slug on the way into each theme it generates, so a shipped theme's
+ * [CORE] This is the portable loader. The `colophon` CLI rewrites the function
+ * prefix and slug on the way into each theme it generates, so a shipped theme's
  * functions.php is byte-for-byte this file with `Colophon`/`colophon` swapped
  * for the theme's own name. Don't add theme-specific behaviour here — it belongs
  * in inc/skin.php, the one file the CLI never overwrites.
@@ -17,7 +17,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-require_once __DIR__ . '/inc/bootstrap.php'; // [CORE] namespace + identity constants — the one swap point.
+require_once __DIR__ . '/inc/bootstrap.php'; // [CORE] function prefix + identity constants — the one swap point.
 require_once __DIR__ . '/inc/setup.php';     // [CORE] theme supports, i18n, nav menus, skip link.
 require_once __DIR__ . '/inc/assets.php';    // [CORE] cascade-ordered stylesheet enqueue + font preload.
 require_once __DIR__ . '/inc/bindings.php';  // [CORE] footer copyright-year + removable credit (block bindings).

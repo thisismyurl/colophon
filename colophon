@@ -8,7 +8,7 @@
  * theme from the core, and later pull core improvements forward into a theme
  * without touching its design.
  *
- *   php colophon new <slug> [--name="Pretty Name"] [--namespace=slug] [--prefix=xx] [--force]
+ *   php colophon new <slug> [--name="Pretty Name"] [--namespace=StudlyName] [--prefix=xx] [--force]
  *   php colophon sync <slug> [--dry-run]
  *   php colophon doctor <slug>
  *   php colophon list
@@ -101,7 +101,24 @@ function default_prefix( string $slug ): string {
 // skip prose, so a conceptual mention of "Colophon" in a comment survives.
 // ---------------------------------------------------------------------------
 function core_subs( string $code, array $t ): string {
-	$code = str_replace( 'namespace Colophon;', 'namespace ' . $t['namespace'] . ';', $code );
+	// Global-scope symbol prefixes. These run FIRST, before the quote-anchored
+	// rules below, so a callback string like 'colophon_setup' is rewritten as one
+	// symbol rather than being half-caught by the `'colophon` domain rule.
+	//
+	// The line these replaced was:
+	//     str_replace( 'namespace Colophon;', 'namespace ' . $t['namespace'] . ';' )
+	// Colophon used to carry its identity in a namespace, on the reasoning that one
+	// line re-pointed every hook. The WordPress.org Theme Review Team rejected that
+	// on ticket #280625 (Masthead, closed not-approved 2026-07-20): a namespace is
+	// accepted only at the CLASS level, because a WordPress site loads a large
+	// number of vendor functions into the global scope, so a bare `function setup()`
+	// inside a namespace still reads as unprefixed. Every function, constant and
+	// class in the global scope needs the theme's own prefix, no abbreviations.
+	// The one-place-to-re-prefix property survives — it is just three rules now
+	// instead of one line.
+	$code = str_replace( 'COLOPHON_', strtoupper( $t['slug'] ) . '_', $code ); // constants
+	$code = str_replace( 'Colophon_', studly( $t['namespace'] ) . '_', $code ); // classes
+	$code = str_replace( 'colophon_', $t['slug'] . '_', $code );               // functions
 	$code = str_replace( "'colophon", "'" . $t['slug'], $code ); // domain literal, hook names, SLUG value
 	$code = str_replace( '@package colophon', '@package ' . $t['slug'], $code );
 	// CSS-class strings (the admin-onboarding classes in inc/admin.php) — the bare
@@ -121,10 +138,17 @@ function core_subs( string $code, array $t ): string {
 	// the seed slug. The trailing space is intentional — it anchors the replacement
 	// to the command token, not prose like "built on Colophon" or "colophon sync".
 	$code = str_replace( 'wp colophon ', 'wp ' . $t['slug'] . ' ', $code );
-	$code = preg_replace_callback(
-		"/const VERSION = '[^']*';/",
-		static function () use ( $t ) {
-			return "const VERSION = '" . $t['version'] . "';";
+	// Version injection. This matched `const VERSION = '...';` until the theme line
+	// moved off namespaced constants — a bare global `const VERSION` is exactly the
+	// unprefixed global-scope symbol WP.org ticket #280625 objected to, so
+	// bootstrap.php now uses define( 'COLOPHON_VERSION', ... ). The prefix rules
+	// above have already rewritten COLOPHON_ to the theme's own prefix by the time
+	// this runs, so match the renamed constant, not the seed one.
+	$version_const = strtoupper( $t['slug'] ) . '_VERSION';
+	$code          = preg_replace_callback(
+		"/define\(\s*'" . preg_quote( $version_const, '/' ) . "',\s*'[^']*'\s*\);/",
+		static function () use ( $t, $version_const ) {
+			return "define( '" . $version_const . "', '" . $t['version'] . "' );";
 		},
 		$code
 	);
@@ -241,7 +265,7 @@ function cmd_new( array $args, array $opts ): void {
 	}
 
 	out( "Created themes/$slug from Colophon core v{$t['colophon_version']}  ($count files)." );
-	out( "  Name: {$t['name']}   Namespace: {$t['namespace']}   Prefix: {$t['prefix']}-" );
+	out( "  Name: {$t['name']}   Class prefix: " . studly( $t['namespace'] ) . "_   CSS prefix: {$t['prefix']}-" );
 	out( '' );
 	out( 'Next — the re-skin (the creative half):' );
 	out( "  1. Edit style.css Description, and readme.txt, for $slug." );
@@ -354,7 +378,13 @@ function cmd_doctor( array $args ): void {
 	$strays = array();
 	foreach ( glob( $target . '/inc/*.php' ) ?: array() as $php ) {
 		$code = read_file_or_fail( $php );
-		if ( false !== strpos( $code, 'namespace Colophon;' )
+		// `namespace Colophon;` is gone from the core (see core_subs), so the stray
+		// check now looks for the symbol prefixes that replaced it. A leaked
+		// `colophon_` function or `COLOPHON_` constant in a generated theme is the
+		// exact WP.org uniqueness failure that closed ticket #280625.
+		if ( false !== strpos( $code, 'colophon_' )
+			|| false !== strpos( $code, 'COLOPHON_' )
+			|| false !== strpos( $code, 'Colophon_' )
 			|| false !== strpos( $code, "'colophon'" )
 			|| false !== strpos( $code, "'colophon/" )
 			|| false !== strpos( $code, '@package colophon' ) ) {
@@ -508,7 +538,7 @@ function main( array $argv ): void {
 		default:
 			out( 'colophon — theme-line generator + core sync' );
 			out( '' );
-			out( '  php colophon new <slug> [--name="Pretty Name"] [--namespace=slug] [--prefix=xx] [--force]' );
+			out( '  php colophon new <slug> [--name="Pretty Name"] [--namespace=StudlyName] [--prefix=xx] [--force]' );
 			out( '  php colophon sync <slug> [--dry-run]' );
 			out( '  php colophon doctor <slug>' );
 			out( '  php colophon list' );

@@ -16,19 +16,17 @@
  * @package colophon
  */
 
-namespace Colophon;
-
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Register theme feature supports, the text domain, and navigation menus.
  */
-function setup(): void {
+function colophon_setup(): void {
 
 	// i18n. The domain is the literal 'colophon' (a constant would break make-pot —
-	// see bootstrap.php); the path uses DIR so it travels with a re-skin. The
+	// see bootstrap.php); the path uses COLOPHON_DIR so it travels with a re-skin. The
 	// CLI rewrites the literal when it generates a theme.
-	load_theme_textdomain( 'colophon', DIR . '/languages' );
+	load_theme_textdomain( 'colophon', COLOPHON_DIR . '/languages' );
 
 	// Fallback content width for oEmbeds in the reading column.
 	// Matches theme.json contentSize (720px).
@@ -71,7 +69,7 @@ function setup(): void {
 	 */
 	do_action( 'colophon/setup' ); // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 }
-add_action( 'after_setup_theme', __NAMESPACE__ . '\\setup' );
+add_action( 'after_setup_theme', 'colophon_setup' );
 
 /**
  * Declare WooCommerce support.
@@ -86,7 +84,7 @@ add_action( 'after_setup_theme', __NAMESPACE__ . '\\setup' );
  *
  * Pillar 6 (Resilience): we handle the 'when', not the 'if'.
  */
-function woocommerce_support(): void {
+function colophon_woocommerce_support(): void {
 	if ( ! class_exists( 'WooCommerce' ) ) {
 		return;
 	}
@@ -95,7 +93,7 @@ function woocommerce_support(): void {
 	add_theme_support( 'wc-product-gallery-lightbox' );
 	add_theme_support( 'wc-product-gallery-slider' );
 }
-add_action( 'after_setup_theme', __NAMESPACE__ . '\\woocommerce_support' );
+add_action( 'after_setup_theme', 'colophon_woocommerce_support' );
 
 /**
  * Register the editor stylesheet so the block editor mirrors the front end.
@@ -104,10 +102,10 @@ add_action( 'after_setup_theme', __NAMESPACE__ . '\\woocommerce_support' );
  * carries only the ::before/::after and custom-block personality that
  * theme.json cannot express.
  */
-function editor_styles(): void {
+function colophon_editor_styles(): void {
 	add_editor_style( array( 'assets/css/editor-style.css' ) );
 }
-add_action( 'after_setup_theme', __NAMESPACE__ . '\\editor_styles' );
+add_action( 'after_setup_theme', 'colophon_editor_styles' );
 
 /**
  * Drop the emoji-detection script and its styles.
@@ -119,13 +117,13 @@ add_action( 'after_setup_theme', __NAMESPACE__ . '\\editor_styles' );
  * Pillar 2 (Innovation over Compliance): we don't ship dead weight because
  * it ships by default.
  */
-function disable_emoji_assets(): void {
+function colophon_disable_emoji_assets(): void {
 	// Front-end only — leave the admin emoji picker intact.
 	// Themes must not alter admin-area behaviour users haven't opted into.
 	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
 	remove_action( 'wp_print_styles', 'print_emoji_styles' );
 }
-add_action( 'init', __NAMESPACE__ . '\\disable_emoji_assets' );
+add_action( 'init', 'colophon_disable_emoji_assets' );
 
 /**
  * Add autocomplete and enterkeyhint hints to the comment-form fields.
@@ -139,7 +137,7 @@ add_action( 'init', __NAMESPACE__ . '\\disable_emoji_assets' );
  * @param array $fields The default comment-form field markup, keyed by field.
  * @return array The fields with input attributes added.
  */
-function comment_form_field_attributes( array $fields ): array {
+function colophon_comment_form_field_attributes( array $fields ): array {
 	$attributes = array(
 		'author' => 'autocomplete="name" enterkeyhint="next"',
 		'email'  => 'autocomplete="email" inputmode="email" enterkeyhint="next"',
@@ -154,7 +152,7 @@ function comment_form_field_attributes( array $fields ): array {
 
 	return $fields;
 }
-add_filter( 'comment_form_default_fields', __NAMESPACE__ . '\\comment_form_field_attributes' );
+add_filter( 'comment_form_default_fields', 'colophon_comment_form_field_attributes' );
 
 /*
  * Skip link — NOT registered here.

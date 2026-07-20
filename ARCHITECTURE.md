@@ -28,7 +28,7 @@ theme on the way in). If you must diverge, list the path in your theme's
 | Path | Why it's core |
 | --- | --- |
 | `functions.php` | Thin loader; identical everywhere. |
-| `inc/bootstrap.php` | The namespace + SLUG/VERSION. Identity is re-injected from `colophon.json` on every sync. |
+| `inc/bootstrap.php` | The `COLOPHON_*` identity constants (SLUG, VERSION, DIR, URI). Identity is re-injected from `colophon.json` on every sync. |
 | `inc/setup.php` | Supports, i18n, nav menus, skip link, emoji-dequeue — the shared floor. |
 | `inc/assets.php` | Cascade-ordered enqueue + the filterable font-preload mechanism. |
 | `inc/bindings.php` | Footer copyright-year + removable credit (reads the theme's own header, so it carries no theme string). |
@@ -95,10 +95,21 @@ ships its own updater is rejected.
 WordPress.org rejects a theme that reuses another's function prefix or text
 domain. Two mechanisms keep every theme unique without scattering the identity:
 
-**PHP — a namespace, not a `mytheme_` prefix.** Callbacks register as
-`__NAMESPACE__ . '\\fn'`, so the namespace declaration is the only thing that
-changes per theme; every hook follows it automatically. `inc/bootstrap.php` holds
-the namespace + the `SLUG`/`VERSION` constants — the whole identity in one file.
+**PHP — a `colophon_` function prefix, rewritten per theme.** Every function,
+constant and class defined in the global scope carries the theme's own prefix:
+`colophon_setup()` becomes `masthead_setup()`, `COLOPHON_SLUG` becomes
+`MASTHEAD_SLUG`, `Colophon_CLI_Command` becomes `Masthead_CLI_Command`.
+`inc/bootstrap.php` holds the `COLOPHON_*` identity constants, and the CLI rewrites
+all three prefix forms — the whole identity still lives in one file.
+
+This replaced a namespace (`namespace Colophon;`), chosen originally because
+callbacks registered as `__NAMESPACE__ . '\\fn'` meant one line re-pointed every
+hook. The WordPress.org Theme Review Team rejected that on ticket #280625, which
+closed Masthead as not-approved: a namespace is accepted only at the **class**
+level, because a WordPress site loads a large number of vendor functions into the
+global scope, so a bare `function setup()` inside a namespace still reads as
+unprefixed to their tooling. Three substitution rules cost little, and the
+requirement is not negotiable.
 
 **CSS — a stable semantic-token namespace.** Core CSS can't reference
 `--wp--preset--color--teal` (that's one skin's word). Instead core references
@@ -125,7 +136,11 @@ rewrites the literal too, so it survives a re-skin and stays a literal.
 `colophon new` and `colophon sync` apply these to every `core` file (and `new`
 also to `scaffold` files) as they're written into the target theme:
 
-1. `namespace Colophon;` → `namespace {Namespace};`
+1. `COLOPHON_` → `{SLUG}_` — constants. Runs first, before the quote-anchored
+   rules below, so a callback string like `'colophon_setup'` is rewritten as one
+   symbol rather than half-caught by rule 2.
+1. `Colophon_` → `{Studly}_` — classes.
+1. `colophon_` → `{slug}_` — functions.
 2. `'colophon` → `'{slug}` — catches the text-domain literal **and** every hook
    name (`'colophon/setup'`, `'colophon/footer_credit'`, …) and the `SLUG`
    constant value, in one rule. The leading single-quote means prose mentioning

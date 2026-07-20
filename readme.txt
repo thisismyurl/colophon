@@ -5,7 +5,7 @@ Tags: blog, full-site-editing, block-patterns, custom-colors, custom-logo, custo
 Requires at least: 6.7
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 1.6159.0900
+Stable tag: 1.6201.1029
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,54 @@ Register them in the skin_block_styles() function in inc/skin.php and add the CS
 Colophon is a block theme built for the WordPress Site Editor. Page builders that support the block editor work alongside it; legacy drag-and-drop builders that bypass the block system are not supported.
 
 == Changelog ==
+
+= 1.6201.1029 =
+The theme line moves off a PHP namespace and onto a per-theme function prefix.
+This is a breaking change for anyone building on Colophon, and it is not optional.
+It is what the WordPress.org Theme Review Team requires.
+
+WHY: ticket #280625 closed Masthead as not-approved. A namespace is accepted only
+at the class level, because a WordPress site loads a large number of vendor
+functions into the global scope, so a bare `function setup()` inside
+`namespace Masthead;` still reads as unprefixed to the review tooling. Every
+function, constant and class defined in the global scope needs the theme's own
+prefix, no abbreviations. Colophon shipped the namespace pattern into every theme
+generated from it, so the fix belongs here rather than in each theme.
+
+* Core: removed `namespace Colophon;` from all eight files in inc/. 28 functions
+  are now `colophon_*`, 8 constants are `COLOPHON_*` (file-scope `const` converted
+  to `define()`, since a bare global `const SLUG` is itself an unprefixed global
+  symbol), and the WP-CLI class is `Colophon_CLI_Command`. Hook names are
+  unchanged, so a theme's filters keep working across the upgrade.
+* Core: 17 translated strings converted from `__()` to `esc_html__()`. Five keep
+  bare `__()` deliberately, because they are escaped with `esc_html()` at the point of
+  echo, and converting them would escape twice and render an apostrophe as a
+  literal `&#039;`. Each carries an inline comment so the exception is not read as
+  an oversight.
+* CLI: the substitution that rewrote `namespace Colophon;` is replaced by three
+  prefix rules: `COLOPHON_` to `{SLUG}_`, `Colophon_` to `{Studly}_`, and
+  `colophon_` to `{slug}_`, applied before the quote-anchored rules so a callback
+  string like `'colophon_setup'` is rewritten as one symbol. The one-place-to-
+  re-prefix property is preserved.
+* CLI: version injection matched `const VERSION = '...';` and would have silently
+  stopped working now that bootstrap.php uses `define()`. It matches the renamed
+  constant instead. Caught before release; no generated theme shipped with a stale
+  version because of it.
+* CLI: `--namespace` was left with nothing to do by the change above. It now sets
+  the class prefix (defaulting, as before, to the slug), so the flag means
+  something again rather than being silently ignored.
+* CLI: `colophon doctor`'s stray-identity check still grepped for
+  `namespace Colophon;`, a string that no longer exists, so it would have
+  reported a clean bill of health on a theme with a leaked core prefix. It now
+  checks the three prefix forms.
+* Tooling: `package-theme.sh` cloned `thisismyurl/colophon-<slug>`, which matches
+  no repository that exists, because published theme repos are named for the theme alone.
+  Every packaging run failed at the clone step. It also gained a
+  `COLOPHON_REPO_REF` override, because a theme's shipped line is not always its
+  default branch.
+* Docs: ARCHITECTURE.md §4 and GUIDE.md described the namespace mechanism as the
+  design. Both now describe the prefix rules, and say plainly why the namespace
+  was rejected, so nobody rediscovers it the hard way.
 
 = 1.6159.0900 =
 * Expanded templates: added archive, front-page, page (wide), and page (blank).

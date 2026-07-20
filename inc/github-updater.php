@@ -37,8 +37,6 @@
  * @package colophon
  */
 
-namespace Colophon;
-
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -49,7 +47,7 @@ defined( 'ABSPATH' ) || exit;
  * answer is cached to stay well clear of that ceiling. Six hours keeps updates
  * timely without ever approaching the limit.
  */
-const GITHUB_UPDATER_CACHE_TTL = 6 * HOUR_IN_SECONDS;
+define( 'COLOPHON_GITHUB_UPDATER_CACHE_TTL', 6 * HOUR_IN_SECONDS );
 
 /**
  * Resolve the configured 'owner/name' GitHub repo for self-updates.
@@ -60,7 +58,7 @@ const GITHUB_UPDATER_CACHE_TTL = 6 * HOUR_IN_SECONDS;
  *
  * @return string The validated 'owner/name', or '' when not opted in / invalid.
  */
-function github_updater_repo(): string {
+function colophon_github_updater_repo(): string {
 	/**
 	 * Filters the GitHub repository this theme self-updates from.
 	 *
@@ -93,17 +91,17 @@ function github_updater_repo(): string {
  *                         other types early in the request — passed through).
  * @return mixed The transient, unchanged unless a newer release is on offer.
  */
-function github_updater_check( $transient ) {
+function colophon_github_updater_check( $transient ) {
 	if ( ! is_object( $transient ) ) {
 		return $transient;
 	}
 
-	$repo = github_updater_repo();
+	$repo = colophon_github_updater_repo();
 	if ( '' === $repo ) {
 		return $transient;
 	}
 
-	$release = github_updater_fetch_release( $repo );
+	$release = colophon_github_updater_fetch_release( $repo );
 	if ( null === $release ) {
 		return $transient;
 	}
@@ -116,7 +114,7 @@ function github_updater_check( $transient ) {
 		return $transient;
 	}
 
-	$package = github_updater_find_zip_asset( $release, $stylesheet );
+	$package = colophon_github_updater_find_zip_asset( $release, $stylesheet );
 	if ( '' === $package ) {
 		// A newer tag exists but ships no slug-matching .zip asset; offering
 		// GitHub's zipball would unpack into the wrong directory. No-op.
@@ -132,21 +130,21 @@ function github_updater_check( $transient ) {
 
 	return $transient;
 }
-add_filter( 'pre_set_site_transient_update_themes', __NAMESPACE__ . '\\github_updater_check' );
+add_filter( 'pre_set_site_transient_update_themes', 'colophon_github_updater_check' );
 
 /**
  * Fetch and cache the repo's latest release, returning the parsed payload.
  *
  * The whole method is failure-tolerant by design: a network error, a rate-limit,
  * a non-200, or malformed JSON all resolve to null, and the caller no-ops. The
- * answer is cached for GITHUB_UPDATER_CACHE_TTL under a SLUG-keyed transient so
+ * answer is cached for COLOPHON_GITHUB_UPDATER_CACHE_TTL under a COLOPHON_SLUG-keyed transient so
  * repeated update checks make at most one request per cache window.
  *
  * @param string $repo Validated 'owner/name'.
  * @return array<string,mixed>|null The decoded release, or null on any failure.
  */
-function github_updater_fetch_release( string $repo ): ?array {
-	$cache_key = 'colophon_gh_release_' . md5( SLUG . '|' . $repo );
+function colophon_github_updater_fetch_release( string $repo ): ?array {
+	$cache_key = 'colophon_gh_release_' . md5( COLOPHON_SLUG . '|' . $repo );
 	$cached    = get_transient( $cache_key );
 
 	if ( is_array( $cached ) ) {
@@ -161,7 +159,7 @@ function github_updater_fetch_release( string $repo ): ?array {
 			'headers'   => array(
 				// GitHub rejects requests without a User-Agent; the Accept
 				// header pins the stable v3 release media type.
-				'User-Agent' => 'Colophon-Theme-Updater/' . VERSION,
+				'User-Agent' => 'Colophon-Theme-Updater/' . COLOPHON_VERSION,
 				'Accept'     => 'application/vnd.github+json',
 			),
 		)
@@ -181,7 +179,7 @@ function github_updater_fetch_release( string $repo ): ?array {
 		return null;
 	}
 
-	set_transient( $cache_key, $release, GITHUB_UPDATER_CACHE_TTL );
+	set_transient( $cache_key, $release, COLOPHON_GITHUB_UPDATER_CACHE_TTL );
 
 	return $release;
 }
@@ -197,7 +195,7 @@ function github_updater_fetch_release( string $repo ): ?array {
  * @param string              $stylesheet The installed theme's stylesheet slug.
  * @return string The asset's browser_download_url, or '' if none matches.
  */
-function github_updater_find_zip_asset( array $release, string $stylesheet ): string {
+function colophon_github_updater_find_zip_asset( array $release, string $stylesheet ): string {
 	if ( empty( $release['assets'] ) || ! is_array( $release['assets'] ) ) {
 		return '';
 	}
@@ -226,12 +224,12 @@ function github_updater_find_zip_asset( array $release, string $stylesheet ): st
  * the cache window lapsed. Fires on the WP_Upgrader completion hook regardless of
  * what was updated — cheap, and keeps the banner honest.
  */
-function github_updater_flush_cache(): void {
-	$repo = github_updater_repo();
+function colophon_github_updater_flush_cache(): void {
+	$repo = colophon_github_updater_repo();
 	if ( '' === $repo ) {
 		return;
 	}
 
-	delete_transient( 'colophon_gh_release_' . md5( SLUG . '|' . $repo ) );
+	delete_transient( 'colophon_gh_release_' . md5( COLOPHON_SLUG . '|' . $repo ) );
 }
-add_action( 'upgrader_process_complete', __NAMESPACE__ . '\\github_updater_flush_cache' );
+add_action( 'upgrader_process_complete', 'colophon_github_updater_flush_cache' );

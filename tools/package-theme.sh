@@ -5,7 +5,8 @@
 #   bash package-theme.sh <slug> [--wporg|--github]
 #
 #   slug      The theme slug (= WP.org text domain / zip root dir name).
-#             NOT the GitHub repo name — pass "kern" not "colophon-kern".
+#             This is also the GitHub repo name — published theme repos are
+#             named for the theme alone (thisismyurl/quillwork).
 #
 # Build flags (default: --wporg):
 #   --wporg   WP.org submission build.
@@ -36,7 +37,11 @@ for arg in "${@:2}"; do
   esac
 done
 
-REPO="colophon-$SLUG"
+# Published theme repos are named for the theme alone — thisismyurl/quillwork,
+# thisismyurl/masthead. This read "colophon-$SLUG", which matches no repo that
+# exists, so every packaging run failed at the clone step. Override with
+# COLOPHON_REPO=<owner/name> if a theme ever lives somewhere else.
+REPO="${COLOPHON_REPO_NAME:-$SLUG}"
 WORK_DIR="$(mktemp -d)"
 trap 'rm -rf "$WORK_DIR"' EXIT
 
@@ -46,7 +51,30 @@ echo "  slug:  $SLUG"
 echo "  build: $BUILD"
 
 # 1. Clone the theme repo (shallow — we only need HEAD)
-gh repo clone "thisismyurl/$REPO" "$WORK_DIR/src" -- --depth=1 --quiet
+# Source. Default is a shallow clone of the published repo; COLOPHON_SRC_DIR
+# builds from a local working tree instead.
+#
+# The local option matters because a WP.org submission zip should be inspectable
+# BEFORE anything is pushed. Cloning from GitHub means the only way to see what
+# you are about to submit is to publish first and check afterwards, which is the
+# wrong order for an artifact that gets rejected on file hygiene.
+if [ -n "${COLOPHON_SRC_DIR:-}" ]; then
+  echo "  src:   $COLOPHON_SRC_DIR (local working tree, not the published repo)"
+  mkdir -p "$WORK_DIR/src"
+  rsync -a "$COLOPHON_SRC_DIR/" "$WORK_DIR/src/"
+else
+  gh repo clone "thisismyurl/$REPO" "$WORK_DIR/src" -- --depth=1 --quiet
+
+  # Build from a specific ref when asked. Needed because a theme's shipped line is
+  # not always its default branch: quillwork's released tags sit on a history that
+  # shares no commits with main, so packaging its default branch would produce a
+  # zip of the wrong lineage entirely.
+  if [ -n "${COLOPHON_REPO_REF:-}" ]; then
+    echo "  ref:   $COLOPHON_REPO_REF (not the default branch)"
+    git -C "$WORK_DIR/src" fetch --depth=1 --quiet origin "$COLOPHON_REPO_REF"
+    git -C "$WORK_DIR/src" checkout --quiet FETCH_HEAD
+  fi
+fi
 
 # 2. Read version from style.css
 VERSION=$(grep '^Version:' "$WORK_DIR/src/style.css" \
@@ -70,13 +98,25 @@ DIST="$WORK_DIR/$SLUG"
 RSYNC_ARGS=(-a)
 
 if [ -f "$WORK_DIR/src/.distignore" ]; then
-  RSYNC_ARGS+=(--exclude-from="$WORK_DIR/src/.distignore")
+  if [ "$BUILD" = "github" ]; then
+    # .distignore lists inc/github-updater.php, because its main job is producing
+    # the WP.org build. Honouring it verbatim here made --github a no-op: it
+    # promised to include the updater and then excluded it anyway, so the two
+    # builds came out byte-identical and GitHub-native self-updates never worked.
+    # Strip that one line for the GitHub build; everything else in .distignore
+    # still applies.
+    grep -v '^inc/github-updater\.php[[:space:]]*$' "$WORK_DIR/src/.distignore" \
+      > "$WORK_DIR/distignore.github"
+    RSYNC_ARGS+=(--exclude-from="$WORK_DIR/distignore.github")
+  else
+    RSYNC_ARGS+=(--exclude-from="$WORK_DIR/src/.distignore")
+  fi
 fi
 
 if [ "$BUILD" = "wporg" ]; then
-  # Exclude the GitHub updater — WP.org uses its own update mechanism.
-  # The file_exists() guard in functions.php makes this a safe exclusion
-  # (no fatal error when the file is absent).
+  # Exclude the GitHub updater. WP.org uses its own update mechanism, and a theme
+  # in the directory must not carry a self-update path. The file_exists() guard in
+  # functions.php makes this a safe exclusion (no fatal error when it is absent).
   RSYNC_ARGS+=(--exclude="inc/github-updater.php")
   echo "  Excluded for WP.org build:"
   echo "    inc/github-updater.php (use WP.org update API instead)"

@@ -34,6 +34,9 @@ jobs:
           - masthead
           - parcel
           - wake
+          - selvedge
+          - gutter
+          - ligature
     steps:
       - name: Dispatch sync to ${{ matrix.repo }}
         uses: actions/github-script@v7

@@ -34,7 +34,11 @@
 
 		<!-- wp:post-navigation-link {"type":"previous","showTitle":true,"linkLabel":true} /-->
 
-		<!-- wp:post-navigation-link {"type":"next","showTitle":true,"linkLabel":true,"textAlign":"right"} /-->
+		<!-- className carries the alignment instead of textAlign:"right" — that
+		     attribute is a literal left/right value that doesn't flip for RTL.
+		     .colophon-nav-next (assets/css/skin.css) uses text-align: end, which
+		     does. -->
+		<!-- wp:post-navigation-link {"type":"next","showTitle":true,"linkLabel":true,"className":"colophon-nav-next"} /-->
 
 	</div>
 	<!-- /wp:group -->

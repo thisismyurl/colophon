@@ -83,6 +83,27 @@
 	.is-style-colophon-band {
 		background-color: var(--wp--preset--color--base-ground);
 	}
+
+	/* Inverted footer (patterns/site-footer.php) — dark background, so the
+	   global link colour (theme.json styles.elements.link, tuned for light
+	   backgrounds) fails WCAG 1.4.3 here: as low as 1.3:1 at rest, 1:1 on
+	   hover (hover = base-black = the footer's own background — invisible).
+	   The class beats core's a:where() rule on specificity alone (0,1,1 vs
+	   0,0,1), so this needs no !important and no elements.link JSON. */
+	.colophon-inverted-footer a:where(:not(.wp-element-button)) {
+		color: var(--wp--preset--color--base-rule);
+	}
+	.colophon-inverted-footer a:where(:not(.wp-element-button)):hover {
+		color: var(--wp--preset--color--base-paper);
+	}
+
+	/* Post navigation's "next" link — the visual pairing with "previous" needs
+	   it pushed to the trailing edge, but the block support's textAlign only
+	   takes a literal left/right, which doesn't flip for RTL. text-align: end
+	   is the logical property that does. */
+	.colophon-nav-next {
+		text-align: end;
+	}
 }
 
 /* =====================================================================

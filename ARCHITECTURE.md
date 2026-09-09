@@ -225,12 +225,19 @@ What the three themes taught, and what changed:
 
 **Contrast is verified, never trusted.** Two design specs shipped contrast ratios
 that were arithmetically wrong; one set was implemented and produced real WCAG
-failures (green data on a saturated blue band at 2.5:1). The fix is a discipline,
-made executable: `php bin/colophon contrast <fg> <bg>` prints the WCAG 2.1 ratio and
-the AA/AAA verdicts. **Every text/background pair a skin introduces is checked
-with this before it ships — no number from a spec is trusted on faith.** It also
-catches wrong-direction fixes (a "darker" suggestion for dim-on-dark text makes
-contrast worse, not better — the tool says so in one line).
+failures (green data on a saturated blue band at 2.5:1). A later audit found a
+second, quieter failure mode: `theme.json`'s global `styles.elements.link` colour
+is tuned for light backgrounds, and a pattern with its own dark background
+(patterns/site-footer.php) inherited it anyway — 1.3:1 at rest, 1:1 on hover,
+because `elements.link`'s CSS targets the bare `<a>` tag directly and beats any
+colour set only on an ancestor. The fix is a discipline, made executable: `php
+bin/colophon contrast <fg> <bg>` prints the WCAG 2.1 ratio and the AA/AAA
+verdicts. **Every text/background pair a skin introduces or inherits is checked
+with this before it ships — no number from a spec is trusted on faith, and
+"the group's colour looks right" is not the same check as "every element inside
+it actually renders that colour."** It also catches wrong-direction fixes (a
+"darker" suggestion for dim-on-dark text makes contrast worse, not better — the
+tool says so in one line).
 
 **The re-prefix now covers CSS-class strings.** `colophon new` originally rewrote
 the namespace, text domain, and hook names, but not the bare `colophon-` CSS

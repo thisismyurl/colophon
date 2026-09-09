@@ -41,6 +41,15 @@ function colophon_setup(): void {
 	add_theme_support( 'responsive-embeds' );
 	add_theme_support( 'align-wide' );
 	add_theme_support(
+		'custom-logo',
+		array(
+			'height'      => 60,
+			'width'       => 200,
+			'flex-height' => true,
+			'flex-width'  => true,
+		)
+	);
+	add_theme_support(
 		'html5',
 		array(
 			'comment-form',

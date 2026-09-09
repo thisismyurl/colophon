@@ -13,7 +13,11 @@
 	<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|3","padding":{"bottom":"var:preset|spacing|8"},"margin":{"bottom":"var:preset|spacing|8"}},"border":{"bottom":{"color":"var:preset|color|base-rule","style":"solid","width":"1px"}}},"layout":{"type":"default"}} -->
 	<div class="wp-block-group" style="padding-bottom:var(--wp--preset--spacing--8);margin-bottom:var(--wp--preset--spacing--8);border-bottom:1px solid var(--wp--preset--color--base-rule)">
 
-		<!-- wp:query-title {"type":"search","level":1,"textAlign":"left"} /-->
+		<!-- "textAlign":"left" removed — a literal left/right value doesn't flip
+		     for RTL, and left is already the natural default alignment in LTR,
+		     so dropping it changes nothing visually except in RTL, where it's
+		     now correct. -->
+		<!-- wp:query-title {"type":"search","level":1} /-->
 
 	</div>
 	<!-- /wp:group -->

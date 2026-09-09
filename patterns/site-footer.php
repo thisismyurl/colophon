@@ -10,8 +10,8 @@
  * @package colophon
  */
 ?>
-<!-- wp:group {"tagName":"footer","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|8","left":"var:preset|spacing|5","right":"var:preset|spacing|5"}},"color":{"background":"var:preset|color|base-black","text":"var:preset|color|base-paper"}},"layout":{"type":"constrained","contentSize":"1200px"}} -->
-<footer class="wp-block-group has-base-paper-color has-base-black-background-color has-text-color has-background" style="padding-top:var(--wp--preset--spacing--10);padding-bottom:var(--wp--preset--spacing--8);padding-left:var(--wp--preset--spacing--5);padding-right:var(--wp--preset--spacing--5)">
+<!-- wp:group {"tagName":"footer","className":"colophon-inverted-footer","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|8","left":"var:preset|spacing|5","right":"var:preset|spacing|5"}},"color":{"background":"var:preset|color|base-black","text":"var:preset|color|base-paper"}},"layout":{"type":"constrained","contentSize":"1200px"}} -->
+<footer class="wp-block-group colophon-inverted-footer has-base-paper-color has-base-black-background-color has-text-color has-background" style="padding-top:var(--wp--preset--spacing--10);padding-bottom:var(--wp--preset--spacing--8);padding-left:var(--wp--preset--spacing--5);padding-right:var(--wp--preset--spacing--5)">
 
 	<!-- wp:columns {"style":{"spacing":{"blockGap":{"top":"var:preset|spacing|7","left":"var:preset|spacing|8"}}}} -->
 	<div class="wp-block-columns">

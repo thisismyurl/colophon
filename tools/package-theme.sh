@@ -1,41 +1,33 @@
 #!/usr/bin/env bash
-# package-theme.sh — build a distribution zip for a Colophon derived theme.
+# package-theme.sh — build a WordPress.org distribution zip for Colophon.
 #
 # Usage:
-#   bash package-theme.sh <slug> [--wporg|--github]
+#   bash package-theme.sh <slug>
 #
 #   slug      The theme slug (= WP.org text domain / zip root dir name).
 #             This is also the GitHub repo name — published theme repos are
 #             named for the theme alone (thisismyurl/quillwork).
 #
-# Build flags (default: --wporg):
-#   --wporg   WP.org submission build.
-#             Excludes inc/github-updater.php. Zip root is <slug>/ — required
-#             by WP.org to match the Text Domain field in style.css.
-#   --github  GitHub release build.
-#             Includes inc/github-updater.php for GitHub-native auto-updates.
-#             Same zip structure; useful for the GitHub release artifact.
+# Colophon carries no self-updater and ships to WordPress.org only, so there
+# is one build, not a --wporg/--github choice. (Earlier revisions offered a
+# --github build that included inc/github-updater.php; that file is gone
+# from core entirely as of themes.trac #276778 — see ARCHITECTURE.md's "No
+# self-updater in Colophon core.") A theme still distributed only via GitHub
+# releases and carrying its own updater is a fork's concern, not this script's.
 #
 # Version:
 #   Read from style.css. Set it first with bump-version.sh.
 #   Format: 1.Yjjj[.hhmm] (see bump-version.sh for details).
 #
 # Output:
-#   <slug>-<version>-wporg.zip   or   <slug>-<version>-github.zip
+#   <slug>-<version>-wporg.zip
 #
 # Requires: gh (authenticated), rsync, zip, jq
 
 set -euo pipefail
 
-SLUG="${1:?Usage: $0 <slug> [--wporg|--github]}"
+SLUG="${1:?Usage: $0 <slug>}"
 BUILD="wporg"
-
-for arg in "${@:2}"; do
-  case "$arg" in
-    --github) BUILD="github" ;;
-    --wporg)  BUILD="wporg" ;;
-  esac
-done
 
 # Published theme repos are named for the theme alone — thisismyurl/quillwork,
 # thisismyurl/masthead. This read "colophon-$SLUG", which matches no repo that
@@ -98,37 +90,19 @@ DIST="$WORK_DIR/$SLUG"
 RSYNC_ARGS=(-a)
 
 if [ -f "$WORK_DIR/src/.distignore" ]; then
-  if [ "$BUILD" = "github" ]; then
-    # .distignore lists inc/github-updater.php, because its main job is producing
-    # the WP.org build. Honouring it verbatim here made --github a no-op: it
-    # promised to include the updater and then excluded it anyway, so the two
-    # builds came out byte-identical and GitHub-native self-updates never worked.
-    # Strip that one line for the GitHub build; everything else in .distignore
-    # still applies.
-    grep -v '^inc/github-updater\.php[[:space:]]*$' "$WORK_DIR/src/.distignore" \
-      > "$WORK_DIR/distignore.github"
-    RSYNC_ARGS+=(--exclude-from="$WORK_DIR/distignore.github")
-  else
-    RSYNC_ARGS+=(--exclude-from="$WORK_DIR/src/.distignore")
-  fi
-fi
-
-if [ "$BUILD" = "wporg" ]; then
-  # Exclude the GitHub updater. WP.org uses its own update mechanism, and a theme
-  # in the directory must not carry a self-update path. The file_exists() guard in
-  # functions.php makes this a safe exclusion (no fatal error when it is absent).
-  RSYNC_ARGS+=(--exclude="inc/github-updater.php")
-  echo "  Excluded for WP.org build:"
-  echo "    inc/github-updater.php (use WP.org update API instead)"
-else
-  echo "  Including inc/github-updater.php (GitHub release build)"
+  RSYNC_ARGS+=(--exclude-from="$WORK_DIR/src/.distignore")
 fi
 
 rsync "${RSYNC_ARGS[@]}" "$WORK_DIR/src/" "$DIST/"
 
-# 5. Confirm github-updater exclusion
-if [ "$BUILD" = "wporg" ] && [ -f "$DIST/inc/github-updater.php" ]; then
-  echo "ERROR: inc/github-updater.php is present in the WP.org dist — rsync exclude failed."
+# 5. Belt-and-suspenders: a theme in the WP.org directory must not carry a
+# self-update path. Core no longer ships inc/github-updater.php at all, but
+# this catches the file anyway if a fork or an old checkout still has one —
+# the previous submission's rejection (themes.trac #276778) was exactly this
+# file leaking into an uploaded zip.
+if [ -f "$DIST/inc/github-updater.php" ]; then
+  echo "ERROR: inc/github-updater.php is present in the dist — WP.org will reject this."
+  echo "  Colophon core no longer ships this file; remove it from $WORK_DIR/src before packaging."
   exit 1
 fi
 
@@ -141,10 +115,13 @@ echo ""
 echo "Output: $OUT ($ZIP_SIZE)"
 echo "  zip root: $SLUG/  ← matches Text Domain '$TEXT_DOMAIN'"
 
+THEME_URI=$(grep '^Theme URI:' "$WORK_DIR/src/style.css" \
+  | sed 's/Theme URI:[[:space:]]*//' | tr -d '[:space:]')
+
 if [ "$BUILD" = "wporg" ]; then
   echo ""
   echo "WP.org checklist before submitting:"
-  echo "  [ ] Theme URI page exists at https://thisismyurl.com/$SLUG/"
+  echo "  [ ] Theme URI page returns 200: $THEME_URI"
   echo "  [ ] screenshot.png is exactly 1200×900 px"
   echo "  [ ] readme.txt is present and complete"
   echo "  [ ] No inc/github-updater.php in zip (verified above)"

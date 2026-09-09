@@ -1,9 +1,6 @@
 # Files excluded from the WordPress.org distribution zip.
 # The colophon CLI and WP.org deploy tooling both read this file.
 
-# Internal updater — not for distribution (file_exists-guarded in functions.php)
-inc/github-updater.php
-
 # Internal tooling manifests
 colophon.json
 .distignore

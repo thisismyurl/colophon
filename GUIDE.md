@@ -81,15 +81,9 @@ There's one spot where the code looks repetitive on purpose, and I want to warn 
 
 The reason is `wp i18n make-pot`. The extractor reads your source statically and only recognises a *literal* as the text-domain argument. Hand it a constant and it extracts nothing, and you ship a theme that looks translation-ready and quietly isn't. So the split is deliberate: the text domain stays a literal; everything else identity-shaped reads from the constants. The CLI rewrites the literal too, so it survives a re-skin and stays a literal.
 
-## The updater you can delete
+## No self-updater here
 
-`inc/github-updater.php` is a small core file that gives a theme distributed from a GitHub repo the one-click update banner in **Appearance → Themes** — no library, no service, nothing phoned home but GitHub's release API. It ships dormant; a theme turns it on with one filter in its `inc/skin.php`:
-
-```php
-add_filter( 'colophon/github_updater_repo', static fn () => 'owner/repo' );
-```
-
-The release needs a real `.zip` asset whose name starts with the theme slug (e.g. `colophon-1.3.0.zip`). And the headline feature is the off-switch: **delete the one file and it's gone** — the loader is `file_exists`-guarded, so nothing else needs touching. Do delete it before a WordPress.org submission, because .org supplies updates there and a self-updater gets a theme rejected.
+Earlier versions of core shipped an optional `inc/github-updater.php` — a small, `file_exists()`-guarded file that gave a theme distributed straight from a GitHub release the one-click update banner in **Appearance → Themes**. Colophon itself only ever ships to WordPress.org, and .org rejects any theme that carries a self-update path (it supplies that mechanism itself), so the file is gone from core entirely rather than merely excluded at packaging time — a build-time exclusion is one more step that can fail, and it did (themes.trac #276778). If you're building a theme that will only ever distribute via GitHub releases, you can still add your own updater; it just isn't part of what `colophon sync` gives you anymore.
 
 ## About the footer credit
 

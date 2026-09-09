@@ -37,7 +37,7 @@ define( 'COLOPHON_SLUG', 'colophon' );
 /**
  * Theme version — cache-bust for enqueued assets and the WordPress.org version.
  */
-define( 'COLOPHON_VERSION', '1.6201.1029' );
+define( 'COLOPHON_VERSION', '1.6252.1241' );
 
 /**
  * Absolute filesystem path to the theme root (no trailing slash).

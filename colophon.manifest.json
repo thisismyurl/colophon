@@ -16,7 +16,6 @@
 		"inc/bindings.php",
 		"inc/admin.php",
 		"inc/cli.php",
-		"inc/github-updater.php",
 		"assets/css/core/reset.css",
 		"assets/css/core/base.css",
 		"assets/css/core/print.css"

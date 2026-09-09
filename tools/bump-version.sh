@@ -80,6 +80,15 @@ update_file() {
     if $DRY_RUN; then
       echo "  [dry-run] $file — would apply: $replacement"
     else
+      # A pattern that matches nothing (source drifted, e.g. the constant was
+      # renamed) makes sed -i a silent no-op that still exits 0 — this script
+      # shipped that exact bug against inc/bootstrap.php after it moved from
+      # `const VERSION` to `define('COLOPHON_VERSION', ...)`. Fail loudly
+      # instead of reporting a version bump that didn't happen.
+      if ! grep -q -- "$pattern" "$file"; then
+        echo "  ERROR: $file — pattern not found, nothing to update: $pattern" >&2
+        exit 1
+      fi
       sed -i "s/$pattern/$replacement/" "$file"
       echo "  updated: $file"
     fi
@@ -93,20 +102,38 @@ update_file "style.css" \
 
 # inc/bootstrap.php — runtime VERSION constant (cache-bust for enqueued assets)
 update_file "inc/bootstrap.php" \
-  "const VERSION = '[^']*';" \
-  "const VERSION = '$VERSION';"
+  "define( 'COLOPHON_VERSION', '[^']*' );" \
+  "define( 'COLOPHON_VERSION', '$VERSION' );"
 
-# colophon.json — CLI manifest; colophon sync reads this and propagates to both files above
-update_file "colophon.json" \
-  "" \
-  "" # handled separately with jq below
-
-if [ -f "colophon.json" ] && ! $DRY_RUN; then
-  jq --arg v "$VERSION" '.version = $v' colophon.json > colophon.json.tmp \
-    && mv colophon.json.tmp colophon.json
+# colophon.json — CLI manifest; colophon sync reads this and propagates to both files above.
+# Both "version" and "colophon_version" are bumped together here: for Colophon's own
+# record (is_core=true) the two have always carried the same value, so this preserves
+# that symmetry rather than assuming which one a future reader means.
+# JSON-safe edit needs a real parser, not sed — jq if present, else a PHP fallback
+# (PHP is a guaranteed dependency of this toolchain; jq is not on every machine).
+if [ -f "colophon.json" ] && $DRY_RUN; then
+  echo "  [dry-run] colophon.json — would set .version and .colophon_version = \"$VERSION\""
+elif [ -f "colophon.json" ]; then
+  if command -v jq >/dev/null 2>&1; then
+    jq --arg v "$VERSION" '.version = $v | .colophon_version = $v' colophon.json > colophon.json.tmp \
+      && mv colophon.json.tmp colophon.json
+  elif command -v php >/dev/null 2>&1; then
+    php -r '
+      $f = "colophon.json";
+      $d = json_decode(file_get_contents($f), true);
+      if (null === $d) { fwrite(STDERR, "colophon.json: invalid JSON\n"); exit(1); }
+      $d["version"] = $argv[1];
+      $d["colophon_version"] = $argv[1];
+      $json = json_encode($d, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+      // json_encode indents with 4 spaces; the repo convention is tabs.
+      $json = preg_replace_callback("/^( +)/m", fn ($m) => str_repeat("\t", strlen($m[1]) / 4), $json);
+      file_put_contents($f, $json . "\n");
+    ' "$VERSION"
+  else
+    echo "  ERROR: colophon.json needs jq or php to edit safely, and neither is on PATH." >&2
+    exit 1
+  fi
   echo "  updated: colophon.json"
-elif [ -f "colophon.json" ] && $DRY_RUN; then
-  echo "  [dry-run] colophon.json — would set .version = \"$VERSION\""
 fi
 
 echo ""

@@ -22,9 +22,6 @@ require_once __DIR__ . '/inc/setup.php';     // [CORE] theme supports, i18n, nav
 require_once __DIR__ . '/inc/assets.php';    // [CORE] cascade-ordered stylesheet enqueue + font preload.
 require_once __DIR__ . '/inc/bindings.php';  // [CORE] footer copyright-year + removable credit (block bindings).
 require_once __DIR__ . '/inc/skin.php';      // [SKIN] this theme's image sizes, fonts, block styles, onboarding copy.
-if ( file_exists( __DIR__ . '/inc/github-updater.php' ) ) {
-	require_once __DIR__ . '/inc/github-updater.php'; // [CORE][REMOVABLE] Remove before WP.org submission.
-}
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	require_once __DIR__ . '/inc/cli.php'; // [CORE] wp colophon commands — CLI-only, zero front-end cost.

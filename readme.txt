@@ -5,7 +5,7 @@ Tags: blog, full-site-editing, block-patterns, custom-colors, custom-logo, custo
 Requires at least: 6.7
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.6201.1029
+Stable tag: 1.6252.1241
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,34 @@ Register them in the skin_block_styles() function in inc/skin.php and add the CS
 Colophon is a block theme built for the WordPress Site Editor. Page builders that support the block editor work alongside it; legacy drag-and-drop builders that bypass the block system are not supported.
 
 == Changelog ==
+
+= 1.6252.1241 =
+Fixes for WordPress.org theme review ticket #276778 (closed not-approved):
+
+* Removed inc/github-updater.php entirely — not merely excluded from the WP.org
+  build. Colophon's own submission zip had leaked the file even with the prior
+  .distignore-based exclusion, because a build-time step is one more thing that
+  can fail. A theme still wanting a GitHub-release self-updater can keep its own
+  copy; core no longer tracks or syncs the path.
+* Fixed Theme URI — it pointed to a page that 404s; now points to the theme's
+  actual download page (thisismyurl.com/downloads/colophon/).
+* Fixed a real PHP warning the reviewer caught under WP_DEBUG: theme.json's
+  settings.blocks.core/navigation.typography used the plural preset-list key
+  ("fontSizes": false) where the singular UI-toggle key was intended
+  ("fontSize": false). The plural key holds an array of preset objects; setting
+  it to a boolean made WordPress core try to foreach() over false. Confirmed
+  fixed by activating the theme with WP_DEBUG on and rendering front page,
+  single, page, search, and 404 templates with a clean debug.log.
+* readme.txt already carried the required copyright/license sections and the
+  accessibility-ready tag was already removed as of 1.6201.1029 — both were
+  cited in the same rejection but were fixed before this release; noted here
+  for the record.
+* tools/bump-version.sh: fixed a stale sed pattern (const VERSION → the actual
+  define('COLOPHON_VERSION', ...)) that had been silently failing to update
+  inc/bootstrap.php on every release since the namespace-to-prefix migration,
+  and a missing-jq code path that silently no-opted colophon.json's version
+  bump. update_file() now fails loudly instead of reporting success on a
+  no-op match.
 
 = 1.6201.1029 =
 The theme line moves off a PHP namespace and onto a per-theme function prefix.

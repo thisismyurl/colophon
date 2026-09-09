@@ -5,6 +5,12 @@
 <!-- wp:group {"tagName":"main","id":"main-content","className":"colophon-main colophon-page-blank","layout":{"type":"constrained","contentSize":"1200px"}} -->
 <main id="main-content" class="wp-block-group colophon-main colophon-page-blank">
 
+	<!-- Visually-hidden h1 — this template deliberately has no header/footer
+	     chrome, but every page still needs one accessible heading (WCAG
+	     1.3.1/2.4.6). An editor building a full custom landing page in the
+	     content area supplies their own visible heading; this is the fallback. -->
+	<!-- wp:post-title {"level":1,"className":"screen-reader-text"} /-->
+
 	<!-- wp:post-content {"layout":{"type":"constrained","contentSize":"1200px"}} /-->
 
 </main>

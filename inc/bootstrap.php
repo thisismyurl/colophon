@@ -2,18 +2,23 @@
 /**
  * [CORE] Bootstrap — the single re-prefixing point for the whole theme line.
  *
- * This is the ONE place a theme's identity lives. Change the namespace and the
- * COLOPHON_SLUG constant and the entire theme re-prefixes, because every other file
- * derives its asset handles, hooks, and i18n keys from this namespace and these
- * constants. With Colophon, the `colophon` CLI rewrites the namespace, slug, and
- * version here from the theme's colophon.json on every sync. The constants are
- * the source of truth at runtime; the CLI just keeps them honest.
+ * This is the ONE place a theme's identity lives. Change the COLOPHON_SLUG
+ * constant (and the function/constant/class prefixes the CLI derives from it)
+ * and the entire theme re-prefixes, because every other file derives its
+ * asset handles, hooks, and i18n keys from these constants. With Colophon,
+ * the `colophon` CLI rewrites the slug, prefixes, and version here from the
+ * theme's colophon.json on every sync. The constants are the source of truth
+ * at runtime; the CLI just keeps them honest.
  *
- * Why a namespace instead of a `colophon_`-style function prefix:
- * callbacks register as `'COLOPHON_fn'`, so renaming the namespace
- * re-points every hook at once, with no second list of callback strings to sync.
- * WordPress.org requires a unique prefix per theme; this concentrates that whole
- * requirement into the one line below.
+ * This used to be a PHP namespace instead of a `colophon_`-style function
+ * prefix — one line change re-pointed every hook, since callbacks registered
+ * via __NAMESPACE__. WordPress.org's Theme Review Team rejected that on
+ * ticket #280625 (Masthead, closed not-approved): a namespace is accepted
+ * only at the CLASS level, because a WordPress site loads a large number of
+ * vendor functions into the global scope, so a bare `function setup()` inside
+ * a namespace still reads as unprefixed. Every function, constant, and class
+ * in the global scope now carries the theme's own prefix directly — three
+ * substitution rules instead of one line, but still one place to re-prefix.
  *
  * NOTE — the one place "tidy" is a bug: the text DOMAIN in __()/_e()/esc_html__()
  * stays a string LITERAL ('colophon'), never the COLOPHON_SLUG constant. `wp i18n make-pot`

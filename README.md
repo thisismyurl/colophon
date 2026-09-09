@@ -11,12 +11,11 @@ Colophon is a **development-time core**, not a runtime parent. You build *from* 
 Developers who want to build a full-site-editing WordPress theme with a real accessibility and performance floor without starting from scratch. You get:
 
 - A six-layer CSS cascade contract (`@layer reset, base, layout, components, blocks, utilities`) declared once, respected everywhere
-- WCAG 2.2 AA accessibility scaffolding — skip link, focus ring contract, reduced-motion, ARIA patterns — baked into the core
+- Accessibility scaffolding built to WCAG 2.2 AA guidelines — skip link, focus ring contract, reduced-motion — baked into the core
 - A `--cl-*` semantic token contract that survives across the whole theme line
-- Zero front-end JavaScript (none, not "minimal")
-- Self-hosted OFL fonts (swap in your own; Colophon's seed uses system fonts)
-- A PHP namespace instead of a function prefix — one line changes, all callbacks follow
-- Full RTL support via CSS logical properties
+- No theme-authored JavaScript (the navigation block's own Interactivity API runtime is core's, not ours)
+- A system-font stack by default, no external requests (bring your own webfonts per theme)
+- A per-theme function/constant prefix, not a namespace — WordPress.org rejects bare namespaced functions as unprefixed, so `inc/bootstrap.php` is the one file the CLI rewrites to carry your theme's identity everywhere
 - A one-file re-prefixing point (`inc/bootstrap.php`) so your theme identity doesn't leak into a dozen files
 
 Then you use the `colophon` CLI to generate your theme and pull core improvements forward without touching your design.
@@ -45,20 +44,20 @@ If you want to run the seed directly:
 
 ## The `colophon` CLI
 
-The CLI is a single PHP file — no Composer, no Node, no dependencies. It lives at `colophon` in this repo.
+The CLI is a single PHP file — no Composer, no Node, no dependencies. It lives at `bin/colophon` in this repo, kept out of the theme root so a WP.org distribution build excludes it the same way it excludes everything else in `bin/`.
 
 ```bash
 # Scaffold a new theme from the Colophon core
-php colophon new <slug> [--name="Pretty Name"] [--namespace=StudlyName] [--prefix=xx]
+php bin/colophon new <slug> [--name="Pretty Name"] [--namespace=StudlyName] [--prefix=xx]
 
 # Pull core improvements into an existing generated theme (leaves your design alone)
-php colophon sync <slug> [--dry-run]
+php bin/colophon sync <slug> [--dry-run]
 
 # Check a theme for common integrity problems
-php colophon doctor <slug>
+php bin/colophon doctor <slug>
 
 # List themes the CLI can see (siblings of the colophon directory)
-php colophon list
+php bin/colophon list
 ```
 
 **What `new` does:** copies every `core` file into a new sibling directory, re-prefixes namespace, text domain, hook names, CSS token prefix, and `SLUG`/`VERSION` constants to your theme's identity, then lays down the `scaffold` files (templates, skin CSS, patterns, `theme.json`) as your starting point. After that, the scaffold is yours.

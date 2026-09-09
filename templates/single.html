@@ -32,12 +32,60 @@
 		<hr class="wp-block-separator has-base-rule-background-color has-background" style="margin-bottom:var(--wp--preset--spacing--8)" />
 		<!-- /wp:separator -->
 
-		<!-- wp:post-navigation-link {"type":"previous","label":"Previous","showTitle":true,"linkLabel":true} /-->
+		<!-- wp:post-navigation-link {"type":"previous","showTitle":true,"linkLabel":true} /-->
 
-		<!-- wp:post-navigation-link {"type":"next","label":"Next","showTitle":true,"linkLabel":true,"textAlign":"right"} /-->
+		<!-- wp:post-navigation-link {"type":"next","showTitle":true,"linkLabel":true,"textAlign":"right"} /-->
 
 	</div>
 	<!-- /wp:group -->
+
+	<!-- Comments: only wp:comments/wp:post-comments-form render anything when
+	     comments are closed or none exist yet — core handles that, not this markup. -->
+	<!-- wp:comments {"style":{"spacing":{"margin":{"top":"var:preset|spacing|10"}}},"layout":{"type":"constrained","contentSize":"720px"}} -->
+	<div class="wp-block-comments" style="margin-top:var(--wp--preset--spacing--10)">
+
+		<!-- wp:comments-title {"level":2} /-->
+
+		<!-- wp:comment-template -->
+			<!-- wp:columns {"style":{"spacing":{"blockGap":{"left":"var:preset|spacing|4"}}}} -->
+			<div class="wp-block-columns">
+
+				<!-- wp:column {"width":"40px"} -->
+				<div class="wp-block-column" style="flex-basis:40px">
+					<!-- wp:avatar {"size":40,"style":{"border":{"radius":"2px"}}} /-->
+				</div>
+				<!-- /wp:column -->
+
+				<!-- wp:column -->
+				<div class="wp-block-column">
+
+					<!-- wp:comment-author-name {"style":{"typography":{"fontWeight":"600"}}} /-->
+
+					<!-- wp:comment-date {"style":{"typography":{"fontSize":"var:preset|font-size|xs"},"color":{"text":"var:preset|color|base-mid"}}} /-->
+
+					<!-- wp:comment-content /-->
+
+					<!-- wp:comment-reply-link {"style":{"typography":{"fontSize":"var:preset|font-size|xs"}}} /-->
+
+					<!-- wp:comment-edit-link {"style":{"typography":{"fontSize":"var:preset|font-size|xs"}}} /-->
+
+				</div>
+				<!-- /wp:column -->
+
+			</div>
+			<!-- /wp:columns -->
+		<!-- /wp:comment-template -->
+
+		<!-- wp:comments-pagination -->
+			<!-- wp:comments-pagination-previous /-->
+			<!-- wp:comments-pagination-numbers /-->
+			<!-- wp:comments-pagination-next /-->
+		<!-- /wp:comments-pagination -->
+
+		<!-- wp:post-comments-form /-->
+
+	</div>
+	<!-- /wp:comments -->
 
 </main>
 <!-- /wp:group -->

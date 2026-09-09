@@ -48,6 +48,18 @@ them alone**. They're where the design lives, and design is per-theme.
 `assets/css/admin-get-started.css`, `inc/skin.php`, `theme.json`,
 `patterns/*.php`, `style.css`, `readme.txt`.
 
+**No `templates/front-page.html`, on purpose.** WordPress's `is_front_page()`
+returns true — and `front-page.html` wins over `index.html` — whenever a
+request is the site's front page, which includes the default "Your latest
+posts" setting, not only a static page assigned as the front page. A
+`front-page.html` that only carries `wp:post-content` has no post context to
+fill on a posts-front site (`wp-includes/block-template.php`'s loop-context
+workaround is gated on `is_singular()`, which is false there) and renders
+blank. `index.html` (posts-on-front) and `page.html` (a static front page)
+already handle both cases correctly, so the front page falls through to
+whichever applies rather than through a template that can only serve one of
+them.
+
 ### `generated` — made fresh per theme, never copied
 
 `colophon.json` (your identity record), `languages/{slug}.pot` (run `wp i18n
@@ -177,9 +189,9 @@ LCP font into preload via the `colophon/preload_fonts` filter in `inc/skin.php`.
 ## 7. Building a theme on Colophon
 
 ```
-php colophon new <slug>           # scaffold a theme from the core
+php bin/colophon new <slug>           # scaffold a theme from the core
 # …re-skin: theme.json tokens, skin.css, patterns, templates, fonts…
-php colophon doctor <slug>        # check theme.json core-key drift + overrides
+php bin/colophon doctor <slug>        # check theme.json core-key drift + overrides
 wp i18n make-pot . languages/<slug>.pot
 # add screenshot.png (1200×900), then submit
 ```
@@ -187,8 +199,8 @@ wp i18n make-pot . languages/<slug>.pot
 When Colophon improves later:
 
 ```
-php colophon sync <slug> --dry-run   # see exactly which core files would change
-php colophon sync <slug>             # apply; your design is untouched
+php bin/colophon sync <slug> --dry-run   # see exactly which core files would change
+php bin/colophon sync <slug>             # apply; your design is untouched
 ```
 
 ### The verification gate (before WP.org submission)
@@ -214,7 +226,7 @@ What the three themes taught, and what changed:
 **Contrast is verified, never trusted.** Two design specs shipped contrast ratios
 that were arithmetically wrong; one set was implemented and produced real WCAG
 failures (green data on a saturated blue band at 2.5:1). The fix is a discipline,
-made executable: `php colophon contrast <fg> <bg>` prints the WCAG 2.1 ratio and
+made executable: `php bin/colophon contrast <fg> <bg>` prints the WCAG 2.1 ratio and
 the AA/AAA verdicts. **Every text/background pair a skin introduces is checked
 with this before it ships — no number from a spec is trusted on faith.** It also
 catches wrong-direction fixes (a "darker" suggestion for dim-on-dark text makes

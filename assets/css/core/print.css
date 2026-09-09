@@ -59,8 +59,8 @@
 	blockquote {
 		page-break-inside: avoid;
 		break-inside: avoid;
-		border-left: 2px solid #000;
-		padding-left: 1em;
+		border-inline-start: 2px solid #000;
+		padding-inline-start: 1em;
 	}
 }
 
@@ -74,7 +74,6 @@
 
 	/* Full-width sections should not override their constraints oddly */
 	.wp-block-group[class*="colophon-band"] {
-		padding-left: 0 !important;
-		padding-right: 0 !important;
+		padding-inline: 0 !important;
 	}
 }

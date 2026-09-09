@@ -9,8 +9,9 @@
  * personality. The separation is intentional and load-bearing.
  *
  * Pillar 5 (Safe by Default): the WooCommerce guard and emoji removal are
- * here by default. The skip link lives in parts/header.html — one skip link
- * per theme, in the DOM, targeting #main-content.
+ * here by default. There is no theme-authored skip link anywhere — WordPress
+ * core injects a translated one at render time, targeting whichever id is on
+ * the template's <main> element (every Colophon template uses #main-content).
  * Pillar 9 (Archaeological Records): [CORE] tag marks what the CLI owns.
  *
  * @package colophon
@@ -52,12 +53,10 @@ function colophon_setup(): void {
 		)
 	);
 
-	register_nav_menus(
-		array(
-			'primary' => esc_html__( 'Primary Navigation', 'colophon' ),
-			'footer'  => esc_html__( 'Footer Navigation', 'colophon' ),
-		)
-	);
+	// No register_nav_menus() here — this is a pure block theme. parts/header.html
+	// and parts/footer.html both use wp:navigation, which lets an editor pick any
+	// Navigation menu directly in the Site Editor; there is no theme-registered
+	// menu location for it to bind to, so registering one would be dead code.
 
 	/**
 	 * Fires after the theme has registered its supports and menus.
@@ -155,15 +154,15 @@ function colophon_comment_form_field_attributes( array $fields ): array {
 add_filter( 'comment_form_default_fields', 'colophon_comment_form_field_attributes' );
 
 /*
- * Skip link — NOT registered here.
+ * Skip link — NOT registered here, and not hand-rolled anywhere in this theme.
  *
- * Every theme template carries the skip link in its header template part
- * (parts/header.html), rendered via wp:html. Registering a second one here
- * via wp_body_open produced a duplicate in the rendered DOM — two visible
- * "Skip to content" links on Tab keypress, one of which targeted a
- * non-existent anchor. The template-part approach is correct: it is always
- * in the rendered markup, it is in the right DOM position, and there is
- * exactly one of it.
- *
- * See parts/header.html for the authoritative skip link.
+ * An earlier version carried a hardcoded "Skip to content" link in
+ * parts/header.html, then ALSO registered a second one here via
+ * wp_body_open — two visible links on Tab keypress, one targeting a
+ * non-existent anchor, neither translatable via wp i18n make-pot (block
+ * template HTML isn't extracted). Both are gone now: WordPress core's own
+ * _block_template_add_skip_link() (wp-includes/block-template.php) inserts
+ * exactly one, correctly positioned and translated, targeting the id
+ * already on the template's <main> element (#main-content everywhere in
+ * this theme). Do not add a theme-authored skip link back — core's is complete.
  */

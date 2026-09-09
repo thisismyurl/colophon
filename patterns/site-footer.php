@@ -30,8 +30,8 @@
 
 		<!-- wp:column -->
 		<div class="wp-block-column">
-			<!-- wp:heading {"level":3,"style":{"typography":{"fontSize":"var:preset|font-size|xs","fontWeight":"600","letterSpacing":"0.08em","textTransform":"uppercase"},"spacing":{"margin":{"bottom":"var:preset|spacing|4"}},"color":{"text":"var:preset|color|base-mid"}},"fontFamily":"sans"} -->
-			<h3 class="wp-block-heading has-base-mid-color has-text-color has-sans-font-family" style="margin-bottom:var(--wp--preset--spacing--4);font-size:var(--wp--preset--font-size--xs);font-weight:600;letter-spacing:0.08em;text-transform:uppercase"><?php echo esc_html__( 'Explore', 'colophon' ); ?></h3>
+			<!-- wp:heading {"level":3,"style":{"typography":{"fontSize":"var:preset|font-size|xs","fontWeight":"600","letterSpacing":"0.08em","textTransform":"uppercase"},"spacing":{"margin":{"bottom":"var:preset|spacing|4"}},"color":{"text":"var:preset|color|base-rule"}},"fontFamily":"sans"} -->
+			<h3 class="wp-block-heading has-base-rule-color has-text-color has-sans-font-family" style="margin-bottom:var(--wp--preset--spacing--4);font-size:var(--wp--preset--font-size--xs);font-weight:600;letter-spacing:0.08em;text-transform:uppercase"><?php echo esc_html__( 'Explore', 'colophon' ); ?></h3>
 			<!-- /wp:heading -->
 
 			<!-- wp:list {"style":{"typography":{"fontSize":"var:preset|font-size|sm","lineHeight":"2"}},"fontFamily":"sans"} -->
@@ -56,8 +56,8 @@
 
 		<!-- wp:column -->
 		<div class="wp-block-column">
-			<!-- wp:heading {"level":3,"style":{"typography":{"fontSize":"var:preset|font-size|xs","fontWeight":"600","letterSpacing":"0.08em","textTransform":"uppercase"},"spacing":{"margin":{"bottom":"var:preset|spacing|4"}},"color":{"text":"var:preset|color|base-mid"}},"fontFamily":"sans"} -->
-			<h3 class="wp-block-heading has-base-mid-color has-text-color has-sans-font-family" style="margin-bottom:var(--wp--preset--spacing--4);font-size:var(--wp--preset--font-size--xs);font-weight:600;letter-spacing:0.08em;text-transform:uppercase"><?php echo esc_html__( 'Contact', 'colophon' ); ?></h3>
+			<!-- wp:heading {"level":3,"style":{"typography":{"fontSize":"var:preset|font-size|xs","fontWeight":"600","letterSpacing":"0.08em","textTransform":"uppercase"},"spacing":{"margin":{"bottom":"var:preset|spacing|4"}},"color":{"text":"var:preset|color|base-rule"}},"fontFamily":"sans"} -->
+			<h3 class="wp-block-heading has-base-rule-color has-text-color has-sans-font-family" style="margin-bottom:var(--wp--preset--spacing--4);font-size:var(--wp--preset--font-size--xs);font-weight:600;letter-spacing:0.08em;text-transform:uppercase"><?php echo esc_html__( 'Contact', 'colophon' ); ?></h3>
 			<!-- /wp:heading -->
 
 			<!-- wp:paragraph {"style":{"typography":{"fontSize":"var:preset|font-size|sm","lineHeight":"1.8"},"color":{"text":"var:preset|color|base-rule"}}} -->
@@ -73,8 +73,17 @@
 	<hr class="wp-block-separator has-base-ink-background-color has-background" style="margin-top:var(--wp--preset--spacing--7);margin-bottom:var(--wp--preset--spacing--6)"/>
 	<!-- /wp:separator -->
 
-	<!-- wp:paragraph {"style":{"typography":{"fontSize":"var:preset|font-size|xs"},"color":{"text":"var:preset|color|base-mid"}},"fontFamily":"sans"} -->
-	<p class="has-base-mid-color has-text-color has-sans-font-family" style="font-size:var(--wp--preset--font-size--xs)"><?php echo esc_html__( '© 2026 Site Name. All rights reserved.', 'colophon' ); ?></p>
+	<!-- wp:paragraph {"style":{"typography":{"fontSize":"var:preset|font-size|xs"},"color":{"text":"var:preset|color|base-rule"}},"fontFamily":"sans"} -->
+	<p class="has-base-rule-color has-text-color has-sans-font-family" style="font-size:var(--wp--preset--font-size--xs)"><?php
+		// The year is computed, not hardcoded — a static "© 2026" in a starter
+		// pattern is wrong every January the site isn't re-edited.
+		printf(
+			/* translators: 1: four-digit year, 2: site title. */
+			esc_html__( '© %1$s %2$s. All rights reserved.', 'colophon' ),
+			esc_html( gmdate( 'Y' ) ),
+			esc_html__( 'Site Name', 'colophon' )
+		);
+	?></p>
 	<!-- /wp:paragraph -->
 
 </footer>

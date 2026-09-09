@@ -64,12 +64,11 @@ class Colophon_CLI_Command {
 	}
 
 	/**
-	 * Flush the object cache and trigger EverCache purge on WP Engine.
+	 * Flush the object cache.
 	 *
-	 * Calls wp_cache_flush() in every environment. When the WP Engine platform
-	 * mu-plugin is loaded (detected via the wpe_cdn_add_tags() function), the
-	 * EverCache full-purge surface is invoked through whichever helper the host
-	 * exposes. Safe to run on any host — falls back to object cache only.
+	 * A theme in the WordPress.org directory has no business knowing about a
+	 * specific host's cache-purging API — that coupling belongs to a host's
+	 * own plugin or mu-plugin, not here. This stays host-agnostic on purpose.
 	 *
 	 * ## EXAMPLES
 	 *
@@ -79,29 +78,7 @@ class Colophon_CLI_Command {
 	 */
 	public function flush(): void {
 		wp_cache_flush();
-		\WP_CLI::log( 'Object cache flushed.' );
-
-		if ( ! function_exists( 'wpe_cdn_add_tags' ) ) {
-			\WP_CLI::success( 'Done. WP Engine platform not detected — object cache only.' );
-			return;
-		}
-
-		// WP Engine exposes a small surface for cache purging from code. The
-		// helper names vary by platform release; call only those that exist so
-		// this stays portable across WPE plugin versions.
-		if ( class_exists( '\WpeCommon' ) ) {
-			if ( method_exists( '\WpeCommon', 'purge_memcached' ) ) {
-				\WpeCommon::purge_memcached();
-			}
-			if ( method_exists( '\WpeCommon', 'clear_maxcdn_cache' ) ) {
-				\WpeCommon::clear_maxcdn_cache();
-			}
-			if ( method_exists( '\WpeCommon', 'purge_varnish_cache' ) ) {
-				\WpeCommon::purge_varnish_cache();
-			}
-		}
-
-		\WP_CLI::success( 'Done. WP Engine EverCache surfaces purged.' );
+		\WP_CLI::success( 'Object cache flushed.' );
 	}
 }
 

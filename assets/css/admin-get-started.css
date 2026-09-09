@@ -32,7 +32,8 @@
 
 .colophon-get-started__steps li {
 	position: relative;
-	padding: 0 0 1rem 2.5rem;
+	padding-block-end: 1rem;
+	padding-inline-start: 2.5rem;
 	max-width: 60ch;
 	line-height: 1.6;
 }
@@ -41,7 +42,7 @@
 	counter-increment: cl-step;
 	content: counter(cl-step);
 	position: absolute;
-	left: 0;
+	inset-inline-start: 0;
 	top: 0;
 	width: 1.75rem;
 	height: 1.75rem;

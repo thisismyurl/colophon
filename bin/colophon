@@ -8,14 +8,20 @@
  * theme from the core, and later pull core improvements forward into a theme
  * without touching its design.
  *
- *   php colophon new <slug> [--name="Pretty Name"] [--namespace=StudlyName] [--prefix=xx] [--force]
- *   php colophon sync <slug> [--dry-run]
- *   php colophon doctor <slug>
- *   php colophon list
+ *   php bin/colophon new <slug> [--name="Pretty Name"] [--namespace=StudlyName] [--prefix=xx] [--force]
+ *   php bin/colophon sync <slug> [--dry-run]
+ *   php bin/colophon doctor <slug>
+ *   php bin/colophon list
  *
  * The rules it applies are documented in ARCHITECTURE.md — §1 (core vs scaffold)
  * and §4 (the substitutions). This file is the executable version of that doc;
  * if the two ever disagree, the doc is the intent and this is the bug.
+ *
+ * Lives in bin/ (not the theme root) so a WP.org distribution build excludes
+ * it the same way it already excludes tools/*.sh — a directory match, not a
+ * one-off filename in .distignore. A root-level dev CLI shipped in an earlier
+ * submission zip precisely because .distignore had no rule for its bare
+ * filename; a directory the build already excludes can't repeat that.
  *
  * @package colophon
  */
@@ -23,11 +29,11 @@
 namespace Colophon\CLI;
 
 // ---------------------------------------------------------------------------
-// Paths. This file sits at themes/colophon/colophon, so the seed is its own
-// directory and the themes root is one level up. Sibling themes are there.
+// Paths. This file sits at themes/colophon/bin/colophon, so the seed is one
+// level up and the themes root is two levels up. Sibling themes are there.
 // ---------------------------------------------------------------------------
-define( __NAMESPACE__ . '\\SEED_DIR', __DIR__ );
-define( __NAMESPACE__ . '\\THEMES_DIR', dirname( __DIR__ ) );
+define( __NAMESPACE__ . '\\SEED_DIR', dirname( __DIR__ ) );
+define( __NAMESPACE__ . '\\THEMES_DIR', dirname( __DIR__, 2 ) );
 
 // ---------------------------------------------------------------------------
 // Tiny IO helpers.
@@ -191,7 +197,7 @@ function scaffold_subs( string $code, array $t, string $rel ): string {
 function cmd_new( array $args, array $opts ): void {
 	$slug = $args[0] ?? '';
 	if ( '' === $slug || ! preg_match( '/^[a-z][a-z0-9-]*$/', $slug ) ) {
-		fail( 'new needs a lowercase-hyphenated <slug>, e.g. `php colophon new gazette`' );
+		fail( 'new needs a lowercase-hyphenated <slug>, e.g. `php bin/colophon new gazette`' );
 	}
 
 	$target = THEMES_DIR . '/' . $slug;
@@ -280,7 +286,7 @@ function cmd_new( array $args, array $opts ): void {
 function cmd_sync( array $args, array $opts ): void {
 	$slug = $args[0] ?? '';
 	if ( '' === $slug ) {
-		fail( 'sync needs a <slug>, e.g. `php colophon sync gazette --dry-run`' );
+		fail( 'sync needs a <slug>, e.g. `php bin/colophon sync gazette --dry-run`' );
 	}
 	$target = THEMES_DIR . '/' . $slug;
 	$record = read_json( $target . '/colophon.json' );
@@ -487,7 +493,7 @@ function luminance( string $hex ): float {
 
 function cmd_contrast( array $args ): void {
 	if ( count( $args ) < 2 ) {
-		fail( 'contrast needs two hex colours, e.g. `php colophon contrast 595959 F7F4EE`' );
+		fail( 'contrast needs two hex colours, e.g. `php bin/colophon contrast 595959 F7F4EE`' );
 	}
 	$fg    = ltrim( $args[0], '#' );
 	$bg    = ltrim( $args[1], '#' );
@@ -538,11 +544,11 @@ function main( array $argv ): void {
 		default:
 			out( 'colophon — theme-line generator + core sync' );
 			out( '' );
-			out( '  php colophon new <slug> [--name="Pretty Name"] [--namespace=StudlyName] [--prefix=xx] [--force]' );
-			out( '  php colophon sync <slug> [--dry-run]' );
-			out( '  php colophon doctor <slug>' );
-			out( '  php colophon list' );
-			out( '  php colophon contrast <fg-hex> <bg-hex>' );
+			out( '  php bin/colophon new <slug> [--name="Pretty Name"] [--namespace=StudlyName] [--prefix=xx] [--force]' );
+			out( '  php bin/colophon sync <slug> [--dry-run]' );
+			out( '  php bin/colophon doctor <slug>' );
+			out( '  php bin/colophon list' );
+			out( '  php bin/colophon contrast <fg-hex> <bg-hex>' );
 			exit( '' === $cmd ? 0 : 1 );
 	}
 }

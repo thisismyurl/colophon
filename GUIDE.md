@@ -8,7 +8,7 @@ A note on who this is for: you write WordPress themes, or you'd like to. I'll as
 
 ## What you get
 
-Installing Colophon gives you a reading-first site with warm type, classical proportions, and nothing in the way of the words. Three touchpoints get you started: **Settings → Reading** to choose a front page, **Appearance → Editor** to browse templates and adjust styles, **Posts → Add New** to write something. The theme handles the rest — self-hosted fonts with no third-party requests, WCAG 2.2 AA focus and heading hierarchy, a skip link, and clean templates for posts, archives, author pages, and media attachments.
+Installing Colophon gives you a reading-first site with warm type, classical proportions, and nothing in the way of the words. Three touchpoints get you started: **Settings → Reading** to choose a front page, **Appearance → Editor** to browse templates and adjust styles, **Posts → Add New** to write something. The theme handles the rest — a system-font stack with no external requests, keyboard focus and heading hierarchy built to WCAG 2.2 AA guidelines, a skip link, and clean templates for posts, pages, archives, and search.
 
 If you want a site that looks different, start in **Styles** inside the Site Editor. Change the typeface. Change the palette. Nothing is permanent until you click Save, and nothing you do there can break the theme from underneath.
 
@@ -18,7 +18,7 @@ Before block themes, a WordPress site was divided into two territories: PHP temp
 
 Full-site editing collapses that boundary. In Colophon, every template is an `.html` file containing block markup — not PHP. You can open **Appearance → Editor**, click into any template, and rearrange the blocks directly in the browser, the same way you edit a post. Want to move the author box below the content? Drag it. Want a different layout for your archive? Edit the template. Changes live in your database, not on disk, so they survive theme updates.
 
-The building blocks are **templates** and **template parts**. A template is the whole-page layout for a content type — the single-post layout, the home-page layout, the archive layout. A template part is a reusable chunk those templates share — the header, the footer. Colophon ships one of each that matters: a single-post template, an archive template, an author archive, a media attachment page, a 404, a header part, and a footer part. You can leave them alone, adjust them in the Editor, or override them entirely by duplicating them in the Editor and editing the copy.
+The building blocks are **templates** and **template parts**. A template is the whole-page layout for a content type — the single-post layout, the home-page layout, the archive layout. A template part is a reusable chunk those templates share — the header, the footer. Colophon ships one of each that matters: a front page, a single-post template, a page template (plus wide and blank variants), an archive template, a search results template, a 404, a header part, and a footer part. You can leave them alone, adjust them in the Editor, or override them entirely by duplicating them in the Editor and editing the copy.
 
 The thing worth holding onto: **you edit this in the browser, not in a `.php` file.** If you've been building WordPress sites since before block themes, this will feel strange for about three days and then obvious. The code is there if you want it — templates are plain `.html` files, `theme.json` is readable JSON — but you do not have to touch code to change the layout of a page.
 
@@ -37,10 +37,10 @@ The cost of that choice is duplication, and duplication is usually a smell. The 
 `colophon` is one self-contained PHP file in the seed. No Composer, no Node. It has four jobs:
 
 ```
-php colophon new <slug> [--name="Pretty Name"] [--namespace=StudlyName] [--prefix=xx]
-php colophon sync <slug> [--dry-run]
-php colophon doctor <slug>
-php colophon list
+php bin/colophon new <slug> [--name="Pretty Name"] [--namespace=StudlyName] [--prefix=xx]
+php bin/colophon sync <slug> [--dry-run]
+php bin/colophon doctor <slug>
+php bin/colophon list
 ```
 
 - **`new`** scaffolds a fresh theme beside Colophon: it copies the core *and* the scaffold, and rewrites every `Colophon` / `colophon` / `cl-` token to your theme's name on the way in. You come out the other side with a prefixed, installable theme to start designing.
@@ -93,7 +93,7 @@ A theme built on Colophon leaves a small credit in its footer. I'd be glad if yo
 
 I'm Christopher Ross. I've been building the web since 1996 and working in WordPress since 2007. Along the way I've shipped 19 plugins to the WordPress.org repository and spoken at more than 18 WordCamps, which mostly means I've made a lot of the mistakes this core is designed to keep you from making. Earlier I was a senior web developer at Corel and a director of technology at Yorkville. These days I lead a training centre, and the teaching is the part I love most.
 
-I tell you this because it's the honest answer to a fair question: *why trust this core enough to build a line on it?* The answer is that you don't have to take my word for any of it. Colophon is built to the WordPress.org Theme Review standard, passes Theme Check clean, and meets WCAG 2.2 AA — and every one of those claims is auditable against the code sitting right next to this guide. Don't trust the architecture because I described it well. Read it.
+I tell you this because it's the honest answer to a fair question: *why trust this core enough to build a line on it?* The answer is that you don't have to take my word for any of it. Colophon is built to the WordPress.org Theme Review standard and to WCAG 2.2 AA guidelines — and every one of those claims is auditable against the code sitting right next to this guide. Don't trust the architecture because I described it well. Read it.
 
 ## Go build something
 

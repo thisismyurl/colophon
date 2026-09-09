@@ -1,7 +1,7 @@
 {
 	"_comment": "The machine-readable version of ARCHITECTURE.md §1. The `colophon` CLI reads this to know which paths it owns (core — overwritten by sync) versus which it only lays down once (scaffold — copied by `new`, then yours). See ARCHITECTURE.md for the human version and §4 for the substitution rules the CLI applies.",
 	"manifest_version": 1,
-	"core_version": "1.6150",
+	"core_version": "1.6252.1241",
 	"tokens": {
 		"namespace": "Colophon",
 		"slug": "colophon",
@@ -22,6 +22,7 @@
 	],
 	"scaffold": [
 		".distignore",
+		".gitattributes",
 		"inc/skin.php",
 		"theme.json",
 		"style.css",
@@ -34,15 +35,15 @@
 		"templates/index.html",
 		"templates/single.html",
 		"templates/page.html",
+		"templates/page-wide.html",
+		"templates/page-blank.html",
 		"templates/archive.html",
 		"templates/search.html",
-		"templates/404.html",
-		"templates/front-page.html",
-		"templates/author.html",
-		"templates/singular.html",
-		"templates/attachment.html"
+		"templates/404.html"
 	],
 	"scaffold_dirs": [
-		"patterns"
+		"patterns",
+		"styles",
+		"assets/images"
 	]
 }

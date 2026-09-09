@@ -1,0 +1,729 @@
+# Copyright (C) 2026 Christopher Ross
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Colophon 1.6252.1241\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/colophon\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-09-09T14:24:25+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: colophon\n"
+
+#. Theme Name of the theme
+#: style.css
+#: inc/skin.php:76
+msgid "Colophon"
+msgstr ""
+
+#. Theme URI of the theme
+#: style.css
+msgid "https://thisismyurl.com/downloads/colophon/"
+msgstr ""
+
+#. Description of the theme
+#: style.css
+msgid "A minimal WordPress FSE starter theme. The shared foundation beneath Kern, Masthead, Parcel, and Wake — four niche editorial themes built on it. Use it as-is for a clean, accessible start, or build on the CORE/SKIN architecture to make your own themed version without touching the portable core files."
+msgstr ""
+
+#. Author of the theme
+#: style.css
+msgid "Christopher Ross"
+msgstr ""
+
+#. Author URI of the theme
+#: style.css
+msgid "https://thisismyurl.com/"
+msgstr ""
+
+#. translators: %s: theme name.
+#: inc/admin.php:70
+#: inc/admin.php:318
+#, php-format
+msgid "%s: Get started"
+msgstr ""
+
+#. translators: %s: theme name.
+#: inc/admin.php:170
+#, php-format
+msgid "Welcome to %s."
+msgstr ""
+
+#: inc/admin.php:173
+msgid "Thanks for giving it a home. A few small steps will have your site reading the way it should."
+msgstr ""
+
+#. translators: %s: theme name.
+#: inc/admin.php:179
+#, php-format
+msgid "Set up %s →"
+msgstr ""
+
+#: inc/admin.php:183
+msgid "Dismiss"
+msgstr ""
+
+#: inc/admin.php:199
+msgid "You do not have permission to do that."
+msgstr ""
+
+#. translators: %s: theme name.
+#: inc/admin.php:225
+#, php-format
+msgid "%s is a free, full-site-editing theme built to get out of the way of your content. Here is how to make it yours."
+msgstr ""
+
+#: inc/admin.php:243
+msgid "Choose what people land on."
+msgstr ""
+
+#: inc/admin.php:244
+msgid "A visitor's first second decides whether they stay. Set a static front page under Settings → Reading, and give your posts a page of their own."
+msgstr ""
+
+#: inc/admin.php:247
+msgid "Give people a way around."
+msgstr ""
+
+#: inc/admin.php:248
+msgid "A site without a menu is a room without doors. Open the Site Editor, edit the header, and assign your menu to Primary Navigation."
+msgstr ""
+
+#: inc/admin.php:251
+msgid "Start from a pattern, not a blank page."
+msgstr ""
+
+#: inc/admin.php:252
+msgid "In any page or post, open the block inserter, choose Patterns, and find this theme's group. Drop one in and change the words."
+msgstr ""
+
+#: inc/admin.php:255
+msgid "Make it sound like you."
+msgstr ""
+
+#: inc/admin.php:256
+msgid "In the Site Editor, open Styles to change colours and typefaces. Nothing you do there can break the theme — experiment freely."
+msgstr ""
+
+#: inc/admin.php:260
+msgid "This theme is already fast by design: no theme-authored JavaScript, system fonts that load instantly, and a cascade-ordered stylesheet that puts nothing on the critical path it doesn't need to."
+msgstr ""
+
+#: inc/admin.php:261
+msgid "It's built to WCAG 2.2 AA guidelines — real focus outlines, a skip link, sensible heading order, and motion that respects a reduce-motion setting. Keep your own copy and images to that bar and the whole site stays welcoming."
+msgstr ""
+
+#: inc/admin.php:263
+msgid "There's a small credit in your footer. It's a thank-you, not a tax — remove it in two clicks in the Site Editor → Footer, or filter it out in code. No hard feelings either way."
+msgstr ""
+
+#. translators: %s: linked developer-guide anchor.
+#: inc/admin.php:266
+#, php-format
+msgid "Colophon is designed to be built on. The %s walks through the CORE/SKIN architecture, how to add fonts, register block styles, and ship your own theme on this foundation."
+msgstr ""
+
+#: inc/admin.php:268
+msgid "developer guide"
+msgstr ""
+
+#: inc/admin.php:327
+msgid "Set up"
+msgstr ""
+
+#: inc/admin.php:339
+msgid "Optimize"
+msgstr ""
+
+#: inc/admin.php:346
+msgid "The footer credit"
+msgstr ""
+
+#: inc/admin.php:351
+msgid "For developers"
+msgstr ""
+
+#: inc/bindings.php:38
+msgid "Copyright line"
+msgstr ""
+
+#: inc/bindings.php:47
+msgid "Footer credit line"
+msgstr ""
+
+#. translators: 1: four-digit year, 2: site title.
+#: inc/bindings.php:80
+#: patterns/site-footer.php:82
+#, php-format
+msgid "© %1$s %2$s. All rights reserved."
+msgstr ""
+
+#. translators: %s: linked theme name.
+#: inc/bindings.php:121
+#, php-format
+msgid "Built with the %s theme."
+msgstr ""
+
+#: inc/skin.php:52
+msgid "Eyebrow label"
+msgstr ""
+
+#: inc/skin.php:61
+msgid "Full-bleed band"
+msgstr ""
+
+#: inc/skin.php:91
+msgid "Colophon is a minimal, accessible WordPress theme that works on its own — and also serves as the foundation for a collection of niche editorial themes. Here is how to make it yours."
+msgstr ""
+
+#: patterns/content-grid.php
+msgctxt "Pattern title"
+msgid "Content Grid"
+msgstr ""
+
+#: patterns/content-grid.php
+msgctxt "Pattern description"
+msgid "Three-column grid of cards, each with a 4:3 image placeholder, heading, short paragraph, and a read-more link."
+msgstr ""
+
+#: patterns/content-grid.php:31
+msgid "First column heading"
+msgstr ""
+
+#: patterns/content-grid.php:35
+#: patterns/content-grid.php:55
+#: patterns/content-grid.php:75
+msgid "A short summary of the topic, written to give the reader a clear sense of what waits behind the link."
+msgstr ""
+
+#: patterns/content-grid.php:39
+#: patterns/content-grid.php:59
+#: patterns/content-grid.php:79
+msgid "Read more"
+msgstr ""
+
+#: patterns/content-grid.php:51
+msgid "Second column heading"
+msgstr ""
+
+#: patterns/content-grid.php:71
+msgid "Third column heading"
+msgstr ""
+
+#: patterns/feature-section.php
+msgctxt "Pattern title"
+msgid "Feature Section"
+msgstr ""
+
+#: patterns/feature-section.php
+msgctxt "Pattern description"
+msgid "Two-column feature layout with a large image on the left and a heading, body copy, and link on the right."
+msgstr ""
+
+#: patterns/feature-section.php:35
+msgid "A feature worth a closer look"
+msgstr ""
+
+#: patterns/feature-section.php:39
+msgid "Two or three sentences of body copy that explain the feature in plain language. Enough to set context and earn the click, without crowding the page."
+msgstr ""
+
+#: patterns/feature-section.php:43
+msgid "Learn more"
+msgstr ""
+
+#: patterns/hidden-404-message.php
+msgctxt "Pattern title"
+msgid "404 message (hidden)"
+msgstr ""
+
+#: patterns/hidden-404-message.php
+#: patterns/hidden-home-link.php
+#: patterns/hidden-latest-posts-heading.php
+#: patterns/hidden-no-archive-posts.php
+#: patterns/hidden-no-posts-yet.php
+#: patterns/hidden-no-search-results.php
+msgctxt "Pattern description"
+msgid "Not for the pattern picker — a translation-string carrier only."
+msgstr ""
+
+#: patterns/hidden-404-message.php:17
+msgid "This page doesn't exist. Try searching, or return to the front page."
+msgstr ""
+
+#: patterns/hidden-home-link.php
+msgctxt "Pattern title"
+msgid "Home link (hidden)"
+msgstr ""
+
+#: patterns/hidden-home-link.php:19
+#: patterns/site-footer.php:39
+msgid "Home"
+msgstr ""
+
+#: patterns/hidden-latest-posts-heading.php
+msgctxt "Pattern title"
+msgid "Latest posts heading (hidden)"
+msgstr ""
+
+#: patterns/hidden-latest-posts-heading.php:17
+msgid "Latest posts"
+msgstr ""
+
+#: patterns/hidden-no-archive-posts.php
+msgctxt "Pattern title"
+msgid "No archive posts (hidden)"
+msgstr ""
+
+#: patterns/hidden-no-archive-posts.php:17
+msgid "No posts found in this archive."
+msgstr ""
+
+#: patterns/hidden-no-posts-yet.php
+msgctxt "Pattern title"
+msgid "No posts yet (hidden)"
+msgstr ""
+
+#: patterns/hidden-no-posts-yet.php:17
+msgid "Nothing here yet. Publish your first post to begin."
+msgstr ""
+
+#: patterns/hidden-no-search-results.php
+msgctxt "Pattern title"
+msgid "No search results (hidden)"
+msgstr ""
+
+#: patterns/hidden-no-search-results.php:17
+msgid "No results found. Try a different search term."
+msgstr ""
+
+#: patterns/main-navigation.php
+msgctxt "Pattern title"
+msgid "Main Navigation"
+msgstr ""
+
+#: patterns/main-navigation.php
+msgctxt "Pattern description"
+msgid "Horizontal navigation bar with a site-title wordmark on the left and navigation links on the right, under a hairline rule."
+msgstr ""
+
+#: patterns/page-hero.php
+msgctxt "Pattern title"
+msgid "Page Hero"
+msgstr ""
+
+#: patterns/page-hero.php
+msgctxt "Pattern description"
+msgid "Full-width typographic hero with a large serif headline, a sans descriptor, and two call-to-action buttons."
+msgstr ""
+
+#: patterns/page-hero.php:21
+msgid "A clean foundation for editorial work"
+msgstr ""
+
+#: patterns/page-hero.php:25
+msgid "A minimal, accessible starter theme built for typography, structure, and the words that matter most."
+msgstr ""
+
+#: patterns/page-hero.php:31
+msgid "Get started"
+msgstr ""
+
+#: patterns/page-hero.php:35
+msgid "Read the docs"
+msgstr ""
+
+#: patterns/post-list.php
+msgctxt "Pattern title"
+msgid "Post List"
+msgstr ""
+
+#: patterns/post-list.php
+msgctxt "Pattern description"
+msgid "Clean editorial list of four posts, each with a date, serif title, and excerpt, divided by hairline rules."
+msgstr ""
+
+#: patterns/post-list.php:19
+msgid "January 12, 2026"
+msgstr ""
+
+#: patterns/post-list.php:23
+msgid "The first article title goes here"
+msgstr ""
+
+#: patterns/post-list.php:27
+#: patterns/post-list.php:47
+#: patterns/post-list.php:67
+#: patterns/post-list.php:87
+msgid "A short excerpt that gives the reader a sense of the piece before they commit to the full read."
+msgstr ""
+
+#: patterns/post-list.php:39
+msgid "January 8, 2026"
+msgstr ""
+
+#: patterns/post-list.php:43
+msgid "The second article title goes here"
+msgstr ""
+
+#: patterns/post-list.php:59
+msgid "January 3, 2026"
+msgstr ""
+
+#: patterns/post-list.php:63
+msgid "The third article title goes here"
+msgstr ""
+
+#: patterns/post-list.php:79
+msgid "December 28, 2025"
+msgstr ""
+
+#: patterns/post-list.php:83
+msgid "The fourth article title goes here"
+msgstr ""
+
+#: patterns/pull-quote.php
+msgctxt "Pattern title"
+msgid "Pull Quote"
+msgstr ""
+
+#: patterns/pull-quote.php
+msgctxt "Pattern description"
+msgid "Centered typographic pull quote in large serif italic with an accent rule and a sans caps attribution."
+msgstr ""
+
+#: patterns/pull-quote.php:21
+msgid "Good structure disappears. The reader never notices the scaffolding holding the words in place, only that the words were easy to read."
+msgstr ""
+
+#: patterns/pull-quote.php:25
+msgid "Attribution Name, Role"
+msgstr ""
+
+#: patterns/site-footer.php
+msgctxt "Pattern title"
+msgid "Site Footer"
+msgstr ""
+
+#: patterns/site-footer.php
+msgctxt "Pattern description"
+msgid "Three-column footer with site name and tagline, navigation links, and contact details, closed by a copyright bar."
+msgstr ""
+
+#: patterns/site-footer.php:22
+#: patterns/site-footer.php:84
+msgid "Site Name"
+msgstr ""
+
+#: patterns/site-footer.php:26
+msgid "A short tagline that says what this site is about in a single, plain sentence."
+msgstr ""
+
+#: patterns/site-footer.php:34
+msgid "Explore"
+msgstr ""
+
+#: patterns/site-footer.php:43
+msgid "Articles"
+msgstr ""
+
+#: patterns/site-footer.php:47
+msgid "About"
+msgstr ""
+
+#: patterns/site-footer.php:51
+msgid "Archive"
+msgstr ""
+
+#: patterns/site-footer.php:60
+msgid "Contact"
+msgstr ""
+
+#: patterns/site-footer.php:64
+msgid "123 Example Street"
+msgstr ""
+
+#: patterns/site-footer.php:64
+msgid "City, Region"
+msgstr ""
+
+#: patterns/subscribe-cta.php
+msgctxt "Pattern title"
+msgid "Subscribe CTA"
+msgstr ""
+
+#: patterns/subscribe-cta.php
+msgctxt "Pattern description"
+msgid "Centered call-to-action with a serif heading, short pitch paragraph, and a subscribe button on a tinted background."
+msgstr ""
+
+#: patterns/subscribe-cta.php:17
+msgid "Subscribe to the newsletter"
+msgstr ""
+
+#: patterns/subscribe-cta.php:21
+msgid "A short, well-written note in your inbox now and then. No noise, no spam, and an easy unsubscribe whenever you like."
+msgstr ""
+
+#: patterns/subscribe-cta.php:27
+msgid "Subscribe"
+msgstr ""
+
+#: theme.json
+#: styles/focus.json
+#: styles/forest.json
+#: styles/midnight.json
+#: styles/slate.json
+#: styles/warm.json
+msgctxt "Color name"
+msgid "Base Black"
+msgstr ""
+
+#: theme.json
+#: styles/focus.json
+#: styles/forest.json
+#: styles/midnight.json
+#: styles/slate.json
+#: styles/warm.json
+msgctxt "Color name"
+msgid "Base Ink"
+msgstr ""
+
+#: theme.json
+#: styles/focus.json
+#: styles/forest.json
+#: styles/midnight.json
+#: styles/slate.json
+#: styles/warm.json
+msgctxt "Color name"
+msgid "Base Mid"
+msgstr ""
+
+#: theme.json
+#: styles/focus.json
+#: styles/forest.json
+#: styles/midnight.json
+#: styles/slate.json
+#: styles/warm.json
+msgctxt "Color name"
+msgid "Base Rule"
+msgstr ""
+
+#: theme.json
+#: styles/focus.json
+#: styles/forest.json
+#: styles/midnight.json
+#: styles/slate.json
+#: styles/warm.json
+msgctxt "Color name"
+msgid "Base Ground"
+msgstr ""
+
+#: theme.json
+#: styles/focus.json
+#: styles/forest.json
+#: styles/midnight.json
+#: styles/slate.json
+#: styles/warm.json
+msgctxt "Color name"
+msgid "Base Paper"
+msgstr ""
+
+#: theme.json
+#: styles/focus.json
+#: styles/forest.json
+#: styles/midnight.json
+#: styles/slate.json
+#: styles/warm.json
+msgctxt "Color name"
+msgid "Base Accent"
+msgstr ""
+
+#: theme.json
+#: styles/focus.json
+#: styles/forest.json
+#: styles/midnight.json
+#: styles/slate.json
+#: styles/warm.json
+msgctxt "Color name"
+msgid "Base Accent Tint"
+msgstr ""
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Serif"
+msgstr ""
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Sans-serif"
+msgstr ""
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Monospace"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "2X-Small"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "X-Small"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Small"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Base"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Medium"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Large"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "X-Large"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "2X-Large"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "3X-Large"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Display"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "1"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "2"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "3"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "4"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "5"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "6"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "7"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "8"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "9"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "10"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "11"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "12"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "20"
+msgstr ""
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Header"
+msgstr ""
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Footer"
+msgstr ""
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "Page (wide)"
+msgstr ""
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "Page (no header/footer)"
+msgstr ""
+
+#: styles/focus.json
+msgctxt "Style variation name"
+msgid "Focus"
+msgstr ""
+
+#: styles/forest.json
+msgctxt "Style variation name"
+msgid "Forest"
+msgstr ""
+
+#: styles/midnight.json
+msgctxt "Style variation name"
+msgid "Midnight"
+msgstr ""
+
+#: styles/slate.json
+msgctxt "Style variation name"
+msgid "Slate"
+msgstr ""
+
+#: styles/warm.json
+msgctxt "Style variation name"
+msgid "Warm"
+msgstr ""

@@ -47,7 +47,7 @@
 	 */
 	.skip-link {
 		position: absolute;
-		left: -9999px;
+		inset-inline-start: -9999px;
 		top: 0;
 		z-index: 10000;
 		padding: 0.75rem 1.25rem;
@@ -57,7 +57,7 @@
 		text-decoration: none;
 	}
 	.skip-link:focus {
-		left: 0.75rem;
+		inset-inline-start: 0.75rem;
 		top: 0.75rem;
 	}
 
@@ -92,7 +92,7 @@
 	.screen-reader-text:focus {
 		position: fixed;
 		top: 0.75rem;
-		left: 0.75rem;
+		inset-inline-start: 0.75rem;
 		width: auto;
 		height: auto;
 		clip: auto;

@@ -9,6 +9,11 @@
  *
  * @package colophon
  */
+
+// A real bundled image, not an unconfigured block — an <img> with no src is
+// invalid HTML and renders as a broken image the moment this pattern is
+// inserted and published without an editor swapping the picture first.
+$colophon_placeholder_src = get_template_directory_uri() . '/assets/images/placeholder.png';
 ?>
 <!-- wp:group {"tagName":"section","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|5","right":"var:preset|spacing|5"}},"color":{"background":"var:preset|color|base-paper"}},"layout":{"type":"constrained","contentSize":"1200px"}} -->
 <section class="wp-block-group has-base-paper-background-color has-background" style="padding-top:var(--wp--preset--spacing--10);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--5);padding-right:var(--wp--preset--spacing--5)">
@@ -18,8 +23,8 @@
 
 		<!-- wp:column {"verticalAlignment":"center","width":"55%"} -->
 		<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:55%">
-			<!-- wp:image {"aspectRatio":"3/2","scale":"cover","sizeSlug":"large"} -->
-			<figure class="wp-block-image size-large"><img alt="" style="aspect-ratio:3/2;object-fit:cover"/></figure>
+			<!-- wp:image {"url":"<?php echo esc_url( $colophon_placeholder_src ); ?>","aspectRatio":"3/2","scale":"cover","sizeSlug":"large"} -->
+			<figure class="wp-block-image size-large"><img src="<?php echo esc_url( $colophon_placeholder_src ); ?>" alt="" style="aspect-ratio:3/2;object-fit:cover"/></figure>
 			<!-- /wp:image -->
 		</div>
 		<!-- /wp:column -->

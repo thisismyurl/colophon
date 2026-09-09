@@ -1,0 +1,13 @@
+# Normalize everything to LF. Mixed line endings in a submitted zip fail
+# WordPress.org's SVN import — see themes.trac #276778 and the fix history in
+# readme.txt for why this file exists.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary

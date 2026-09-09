@@ -9,6 +9,11 @@
  *
  * @package colophon
  */
+
+// A real bundled image, not an unconfigured block — an <img> with no src is
+// invalid HTML and renders as three broken images the moment this pattern is
+// inserted and published without an editor swapping the picture first.
+$colophon_placeholder_src = get_template_directory_uri() . '/assets/images/placeholder.png';
 ?>
 <!-- wp:group {"tagName":"section","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|5","right":"var:preset|spacing|5"}},"color":{"background":"var:preset|color|base-ground"}},"layout":{"type":"constrained","contentSize":"1200px"}} -->
 <section class="wp-block-group has-base-ground-background-color has-background" style="padding-top:var(--wp--preset--spacing--10);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--5);padding-right:var(--wp--preset--spacing--5)">
@@ -18,8 +23,8 @@
 
 		<!-- wp:column -->
 		<div class="wp-block-column">
-			<!-- wp:image {"aspectRatio":"4/3","scale":"cover","sizeSlug":"large","className":"is-resized"} -->
-			<figure class="wp-block-image size-large is-resized"><img alt="" style="aspect-ratio:4/3;object-fit:cover"/></figure>
+			<!-- wp:image {"url":"<?php echo esc_url( $colophon_placeholder_src ); ?>","aspectRatio":"4/3","scale":"cover","sizeSlug":"large","className":"is-resized"} -->
+			<figure class="wp-block-image size-large is-resized"><img src="<?php echo esc_url( $colophon_placeholder_src ); ?>" alt="" style="aspect-ratio:4/3;object-fit:cover"/></figure>
 			<!-- /wp:image -->
 
 			<!-- wp:heading {"level":3,"style":{"spacing":{"margin":{"top":"var:preset|spacing|5","bottom":"var:preset|spacing|3"}}},"fontFamily":"serif"} -->
@@ -38,8 +43,8 @@
 
 		<!-- wp:column -->
 		<div class="wp-block-column">
-			<!-- wp:image {"aspectRatio":"4/3","scale":"cover","sizeSlug":"large","className":"is-resized"} -->
-			<figure class="wp-block-image size-large is-resized"><img alt="" style="aspect-ratio:4/3;object-fit:cover"/></figure>
+			<!-- wp:image {"url":"<?php echo esc_url( $colophon_placeholder_src ); ?>","aspectRatio":"4/3","scale":"cover","sizeSlug":"large","className":"is-resized"} -->
+			<figure class="wp-block-image size-large is-resized"><img src="<?php echo esc_url( $colophon_placeholder_src ); ?>" alt="" style="aspect-ratio:4/3;object-fit:cover"/></figure>
 			<!-- /wp:image -->
 
 			<!-- wp:heading {"level":3,"style":{"spacing":{"margin":{"top":"var:preset|spacing|5","bottom":"var:preset|spacing|3"}}},"fontFamily":"serif"} -->
@@ -58,8 +63,8 @@
 
 		<!-- wp:column -->
 		<div class="wp-block-column">
-			<!-- wp:image {"aspectRatio":"4/3","scale":"cover","sizeSlug":"large","className":"is-resized"} -->
-			<figure class="wp-block-image size-large is-resized"><img alt="" style="aspect-ratio:4/3;object-fit:cover"/></figure>
+			<!-- wp:image {"url":"<?php echo esc_url( $colophon_placeholder_src ); ?>","aspectRatio":"4/3","scale":"cover","sizeSlug":"large","className":"is-resized"} -->
+			<figure class="wp-block-image size-large is-resized"><img src="<?php echo esc_url( $colophon_placeholder_src ); ?>" alt="" style="aspect-ratio:4/3;object-fit:cover"/></figure>
 			<!-- /wp:image -->
 
 			<!-- wp:heading {"level":3,"style":{"spacing":{"margin":{"top":"var:preset|spacing|5","bottom":"var:preset|spacing|3"}}},"fontFamily":"serif"} -->

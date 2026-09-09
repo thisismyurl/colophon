@@ -7,22 +7,21 @@
 <!-- wp:group {"tagName":"main","id":"main-content","className":"colophon-main colophon-404","layout":{"type":"constrained","contentSize":"720px"},"style":{"spacing":{"padding":{"top":"var:preset|spacing|20","bottom":"var:preset|spacing|20","left":"var:preset|spacing|5","right":"var:preset|spacing|5"}}}} -->
 <main id="main-content" class="wp-block-group colophon-main colophon-404" style="padding-top:var(--wp--preset--spacing--20);padding-bottom:var(--wp--preset--spacing--20);padding-left:var(--wp--preset--spacing--5);padding-right:var(--wp--preset--spacing--5)">
 
-	<!-- wp:heading {"level":1,"style":{"typography":{"fontSize":"var:preset|font-size|display","letterSpacing":"-0.03em","lineHeight":"1"},"color":{"text":"var:preset|color|base-rule"}}} -->
-	<h1 class="wp-block-heading has-base-rule-color has-text-color" style="font-size:var(--wp--preset--font-size--display);letter-spacing:-0.03em;line-height:1">404</h1>
+	<!-- base-mid, not base-rule: base-rule is a border/separator tint, never
+	     audited as a text colour, and fails WCAG 1.4.3 badly (~1.4:1) as one.
+	     base-mid clears the large-text 3:1 floor in every style variation. -->
+	<!-- wp:heading {"level":1,"style":{"typography":{"fontSize":"var:preset|font-size|display","letterSpacing":"-0.03em","lineHeight":"1"},"color":{"text":"var:preset|color|base-mid"}}} -->
+	<h1 class="wp-block-heading has-base-mid-color has-text-color" style="font-size:var(--wp--preset--font-size--display);letter-spacing:-0.03em;line-height:1">404</h1>
 	<!-- /wp:heading -->
 
 	<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|6","padding":{"top":"var:preset|spacing|8"}}},"layout":{"type":"default"}} -->
 	<div class="wp-block-group" style="padding-top:var(--wp--preset--spacing--8)">
 
-		<!-- wp:paragraph {"style":{"color":{"text":"var:preset|color|base-mid"}}} -->
-		<p class="has-base-mid-color has-text-color">This page doesn't exist. Try searching, or return to the front page.</p>
-		<!-- /wp:paragraph -->
+		<!-- wp:pattern {"slug":"colophon/hidden-404-message"} /-->
 
-		<!-- wp:search {"label":"Search","buttonText":"Search","buttonUseIcon":true} /-->
+		<!-- wp:search {"buttonUseIcon":true} /-->
 
-		<!-- wp:paragraph {"style":{"typography":{"fontSize":"var:preset|font-size|sm"},"color":{"text":"var:preset|color|base-mid"}}} -->
-		<p class="has-base-mid-color has-text-color" style="font-size:var(--wp--preset--font-size--sm)"><!-- wp:home-link {"label":"← Back to start"} /--></p>
-		<!-- /wp:paragraph -->
+		<!-- wp:pattern {"slug":"colophon/hidden-home-link"} /-->
 
 	</div>
 	<!-- /wp:group -->

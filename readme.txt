@@ -4,7 +4,7 @@ Contributors: thisismyurl
 Tags: blog, full-site-editing, block-patterns, custom-colors, custom-logo, custom-menu, editor-style, featured-images, rtl-language-support, translation-ready, wide-blocks
 Requires at least: 6.7
 Tested up to: 7.1
-Requires PHP: 8.1
+Requires PHP: 7.4
 Stable tag: 1.6252.1241
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -21,7 +21,7 @@ Features:
 
 * Full Site Editing — every element customisable in the Site Editor
 * System font stack — no external requests; typography uses the visitor's native fonts until you add your own
-* WCAG 2.2 AA accessible — skip link, visible focus rings, screen-reader utilities, ARIA landmarks
+* Built to WCAG 2.2 AA guidelines — visible focus rings, screen-reader utilities, semantic landmark elements
 * RTL-ready — all layout written with CSS logical properties
 * Core Web Vitals optimised — zero render-blocking JavaScript, cascade-ordered CSS, no dead weight
 * Reduced-motion support — all decorative animation is governed by a single global guard
@@ -99,6 +99,53 @@ Fixes for WordPress.org theme review ticket #276778 (closed not-approved):
   and a missing-jq code path that silently no-opted colophon.json's version
   bump. update_file() now fails loudly instead of reporting success on a
   no-op match.
+* Removed templates/front-page.html. It always wins over index.html when
+  WordPress considers the request the front page — including the default
+  "Your latest posts" configuration, not only a static front page — and a
+  front-page.html built around wp:post-content alone has no post context to
+  render there, so it shipped blank. The front page now falls through to
+  index.html (posts-on-front) or page.html (a static page assigned as front
+  page); both already had working content.
+* i18n: block-template HTML isn't scanned by wp i18n make-pot. Several
+  hardcoded strings across templates/ and parts/header.html — a "Latest
+  posts" heading, three query-no-results messages, a 404 message, the skip
+  link, and several block-attribute overrides (post-excerpt's "Read more",
+  the search block's label/button text, home-link's label, the post
+  navigation labels) — are now either backed by a small hidden pattern
+  (Inserter: false, translation-string carrier only) or simply no longer
+  overridden, so WordPress core's own already-translated default applies.
+  The hand-rolled skip link is gone entirely: core injects an equivalent one.
+* templates/404.html: replaced wp:home-link (invalid outside core/navigation,
+  and its rendered li was sitting inside a hand-written p) with a plain,
+  translatable link.
+* patterns/content-grid.php and feature-section.php: the four unconfigured
+  wp:image blocks had no src attribute, so inserting either pattern and
+  publishing without swapping the image shipped three or four broken images.
+  They now reference a bundled placeholder.png.
+* Accessibility: fixed real WCAG 1.4.3 contrast failures, not just claims
+  about them. The 404 page's oversized "404" used base-rule as a text colour
+  — a border/separator tint never meant to carry text, ~1.4:1 in every style
+  variation — swapped for base-mid. patterns/site-footer.php's dark, inverted
+  layout used base-mid (tuned for light backgrounds) for muted text on a dark
+  background, failing everywhere; swapped for base-rule, which was already
+  the right shade for a dark background and needed no new colour. base-mid
+  itself was independently too light against its light backgrounds in the
+  Forest, Slate, and Warm style variations, and base-accent too dark (Warm)
+  or too dark for a dark theme (Midnight) against the backgrounds it
+  actually appears on; all four are now within their real contrast floor,
+  verified by direct WCAG relative-luminance calculation across every text/
+  background pair actually used, not spot-checked.
+* Regenerated languages/colophon.pot and reconciled a duplicate msgid: the
+  copyright block binding (inc/bindings.php) and the Site Footer pattern
+  share one "© %1$s %2$s. All rights reserved." string with two different
+  translator comments, which is a make-pot warning; both now read the same.
+* Replaced screenshot.png. The previous file was an unmodified copy of a
+  preview/ mockup render using fonts and features (a display serif, a
+  category eyebrow, a reading-time label, header buttons) that don't exist
+  in the shipped theme. The current one is a real render of the actual
+  theme with real demo content.
+* Normalised line endings to LF across every shipped file type and added
+  .gitattributes so a future edit on Windows doesn't reintroduce CRLF.
 
 = 1.6201.1029 =
 The theme line moves off a PHP namespace and onto a per-theme function prefix.
@@ -118,7 +165,7 @@ generated from it, so the fix belongs here rather than in each theme.
   to `define()`, since a bare global `const SLUG` is itself an unprefixed global
   symbol), and the WP-CLI class is `Colophon_CLI_Command`. Hook names are
   unchanged, so a theme's filters keep working across the upgrade.
-* Core: 17 translated strings converted from `__()` to `esc_html__()`. Five keep
+* Core: 17 translated strings converted from `__()` to `esc_html__()`. Six keep
   bare `__()` deliberately, because they are escaped with `esc_html()` at the point of
   echo, and converting them would escape twice and render an apostrophe as a
   literal `&#039;`. Each carries an inline comment so the exception is not read as
@@ -148,6 +195,10 @@ generated from it, so the fix belongs here rather than in each theme.
   design. Both now describe the prefix rules, and say plainly why the namespace
   was rejected, so nobody rediscovers it the hard way.
 
+= 1.6160.1430 =
+Submitted to WordPress.org (themes.trac ticket #276778); closed not-approved.
+See 1.6252.1241 above for the fixes made in response.
+
 = 1.6159.0900 =
 * Expanded templates: added archive, front-page, page (wide), and page (blank).
 * Added a block-pattern library: page hero, feature section, content grid, post list, pull quote, subscribe CTA, site footer, and main navigation.
@@ -163,6 +214,14 @@ generated from it, so the fix belongs here rather than in each theme.
 * CORE/SKIN architecture with documented extension points.
 * WCAG 2.2 AA scaffolding in base.css.
 * Block bindings: copyright year and footer credit.
+
+== Resources ==
+
+* assets/images/placeholder.png — a flat, solid-colour PNG generated for this
+  theme (no photographic or third-party content), used only as the default
+  image in the Content Grid and Feature Section patterns so an unconfigured
+  block never ships as a bare `<img>` with no `src`. Licensed GPLv2 or later,
+  same as the rest of the theme.
 
 == License ==
 

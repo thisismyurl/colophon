@@ -257,14 +257,14 @@ function colophon_get_started_content(): array {
 			),
 		),
 		'optimize'   => array(
-			esc_html__( "This theme is already fast by design: zero front-end JavaScript, system fonts that load instantly, and a cascade-ordered stylesheet that puts nothing on the critical path it doesn't need to.", 'colophon' ),
-			esc_html__( 'It meets WCAG 2.2 AA — real focus outlines, a skip link, sensible heading order, and motion that respects a reduce-motion setting. Keep your own copy and images to that bar and the whole site stays welcoming.', 'colophon' ),
+			esc_html__( "This theme is already fast by design: no theme-authored JavaScript, system fonts that load instantly, and a cascade-ordered stylesheet that puts nothing on the critical path it doesn't need to.", 'colophon' ),
+			esc_html__( "It's built to WCAG 2.2 AA guidelines — real focus outlines, a skip link, sensible heading order, and motion that respects a reduce-motion setting. Keep your own copy and images to that bar and the whole site stays welcoming.", 'colophon' ),
 		),
 		'credit'     => esc_html__( "There's a small credit in your footer. It's a thank-you, not a tax — remove it in two clicks in the Site Editor → Footer, or filter it out in code. No hard feelings either way.", 'colophon' ),
 		'developers' => array(
 			/* translators: %s: linked developer-guide anchor. */
 			'text'  => __( 'Colophon is designed to be built on. The %s walks through the CORE/SKIN architecture, how to add fonts, register block styles, and ship your own theme on this foundation.', 'colophon' ),
-			'url'   => 'https://thisismyurl.com/colophon',
+			'url'   => 'https://thisismyurl.com/downloads/colophon/',
 			'label' => __( 'developer guide', 'colophon' ),
 		),
 	);

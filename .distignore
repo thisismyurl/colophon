@@ -3,13 +3,21 @@
 
 # Internal tooling manifests
 colophon.json
+colophon.manifest.json
 .distignore
 
-# Developer tooling
+# Developer tooling and docs — for people building on Colophon, not for the
+# WP.org listing or an activated install. README.md carries donation links
+# that have no business in a shipped theme zip; the others document the CLI
+# and core architecture a WP.org visitor never touches.
 NOT-A-WP-THEME.md
 PILLARS.md
+README.md
+ARCHITECTURE.md
+GUIDE.md
 *.sh
 bin/
+tools/
 
 # Preview system
 preview/

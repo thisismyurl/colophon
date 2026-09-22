@@ -164,7 +164,25 @@ function core_subs( string $code, array $t ): string {
 function scaffold_subs( string $code, array $t, string $rel ): string {
 	$code = core_subs( $code, $t );
 	$code = str_replace( "'Colophon", "'" . $t['name'], $code );          // quoted labels: 'Colophon: Sections'
-	$code = str_replace( 'Slug: colophon/', 'Slug: ' . $t['slug'] . '/', $code ); // pattern slugs
+	$code = str_replace( 'Slug: colophon/', 'Slug: ' . $t['slug'] . '/', $code ); // pattern slugs (docblock form)
+	// Categories: colophon — the pattern-header form Slug: colophon/ above does
+	// NOT cover. Missed until Kerf and Halyard both shipped with every inherited
+	// pattern uncategorised in the inserter (2026-09-22): the two lines look like
+	// one rule but are two separate header fields.
+	$code = str_replace( 'Categories: colophon', 'Categories: ' . $t['slug'], $code );
+	// "slug":"colophon/..." — the JSON-attribute form used by `wp:pattern`
+	// references inside templates/*.html and parts/*.html (as opposed to the
+	// PHP-docblock `Slug:` form above, which only appears in patterns/*.php).
+	// Missed by every prior rule, so every wp:pattern reference in a generated
+	// theme's own templates pointed at a namespace the theme never registers.
+	// Found 2026-09-22 after it silently blanked the 404 message, the blog
+	// index's only h1, and three no-results states in both Kerf and Halyard —
+	// `colophon doctor` didn't catch it because it never reads templates/.
+	$code = str_replace( '"slug":"colophon/', '"slug":"' . $t['slug'] . '/', $code );
+	// "source":"colophon/..." — block-bindings source references in the same
+	// JSON-attribute form, e.g. parts/footer.html's copyright and footer-credit
+	// bindings. Same root cause and same discovery date as the rule above.
+	$code = str_replace( '"source":"colophon/', '"source":"' . $t['slug'] . '/', $code );
 	$code = str_replace( 'themes/colophon', 'themes/' . $t['slug'], $code );      // theme-home URLs
 	$code = str_replace( '>Colophon</a>', '>' . $t['name'] . '</a>', $code );     // footer credit link text
 
@@ -447,6 +465,44 @@ function cmd_doctor( array $args ): void {
 	out( '  ' . ( $at === $core ? '[ok]  ' : '[warn]' ) . " colophon_version $at  (core is $core)" );
 	$ovr = (array) ( $record['overrides'] ?? array() );
 	out( '  [info] overrides: ' . ( empty( $ovr ) ? 'none' : implode( ', ', $ovr ) ) );
+
+	// 4. Leaked core namespace in templates/, parts/, and pattern headers.
+	//
+	// Added 2026-09-22. Every check above only reads inc/*.php, so a derived
+	// theme could report a completely clean bill of health — no stray identity,
+	// theme.json settings matched, version current — while its 404 page, its
+	// blog index's only h1, three separate no-results states, and its footer
+	// copyright all rendered nothing, because the corresponding wp:pattern and
+	// block-bindings JSON references in templates/*.html and parts/*.html still
+	// pointed at "colophon/…" instead of the theme's own slug, and every
+	// inherited pattern's `Categories:` header still read "colophon" instead of
+	// the registered category. `core_subs()`/`scaffold_subs()` now rewrite both
+	// forms going forward (see the `"slug":"colophon/`, `"source":"colophon/`,
+	// and `Categories: colophon` rules above); this check exists so a theme
+	// scaffolded before that fix — or hand-edited afterward — cannot pass
+	// silently again the same way Kerf and Halyard both did.
+	if ( empty( $record['is_core'] ) ) {
+		$leaks = array();
+		foreach ( array_merge(
+			glob( $target . '/templates/*.html' ) ?: array(),
+			glob( $target . '/parts/*.html' ) ?: array()
+		) as $html ) {
+			if ( false !== strpos( read_file_or_fail( $html ), 'colophon/' ) ) {
+				$leaks[] = basename( $html );
+			}
+		}
+		foreach ( glob( $target . '/patterns/*.php' ) ?: array() as $php ) {
+			$code = read_file_or_fail( $php );
+			if ( false !== strpos( $code, 'Slug: colophon/' ) || false !== strpos( $code, 'Categories: colophon' ) ) {
+				$leaks[] = basename( $php );
+			}
+		}
+		if ( empty( $leaks ) ) {
+			out( '  [ok]   no leaked colophon/ namespace in templates/, parts/, or pattern headers' );
+		} else {
+			out( '  [FAIL] leaked colophon/ namespace in: ' . implode( ', ', array_unique( $leaks ) ) . ' — a wp:pattern reference, a block-binding source, or a Categories/Slug header still points at the core rather than at ' . $record['slug'] );
+		}
+	}
 }
 
 function cmd_list(): void {

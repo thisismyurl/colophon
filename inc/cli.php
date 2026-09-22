@@ -22,7 +22,14 @@ if ( ! ( defined( 'WP_CLI' ) && \WP_CLI ) ) {
 }
 
 /**
- * Colophon: theme operations from the command line.
+ * Theme operations from the command line.
+ *
+ * Deliberately generic wording — this docblock is only reached by core_subs()
+ * during `colophon sync` (not the broader scaffold_subs() used at `new` time),
+ * which has no rule for a bare "Colophon" with neither a leading quote nor a
+ * trailing underscore. A theme-name-bearing sentence here would silently
+ * revert to "Colophon" on every future sync. Found 2026-09-22 while auditing
+ * what `colophon sync kerf` would actually change.
  */
 class Colophon_CLI_Command {
 

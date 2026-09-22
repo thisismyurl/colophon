@@ -5,7 +5,7 @@ Tags: blog, full-site-editing, block-patterns, custom-colors, custom-logo, custo
 Requires at least: 6.7
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.6252.1241
+Stable tag: 1.6265.1511
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,49 @@ Register them in the skin_block_styles() function in inc/skin.php and add the CS
 Colophon is a block theme built for the WordPress Site Editor. Page builders that support the block editor work alongside it; legacy drag-and-drop builders that bypass the block system are not supported.
 
 == Changelog ==
+
+= 1.6265.1511 =
+Version numbering switches to 1.Y{DDD}.{HHMM} (Toronto time) from this release
+forward. Fixes found auditing Kerf and Halyard, the first two themes generated
+since ticket #276778's fixes — both independently surfaced the same core bugs
+on the same day (2026-09-22), which is what confirmed these belong here rather
+than in either theme:
+
+* `colophon new` rewrote pattern `Slug:` headers (the PHP-docblock form used in
+  patterns/*.php) but not `Categories:` headers, nor the JSON-attribute
+  `"slug":"colophon/…"` form used by wp:pattern references inside a generated
+  theme's own templates/*.html and parts/*.html, nor the matching
+  `"source":"colophon/…"` form used by block-bindings references. Every
+  generated theme therefore shipped with unresolved core-namespace references
+  in its own templates: the 404 message, the 404 home link, the blog index's
+  only h1, and three separate "no results" states all rendered nothing, and
+  every inherited pattern landed uncategorised in the inserter. All three
+  forms are now rewritten by `colophon new`.
+* `colophon doctor` only ever read inc/*.php, so it reported a clean bill of
+  health on a theme with the defect above — the 404 page and blog index h1
+  didn't render, and doctor said nothing was wrong. It now also checks
+  templates/, parts/, and pattern headers for a leaked `colophon/` reference.
+* Registered the `{slug}/footer-credit` block-bindings source in
+  inc/bindings.php. parts/footer.html has bound a paragraph to it since the
+  credit line existed, and this file's own docblock has described it in
+  detail for just as long, but nothing ever called
+  register_block_bindings_source() for it — every theme in the line rendered
+  an empty `<p>` in every footer until now.
+* functions.php never actually required inc/cli.php, despite both files'
+  docblocks describing the guard in detail. `wp {slug} version|info|flush`
+  did not exist in any generated theme. Added the guarded require.
+* patterns/page-hero.php and patterns/subscribe-cta.php: all three buttons
+  were `<a>` elements with no `href` — present in markup, entirely
+  unreachable by keyboard, and not part of the saved block's tab order.
+  Added `"url":"#"` to each wp:button's attributes and `href="#"` to the
+  saved anchor, the WP.org pattern convention for a CTA an editor is expected
+  to point somewhere real.
+* inc/cli.php's class docblock read "Colophon: theme operations from the
+  command line." — a bare, unquoted "Colophon" that neither `core_subs()` nor
+  `scaffold_subs()` has a rule for, so `colophon sync` would have silently
+  reverted a theme's already-correct name back to "Colophon" here on every
+  future sync. Reworded to generic phrasing that needs no per-theme
+  substitution, with a comment explaining why.
 
 = 1.6252.1241 =
 Fixes for WordPress.org theme review ticket #276778 (closed not-approved):

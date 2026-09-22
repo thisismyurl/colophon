@@ -23,8 +23,8 @@
 
 	<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 	<div class="wp-block-buttons">
-		<!-- wp:button {"backgroundColor":"base-accent","textColor":"base-paper","style":{"border":{"radius":"0px"},"spacing":{"padding":{"top":"var:preset|spacing|4","bottom":"var:preset|spacing|4","left":"var:preset|spacing|7","right":"var:preset|spacing|7"}},"typography":{"fontSize":"var:preset|font-size|sm"}},"fontFamily":"sans"} -->
-		<div class="wp-block-button has-custom-font-size has-sans-font-family" style="font-size:var(--wp--preset--font-size--sm)"><a class="wp-block-button__link has-base-paper-color has-base-accent-background-color has-text-color has-background wp-element-button" style="border-radius:0px;padding-top:var(--wp--preset--spacing--4);padding-right:var(--wp--preset--spacing--7);padding-bottom:var(--wp--preset--spacing--4);padding-left:var(--wp--preset--spacing--7)"><?php echo esc_html__( 'Subscribe', 'colophon' ); ?></a></div>
+		<!-- wp:button {"url":"#","backgroundColor":"base-accent","textColor":"base-paper","style":{"border":{"radius":"0px"},"spacing":{"padding":{"top":"var:preset|spacing|4","bottom":"var:preset|spacing|4","left":"var:preset|spacing|7","right":"var:preset|spacing|7"}},"typography":{"fontSize":"var:preset|font-size|sm"}},"fontFamily":"sans"} -->
+		<div class="wp-block-button has-custom-font-size has-sans-font-family" style="font-size:var(--wp--preset--font-size--sm)"><a class="wp-block-button__link has-base-paper-color has-base-accent-background-color has-text-color has-background wp-element-button" href="#" style="border-radius:0px;padding-top:var(--wp--preset--spacing--4);padding-right:var(--wp--preset--spacing--7);padding-bottom:var(--wp--preset--spacing--4);padding-left:var(--wp--preset--spacing--7)"><?php echo esc_html__( 'Subscribe', 'colophon' ); ?></a></div>
 		<!-- /wp:button -->
 	</div>
 	<!-- /wp:buttons -->

@@ -10,7 +10,7 @@
  * Registers:
  *   wp colophon version  — theme name and version, read from COLOPHON_SLUG + COLOPHON_VERSION.
  *   wp colophon info     — name, version, active template, .pot presence.
- *   wp colophon flush    — wp_cache_flush() + WP Engine EverCache purge if present.
+ *   wp colophon flush    — wp_cache_flush().
  *
  * @package colophon
  */
@@ -66,10 +66,6 @@ class Colophon_CLI_Command {
 	/**
 	 * Flush the object cache.
 	 *
-	 * A theme in the WordPress.org directory has no business knowing about a
-	 * specific host's cache-purging API — that coupling belongs to a host's
-	 * own plugin or mu-plugin, not here. This stays host-agnostic on purpose.
-	 *
 	 * ## EXAMPLES
 	 *
 	 *     wp colophon flush
@@ -78,7 +74,7 @@ class Colophon_CLI_Command {
 	 */
 	public function flush(): void {
 		wp_cache_flush();
-		\WP_CLI::success( 'Object cache flushed.' );
+		\WP_CLI::success( 'Done. Object cache flushed.' );
 	}
 }
 

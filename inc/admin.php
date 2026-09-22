@@ -214,7 +214,7 @@ add_action( 'admin_post_' . COLOPHON_DISMISS_ACTION, 'colophon_handle_welcome_di
  * filter in inc/skin.php — that is where each theme's voice lives, kept out of
  * this synced file.
  *
- * @return array{lead:string,steps:array<int,array{title:string,body:string}>,optimize:string[],credit:string,developers:array{text:string,url:string,label:string}} The page content.
+ * @return array{lead:string,steps:array<int,array{title:string,body:string}>,optimize:string[],developers:array{text:string,url:string,label:string}} The page content.
  */
 function colophon_get_started_content(): array {
 	$theme = colophon_get_theme_name();
@@ -232,11 +232,7 @@ function colophon_get_started_content(): array {
 		 * 'label' inside the anchor, the 'text' as the sprintf format). Wrapping them
 		 * in esc_html__() here would escape the same string twice, so an apostrophe
 		 * would render on screen as a literal &#039;. Every other translated string in
-		 * this theme uses esc_html__(); these are the escape-at-output exceptions.
-		 *
-		 * WP.org ticket #280625 (Masthead) asked for esc_html__ everywhere. It is
-		 * right almost everywhere — but not where the value is escaped again at
-		 * output, so these are annotated rather than converted.
+		 * this theme uses esc_html__(); these seven are the escape-at-output exceptions.
 		 */
 		'steps'      => array(
 			array(
@@ -257,14 +253,13 @@ function colophon_get_started_content(): array {
 			),
 		),
 		'optimize'   => array(
-			esc_html__( "This theme is already fast by design: no theme-authored JavaScript, system fonts that load instantly, and a cascade-ordered stylesheet that puts nothing on the critical path it doesn't need to.", 'colophon' ),
-			esc_html__( "It's built to WCAG 2.2 AA guidelines — real focus outlines, a skip link, sensible heading order, and motion that respects a reduce-motion setting. Keep your own copy and images to that bar and the whole site stays welcoming.", 'colophon' ),
+			esc_html__( "This theme is fast by design: reading is JavaScript-free (only the breaking-news dismiss control ships a small script), self-hosted fonts that don't phone home, and tuning against the Core Web Vitals search engines actually measure.", 'colophon' ),
+			esc_html__( 'It is built to WCAG 2.2 AA guidance — real focus outlines, a skip link, sensible heading order, and motion that respects a reduce-motion setting. Keep your own copy and images to that bar and the whole site stays welcoming.', 'colophon' ),
 		),
-		'credit'     => esc_html__( "There's a small credit in your footer. It's a thank-you, not a tax — remove it in two clicks in the Site Editor → Footer, or filter it out in code. No hard feelings either way.", 'colophon' ),
 		'developers' => array(
 			/* translators: %s: linked developer-guide anchor. */
-			'text'  => __( 'Colophon is designed to be built on. The %s walks through the CORE/SKIN architecture, how to add fonts, register block styles, and ship your own theme on this foundation.', 'colophon' ),
-			'url'   => 'https://thisismyurl.com/downloads/colophon/',
+			'text'  => __( 'This theme is built on Colophon, a small documented core meant to be reused. The %s walks through how to build your own theme on it.', 'colophon' ),
+			'url'   => apply_filters( COLOPHON_SLUG . '/developer_guide_url', 'https://thisismyurl.com/colophon/' ), // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 			'label' => __( 'developer guide', 'colophon' ),
 		),
 	);
@@ -340,11 +335,6 @@ function colophon_render_get_started_page(): void {
 			<?php foreach ( $content['optimize'] as $para ) : ?>
 				<p><?php echo wp_kses( $para, $cl_inline ); ?></p>
 			<?php endforeach; ?>
-		<?php endif; ?>
-
-		<?php if ( ! empty( $content['credit'] ) ) : ?>
-			<h2><?php esc_html_e( 'The footer credit', 'colophon' ); ?></h2>
-			<p><?php echo wp_kses( $content['credit'], $cl_inline ); ?></p>
 		<?php endif; ?>
 
 		<?php if ( ! empty( $content['developers']['text'] ) ) : ?>

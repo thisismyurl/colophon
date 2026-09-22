@@ -23,7 +23,10 @@ require_once __DIR__ . '/inc/assets.php';    // [CORE] cascade-ordered styleshee
 require_once __DIR__ . '/inc/bindings.php';  // [CORE] footer copyright-year + removable credit (block bindings).
 require_once __DIR__ . '/inc/skin.php';      // [SKIN] this theme's image sizes, fonts, block styles, onboarding copy.
 
-if ( defined( 'WP_CLI' ) && WP_CLI ) {
+// file_exists() guard so a WP.org distribution zip (which excludes inc/cli.php
+// via .distignore) never fatals under WP-CLI — same pattern core used for the
+// now-removed inc/github-updater.php, applied consistently here too.
+if ( defined( 'WP_CLI' ) && WP_CLI && file_exists( __DIR__ . '/inc/cli.php' ) ) {
 	require_once __DIR__ . '/inc/cli.php'; // [CORE] wp colophon commands — CLI-only, zero front-end cost.
 }
 

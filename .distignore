@@ -19,6 +19,10 @@ GUIDE.md
 bin/
 tools/
 
+# CLI-only dev tooling (functions.php guards this with file_exists() so
+# excluding it here is safe under WP-CLI, not just on the front end).
+inc/cli.php
+
 # Preview system
 preview/
 

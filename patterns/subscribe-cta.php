@@ -14,7 +14,7 @@
 <section class="wp-block-group has-base-accent-tint-background-color has-background" style="padding-top:var(--wp--preset--spacing--10);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--5);padding-right:var(--wp--preset--spacing--5)">
 
 	<!-- wp:heading {"textAlign":"center","level":2,"style":{"typography":{"fontSize":"var:preset|font-size|2xl"},"spacing":{"margin":{"bottom":"var:preset|spacing|4"}}},"fontFamily":"serif"} -->
-	<h2 class="wp-block-heading has-text-align-center has-serif-font-family" style="margin-bottom:var(--wp--preset--spacing--4);font-size:var(--wp--preset--font-size--2xl)"><?php echo esc_html__( 'Subscribe to the newsletter', 'colophon' ); ?></h2>
+	<h2 class="wp-block-heading has-text-align-center has-serif-font-family" style="margin-bottom:var(--wp--preset--spacing--4);font-size:var(--wp--preset--font-size--2-xl)"><?php echo esc_html__( 'Subscribe to the newsletter', 'colophon' ); ?></h2>
 	<!-- /wp:heading -->
 
 	<!-- wp:paragraph {"align":"center","style":{"typography":{"fontSize":"var:preset|font-size|base","lineHeight":"1.6"},"spacing":{"margin":{"bottom":"var:preset|spacing|7"}},"color":{"text":"var:preset|color|base-ink"}}} -->

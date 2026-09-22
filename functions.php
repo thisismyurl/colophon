@@ -32,6 +32,6 @@ if ( is_admin() ) {
 // .distignore already excludes it from the WP.org zip, but functions.php never
 // actually required it — found 2026-09-22 while auditing Kerf and Halyard,
 // where `wp kerf version` / `wp halyard version` simply did not exist.
-if ( defined( 'WP_CLI' ) && \WP_CLI ) {
+if ( defined( 'WP_CLI' ) && \WP_CLI && file_exists( __DIR__ . '/inc/cli.php' ) ) {
 	require_once __DIR__ . '/inc/cli.php';
 }

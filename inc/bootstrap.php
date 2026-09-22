@@ -44,7 +44,7 @@ define( 'COLOPHON_SLUG', 'colophon' );
  * Theme version — cache-bust for enqueued assets and the WordPress.org version.
  * Keep this in step with the Version header in style.css and Stable tag in readme.txt.
  */
-define( 'COLOPHON_VERSION', '1.6265.1511' );
+define( 'COLOPHON_VERSION', '1.6265.1620' );
 
 /**
  * Absolute filesystem path to the theme root (no trailing slash).

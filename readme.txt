@@ -5,7 +5,7 @@ Tags: blog, full-site-editing, block-patterns, custom-colors, custom-logo, custo
 Requires at least: 6.7
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.6265.1511
+Stable tag: 1.6265.1620
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,27 @@ Register them in the skin_block_styles() function in inc/skin.php and add the CS
 Colophon is a block theme built for the WordPress Site Editor. Page builders that support the block editor work alongside it; legacy drag-and-drop builders that bypass the block system are not supported.
 
 == Changelog ==
+
+= 1.6265.1620 =
+A wp-expert review of Kerf (independent of the audit that produced 1.6265.1511)
+found the previous release's own fix left two regressions, both fixed here:
+
+* functions.php required inc/cli.php unconditionally once WP_CLI was true, with
+  no file_exists() guard — but .distignore strips inc/cli.php from the WP.org
+  zip, so every wp-cli command against an installed copy fataled. Added the
+  guard.
+* theme.json's h1/h2 styles and four patterns (feature-section, subscribe-cta,
+  pull-quote, hidden-latest-posts-heading) referenced
+  --wp--preset--font-size--2xl / --3xl directly; WordPress kebab-cases a preset
+  slug before emitting its custom property, so a digit-led slug like 2xl
+  becomes --2-xl, not --2xl. Both headings were silently falling back to body
+  size. Corrected every reference.
+* settings.typography.defaultFontSizes and settings.spacing.defaultSpacingSizes
+  were not set to false, so the editor's own auto-generated presets (slugs 1-6
+  0-9) merged with this theme's own. The theme's spacing slug "20" (12rem)
+  silently overwrote core's auto-generated slug "20" (a very different, much
+  smaller step) — a 27x jump for any editor content using that step. Both
+  settings are now explicitly false, matching defaultPalette's existing value.
 
 = 1.6265.1511 =
 Version numbering switches to 1.Y{DDD}.{HHMM} (Toronto time) from this release

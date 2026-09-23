@@ -5,28 +5,28 @@ Tags: blog, full-site-editing, block-patterns, custom-colors, custom-logo, custo
 Requires at least: 6.7
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.6265.1620
+Stable tag: 1.6266.1253
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-A minimal WordPress FSE starter theme — the shared foundation for the Colophon theme collection.
+A minimal, accessible WordPress FSE starter theme. Also the shared foundation for a growing collection of niche editorial and small-business themes.
 
 == Description ==
 
-Colophon is a free, full-site-editing WordPress theme built to be extended. It ships a clean, accessible base that works on its own and also serves as the foundation for a growing collection of niche editorial themes — Kern, Masthead, Parcel, and Wake are all built on it.
+Colophon is a free, full-site-editing WordPress theme built to be extended. It ships a clean, accessible base that works well on its own, and it is also the foundation several other niche themes are built from.
 
 Use Colophon as-is for a minimal, fast, and accessible blog or site. Or use it as a starting point: the CORE/SKIN architecture separates portable infrastructure from your theme's personality into two distinct files, so you can build your own design without ever editing the scaffolding that makes the theme work.
 
 Features:
 
-* Full Site Editing — every element customisable in the Site Editor
-* System font stack — no external requests; typography uses the visitor's native fonts until you add your own
-* Built to WCAG 2.2 AA guidelines — visible focus rings, screen-reader utilities, semantic landmark elements
-* RTL-ready — all layout written with CSS logical properties
-* Core Web Vitals optimised — zero render-blocking JavaScript, cascade-ordered CSS, no dead weight
-* Reduced-motion support — all decorative animation is governed by a single global guard
-* Block patterns — starter patterns for hero, content, and navigation layouts
-* WooCommerce compatible — declares support automatically when the plugin is active
+* Full Site Editing: every element customisable in the Site Editor
+* System font stack: no external requests; typography uses the visitor's native fonts until you add your own
+* Built with WCAG 2.2 AA in mind: visible focus rings, screen-reader utilities, semantic landmark elements
+* RTL-ready: all layout written with CSS logical properties
+* Tuned for Core Web Vitals: zero render-blocking JavaScript, cascade-ordered CSS, no dead weight
+* Reduced-motion support: all decorative animation is governed by a single global guard
+* Block patterns: starter patterns for hero, content, and navigation layouts
+* WooCommerce compatible: declares support automatically when the plugin is active
 * Zero plugin dependencies
 
 == The CORE/SKIN split ==
@@ -35,7 +35,7 @@ Every file in inc/ is labelled [CORE] or [SKIN].
 
 [CORE] files are the portable infrastructure: theme supports, a11y scaffolding, the block-bindings copyright footer, and the WP.org-compliant onboarding flow. These are the same across every theme in the collection.
 
-[SKIN] is inc/skin.php — the one file that carries your theme's personality: image crop sizes, bundled fonts, block style registrations, pattern categories, and the onboarding copy. The Colophon CLI (`colophon sync`) never overwrites skin.php, so you can rebuild or update the core without losing your customisations.
+[SKIN] is inc/skin.php, the one file that carries your theme's personality: image crop sizes, bundled fonts, block style registrations, pattern categories, and the onboarding copy. The Colophon CLI (`colophon sync`) never overwrites skin.php, so you can rebuild or update the core without losing your customisations.
 
 == Installation ==
 
@@ -52,11 +52,11 @@ Yes. Licensed GPLv2 or later, with no upsells or required paid extensions.
 
 = What is it for? =
 
-Two things. First, it works as a standalone minimal theme for blogs and personal sites that want a clean, fast, accessible foundation without a specific editorial personality. Second, it is the documented base for a collection of niche WordPress themes — each of those themes is Colophon with a specific skin applied.
+Two things. First, it works as a standalone minimal theme for blogs and personal sites that want a clean, fast, accessible foundation without a specific editorial personality. Second, it is the documented base for a collection of niche WordPress themes. Each of those themes is Colophon with a specific skin applied.
 
 = What are the Colophon themes? =
 
-Kern (type studios and brand consultancies), Masthead (digital newspapers and editorial publications), Parcel (direct-to-consumer brands), and Wake (maritime journals and coastal lifestyle sites). Each is a full standalone theme on WordPress.org, built on this foundation.
+Quillwork (writers and personal brands) and Masthead (newsrooms and digital publishers) are live in the WordPress.org theme directory. Kern (literary and culture magazines), Gutter (financial and data publications), Ligature (design studios), Selvedge (maker and craft studios), Parcel (coffee roasters and cafes), Wake (marinas and sailing schools), Kerf (furniture rescue and resale), and Halyard (community sailing education) are available on GitHub, with more headed to the directory over time.
 
 = How do I add my own fonts? =
 
@@ -71,6 +71,40 @@ Register them in the skin_block_styles() function in inc/skin.php and add the CS
 Colophon is a block theme built for the WordPress Site Editor. Page builders that support the block editor work alongside it; legacy drag-and-drop builders that bypass the block system are not supported.
 
 == Changelog ==
+
+= 1.6266.1253 =
+Prepared for submission to the WordPress.org theme directory: false claims
+and a dead link removed from the admin screens, a nested navigation
+landmark fixed, an RTL border bug fixed, and the 404 heading made
+descriptive and translatable.
+
+* The Get-started page's "optimize" copy claimed self-hosted fonts and a
+  breaking-news dismiss script that Colophon does not have (both were
+  written for a sibling theme and never corrected here). Rewritten to
+  describe what Colophon actually ships.
+* The Get-started page's developer-guide link pointed at a page that
+  404s. It now points at this GitHub repository.
+* The welcome notice's is-dismissible class gave core's own JS an X
+  button that only hid the notice for the current page load, sitting
+  next to a real "Dismiss" link that persists. Removed is-dismissible;
+  the one real dismissal path remains.
+* The 404 template's heading was the literal text "404". It now renders
+  the theme's existing, already-translated "Page not found" string via
+  a block binding, so it describes the page rather than only naming an
+  HTTP status.
+* patterns/main-navigation.php wrapped a wp:navigation block (which
+  renders its own <nav>) inside a second <nav> element. Screen readers
+  surfaced two navigation landmarks for one navigation bar. The outer
+  wrapper is now a plain group.
+* The quote block's accent border used theme.json's border support,
+  which only emits physical left/right and put the rule on the wrong
+  side in RTL languages. Moved to a border-inline-start rule in
+  skin.css, which flips correctly with writing direction.
+* readme.txt and style.css claimed Kern, Parcel, and Wake are each "a
+  full standalone theme on WordPress.org." They are not yet; only
+  Masthead and Quillwork are live. Corrected, and Quillwork (previously
+  missing from this list) is now included.
+* Regenerated languages/colophon.pot against the current source.
 
 = 1.6265.1620 =
 A wp-expert review of Kerf (independent of the audit that produced 1.6265.1511)

@@ -2,14 +2,14 @@
 # This file is distributed under the GNU General Public License v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Colophon 1.6252.1241\n"
+"Project-Id-Version: Colophon 1.6265.1620\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/colophon\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-09T14:51:07+00:00\n"
+"POT-Creation-Date: 2026-09-23T12:48:50+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: colophon\n"
@@ -27,7 +27,7 @@ msgstr ""
 
 #. Description of the theme
 #: style.css
-msgid "A minimal WordPress FSE starter theme. The shared foundation beneath Kern, Masthead, Parcel, and Wake — four niche editorial themes built on it. Use it as-is for a clean, accessible start, or build on the CORE/SKIN architecture to make your own themed version without touching the portable core files."
+msgid "A minimal, accessible WordPress FSE starter theme, and the shared foundation for a growing collection of niche editorial and small-business themes. Use it as-is for a clean, accessible start, or build on the CORE/SKIN architecture to make your own themed version without touching the portable core files."
 msgstr ""
 
 #. Author of the theme
@@ -42,108 +42,100 @@ msgstr ""
 
 #. translators: %s: theme name.
 #: inc/admin.php:70
-#: inc/admin.php:318
+#: inc/admin.php:315
 #, php-format
 msgid "%s: Get started"
 msgstr ""
 
 #. translators: %s: theme name.
-#: inc/admin.php:170
+#: inc/admin.php:172
 #, php-format
 msgid "Welcome to %s."
 msgstr ""
 
-#: inc/admin.php:173
+#: inc/admin.php:175
 msgid "Thanks for giving it a home. A few small steps will have your site reading the way it should."
 msgstr ""
 
 #. translators: %s: theme name.
-#: inc/admin.php:179
+#: inc/admin.php:181
 #, php-format
 msgid "Set up %s →"
 msgstr ""
 
-#: inc/admin.php:183
+#: inc/admin.php:185
 msgid "Dismiss"
 msgstr ""
 
-#: inc/admin.php:199
+#: inc/admin.php:201
 msgid "You do not have permission to do that."
 msgstr ""
 
 #. translators: %s: theme name.
-#: inc/admin.php:225
+#: inc/admin.php:227
 #, php-format
 msgid "%s is a free, full-site-editing theme built to get out of the way of your content. Here is how to make it yours."
 msgstr ""
 
-#: inc/admin.php:243
+#: inc/admin.php:241
 msgid "Choose what people land on."
 msgstr ""
 
-#: inc/admin.php:244
+#: inc/admin.php:242
 msgid "A visitor's first second decides whether they stay. Set a static front page under Settings → Reading, and give your posts a page of their own."
 msgstr ""
 
-#: inc/admin.php:247
+#: inc/admin.php:245
 msgid "Give people a way around."
 msgstr ""
 
-#: inc/admin.php:248
+#: inc/admin.php:246
 msgid "A site without a menu is a room without doors. Open the Site Editor, edit the header, and assign your menu to Primary Navigation."
 msgstr ""
 
-#: inc/admin.php:251
+#: inc/admin.php:249
 msgid "Start from a pattern, not a blank page."
 msgstr ""
 
-#: inc/admin.php:252
+#: inc/admin.php:250
 msgid "In any page or post, open the block inserter, choose Patterns, and find this theme's group. Drop one in and change the words."
 msgstr ""
 
-#: inc/admin.php:255
+#: inc/admin.php:253
 msgid "Make it sound like you."
 msgstr ""
 
-#: inc/admin.php:256
+#: inc/admin.php:254
 msgid "In the Site Editor, open Styles to change colours and typefaces. Nothing you do there can break the theme — experiment freely."
 msgstr ""
 
-#: inc/admin.php:260
-msgid "This theme is already fast by design: no theme-authored JavaScript, system fonts that load instantly, and a cascade-ordered stylesheet that puts nothing on the critical path it doesn't need to."
+#: inc/admin.php:258
+msgid "This theme is fast by design: no front-end JavaScript framework, no third-party requests, and tuning against the Core Web Vitals search engines actually measure."
 msgstr ""
 
-#: inc/admin.php:261
-msgid "It's built to WCAG 2.2 AA guidelines — real focus outlines, a skip link, sensible heading order, and motion that respects a reduce-motion setting. Keep your own copy and images to that bar and the whole site stays welcoming."
-msgstr ""
-
-#: inc/admin.php:263
-msgid "There's a small credit in your footer. It's a thank-you, not a tax — remove it in two clicks in the Site Editor → Footer, or filter it out in code. No hard feelings either way."
+#: inc/admin.php:259
+msgid "It is built with WCAG 2.2 AA in mind — real focus outlines, a skip link, sensible heading order, and motion that respects a reduce-motion setting. Keep your own copy and images to that bar and the whole site stays welcoming."
 msgstr ""
 
 #. translators: %s: linked developer-guide anchor.
-#: inc/admin.php:266
+#: inc/admin.php:263
 #, php-format
-msgid "Colophon is designed to be built on. The %s walks through the CORE/SKIN architecture, how to add fonts, register block styles, and ship your own theme on this foundation."
+msgid "This theme is built on Colophon, a small documented core meant to be reused. The %s walks through how to build your own theme on it."
 msgstr ""
 
-#: inc/admin.php:268
+#: inc/admin.php:265
 msgid "developer guide"
 msgstr ""
 
-#: inc/admin.php:327
+#: inc/admin.php:324
 msgid "Set up"
 msgstr ""
 
-#: inc/admin.php:339
+#: inc/admin.php:336
 msgid "Optimize"
 msgstr ""
 
-#: inc/admin.php:346
-msgid "The footer credit"
-msgstr ""
-
-#: inc/admin.php:351
+#: inc/admin.php:343
 msgid "For developers"
 msgstr ""
 
@@ -152,20 +144,52 @@ msgid "Copyright line"
 msgstr ""
 
 #: inc/bindings.php:47
-msgid "Footer credit line"
+msgid "Theme strings"
+msgstr ""
+
+#: inc/bindings.php:56
+msgid "Publication date"
+msgstr ""
+
+#: inc/bindings.php:65
+msgid "Footer credit"
+msgstr ""
+
+#: inc/bindings.php:86
+msgid "Breaking"
+msgstr ""
+
+#: inc/bindings.php:88
+msgid "Back to the front page"
+msgstr ""
+
+#: inc/bindings.php:92
+msgid "Page not found"
+msgstr ""
+
+#: inc/bindings.php:95
+msgid "Latest news"
 msgstr ""
 
 #. translators: 1: four-digit year, 2: site title.
-#: inc/bindings.php:80
+#: inc/bindings.php:125
 #: patterns/site-footer.php:82
 #, php-format
 msgid "© %1$s %2$s. All rights reserved."
 msgstr ""
 
-#. translators: %s: linked theme name.
-#: inc/bindings.php:121
+#. translators: %s: linked or plain theme name.
+#: inc/bindings.php:188
 #, php-format
-msgid "Built with the %s theme."
+msgid "Built with %s."
+msgstr ""
+
+#: inc/setup.php:73
+msgid "Primary Navigation"
+msgstr ""
+
+#: inc/setup.php:74
+msgid "Footer Navigation"
 msgstr ""
 
 #: inc/skin.php:52

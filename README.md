@@ -1,6 +1,6 @@
 # Colophon
 
-The shared starter core behind the [Christopher Ross](https://thisismyurl.com) free theme line — and the tool that generates themes from it.
+The shared starter core behind the [Christopher Ross](https://thisismyurl.com) free theme line, and the tool that generates themes from it.
 
 Colophon is a **development-time core**, not a runtime parent. You build *from* it (copy + re-skin), not *on* it (no `Template:` header, no cross-theme `get_template_part`, no shared runtime state). Each theme in the line ships as a fully self-contained WordPress install; Colophon is where the bones evolve.
 
@@ -11,11 +11,11 @@ Colophon is a **development-time core**, not a runtime parent. You build *from* 
 Developers who want to build a full-site-editing WordPress theme with a real accessibility and performance floor without starting from scratch. You get:
 
 - A six-layer CSS cascade contract (`@layer reset, base, layout, components, blocks, utilities`) declared once, respected everywhere
-- Accessibility scaffolding built to WCAG 2.2 AA guidelines — skip link, focus ring contract, reduced-motion — baked into the core
+- Accessibility scaffolding built with WCAG 2.2 AA in mind: skip link, focus ring contract, reduced-motion, baked into the core
 - A `--cl-*` semantic token contract that survives across the whole theme line
 - No theme-authored JavaScript (the navigation block's own Interactivity API runtime is core's, not ours)
 - A system-font stack by default, no external requests (bring your own webfonts per theme)
-- A per-theme function/constant prefix, not a namespace — WordPress.org rejects bare namespaced functions as unprefixed, so `inc/bootstrap.php` is the one file the CLI rewrites to carry your theme's identity everywhere
+- A per-theme function/constant prefix, not a namespace: WordPress.org rejects bare namespaced functions as unprefixed, so `inc/bootstrap.php` is the one file the CLI rewrites to carry your theme's identity everywhere
 - A one-file re-prefixing point (`inc/bootstrap.php`) so your theme identity doesn't leak into a dozen files
 
 Then you use the `colophon` CLI to generate your theme and pull core improvements forward without touching your design.
@@ -24,15 +24,15 @@ Then you use the `colophon` CLI to generate your theme and pull core improvement
 
 ## Requirements
 
-- WordPress 7.0 or later
-- PHP 8.1 or later
+- WordPress 6.7 or later
+- PHP 7.4 or later
 - No plugins required
 
 ---
 
 ## Install (as a usable theme)
 
-Colophon works as a standalone theme, but it's plain by design — no bundled skin, system fonts only. Most people will prefer one of the finished themes in the line (see [The theme line](#the-theme-line) below).
+Colophon works as a standalone theme in its own right: a minimal, accessible base for a blog or personal site, plain by design, system fonts only. It's also the starting point for one of the finished themes in the line (see [The theme line](#the-theme-line) below).
 
 If you want to run the seed directly:
 
@@ -44,7 +44,7 @@ If you want to run the seed directly:
 
 ## The `colophon` CLI
 
-The CLI is a single PHP file — no Composer, no Node, no dependencies. It lives at `bin/colophon` in this repo, kept out of the theme root so a WP.org distribution build excludes it the same way it excludes everything else in `bin/`.
+The CLI is a single PHP file: no Composer, no Node, no dependencies. It lives at `bin/colophon` in this repo, kept out of the theme root so a WP.org distribution build excludes it the same way it excludes everything else in `bin/`.
 
 ```bash
 # Scaffold a new theme from the Colophon core
@@ -62,11 +62,11 @@ php bin/colophon list
 
 **What `new` does:** copies every `core` file into a new sibling directory, re-prefixes namespace, text domain, hook names, CSS token prefix, and `SLUG`/`VERSION` constants to your theme's identity, then lays down the `scaffold` files (templates, skin CSS, patterns, `theme.json`) as your starting point. After that, the scaffold is yours.
 
-**What `sync` does:** re-applies the latest `core` files to an existing generated theme — picking up accessibility fixes, performance improvements, or cascade changes from Colophon — without touching anything in the `scaffold` or `generated` buckets. Your design is never overwritten.
+**What `sync` does:** re-applies the latest `core` files to an existing generated theme, picking up accessibility fixes, performance improvements, or cascade changes from Colophon, without touching anything in the `scaffold` or `generated` buckets. Your design is never overwritten.
 
 **What `doctor` does:** checks a generated theme for stale core files, missing identity fields, mismatched versions, and text-domain integrity.
 
-The full rules — which files are `core` vs `scaffold` vs `generated`, the substitution rules, the CSS cascade contract, the i18n literal gotcha — are in [ARCHITECTURE.md](./ARCHITECTURE.md). Read it before you build.
+The full rules (which files are `core` vs `scaffold` vs `generated`, the substitution rules, the CSS cascade contract, the i18n literal gotcha) are in [ARCHITECTURE.md](./ARCHITECTURE.md). Read it before you build.
 
 ---
 
@@ -88,15 +88,22 @@ Every file in a generated theme is one of three kinds:
 
 Colophon is the core. The finished themes are:
 
-- **[Quillwork](https://github.com/thisismyurl/colophon-quillwork)** — portfolio and editorial; Cormorant Garamond headlines, Newsreader body, deep-teal/warm-ochre palette
-- **Masthead** — broadsheet newspaper; three-column print grid, CSS-only breaking-news ticker, Playfair Display/Libre Baskerville/Barlow Condensed
-- **Margin** — financial trade publication; ink-on-paper, DM Sans/Fraunces/Source Serif 4, static market band with signed change values
+- **[Quillwork](https://github.com/thisismyurl/quillwork)**: writers and personal brands; live on WordPress.org
+- **[Masthead](https://github.com/thisismyurl/masthead)**: newsrooms and digital publishers; live on WordPress.org
+- **[Kern](https://github.com/thisismyurl/kern)**: literary and culture magazines
+- **[Gutter](https://github.com/thisismyurl/gutter)**: financial and data publications
+- **[Ligature](https://github.com/thisismyurl/ligature)**: design studios and agencies
+- **[Selvedge](https://github.com/thisismyurl/selvedge)**: maker and craft studios
+- **[Parcel](https://github.com/thisismyurl/parcel)**: coffee roasters, bakeries, and cafes
+- **[Wake](https://github.com/thisismyurl/wake)**: marinas, boat charters, and sailing schools
+- **[Kerf](https://github.com/thisismyurl/kerf)**: furniture rescue and cause-funded resale
+- **[Halyard](https://github.com/thisismyurl/halyard)**: teaching-first sailing and community education
 
-All themes are free, GPL-licensed, and listed at [thisismyurl.com/themes](https://thisismyurl.com/themes/).
+All themes are free and GPL-licensed. Previews and downloads are at [themes.thisismyurl.com](https://themes.thisismyurl.com/).
 
 ---
 
-## Free, forever — no upsell
+## Free, forever, no upsell
 
 This repo and every theme in the line are GPL-2.0. No pro version, no feature lock, no "upgrade for support." Build whatever you want with it.
 
@@ -143,7 +150,7 @@ This theme is built and maintained by [Christopher Ross](https://thisismyurl.com
 
 ## License
 
-GNU General Public License v2.0 or later — see [LICENSE](./LICENSE).
+GNU General Public License v2.0 or later. See [LICENSE](./LICENSE).
 
 ---
 *This project follows the [10 Core Pillars](PILLARS.md). Support quality work [here](https://github.com/sponsors/thisismyurl).*

@@ -10,8 +10,12 @@
  * @package colophon
  */
 ?>
-<!-- wp:group {"tagName":"nav","style":{"spacing":{"padding":{"top":"var:preset|spacing|5","bottom":"var:preset|spacing|5","left":"var:preset|spacing|5","right":"var:preset|spacing|5"}},"color":{"background":"var:preset|color|base-paper"},"border":{"bottom":{"color":"var:preset|color|base-rule","width":"1px"}}},"layout":{"type":"constrained","contentSize":"1200px"}} -->
-<nav class="wp-block-group has-base-paper-background-color has-background" style="border-bottom-color:var(--wp--preset--color--base-rule);border-bottom-width:1px;padding-top:var(--wp--preset--spacing--5);padding-bottom:var(--wp--preset--spacing--5);padding-left:var(--wp--preset--spacing--5);padding-right:var(--wp--preset--spacing--5)">
+<!-- The inner wp:navigation block already renders its own <nav> landmark, so
+     this wrapper stays a plain group. tagName:"nav" here would nest a second
+     <nav> inside the first, which screen readers surface as two navigation
+     landmarks for one navigation bar. -->
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|5","bottom":"var:preset|spacing|5","left":"var:preset|spacing|5","right":"var:preset|spacing|5"}},"color":{"background":"var:preset|color|base-paper"},"border":{"bottom":{"color":"var:preset|color|base-rule","width":"1px"}}},"layout":{"type":"constrained","contentSize":"1200px"}} -->
+<div class="wp-block-group has-base-paper-background-color has-background" style="border-bottom-color:var(--wp--preset--color--base-rule);border-bottom-width:1px;padding-top:var(--wp--preset--spacing--5);padding-bottom:var(--wp--preset--spacing--5);padding-left:var(--wp--preset--spacing--5);padding-right:var(--wp--preset--spacing--5)">
 
 	<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between","verticalAlignment":"center"}} -->
 	<div class="wp-block-group">
@@ -23,5 +27,5 @@
 	</div>
 	<!-- /wp:group -->
 
-</nav>
+</div>
 <!-- /wp:group -->

@@ -1,4 +1,4 @@
-# Colophon — the shared theme-line core
+# Colophon, the shared theme-line core
 
 Colophon is a **development-time core**, not a runtime parent. Themes are built
 *from* it (copied + re-skinned), never built *on* it (inherited). Every theme in
@@ -8,20 +8,20 @@ state. The bones evolve in one place; the shipped themes share DNA without
 sharing a dependency.
 
 This is the contract. If you're building a theme on Colophon, read it top to
-bottom — the re-skin is mostly mechanical, and the `colophon` CLI does the
+bottom, the re-skin is mostly mechanical, and the `colophon` CLI does the
 mechanical half for you.
 
 ---
 
-## 1. Three buckets — what the CLI owns, and what's yours
+## 1. Three buckets, what the CLI owns, and what's yours
 
 Every path in a theme is exactly one of three kinds. `colophon.manifest.json` is
 the machine-readable version of this table; this section is the human one.
 
-### `core` — Colophon owns it; `colophon sync` overwrites it
+### `core`, Colophon owns it; `colophon sync` overwrites it
 
 The portable engine and the accessibility / performance floor. You never hand-edit
-these in a generated theme — `sync` will overwrite them (re-prefixed to your
+these in a generated theme, `sync` will overwrite them (re-prefixed to your
 theme on the way in). If you must diverge, list the path in your theme's
 `colophon.json` `overrides` and `sync` will skip it.
 
@@ -29,7 +29,7 @@ theme on the way in). If you must diverge, list the path in your theme's
 | --- | --- |
 | `functions.php` | Thin loader; identical everywhere. |
 | `inc/bootstrap.php` | The `COLOPHON_*` identity constants (SLUG, VERSION, DIR, URI). Identity is re-injected from `colophon.json` on every sync. |
-| `inc/setup.php` | Supports, i18n, nav menus, skip link, emoji-dequeue — the shared floor. |
+| `inc/setup.php` | Supports, i18n, nav menus, skip link, emoji-dequeue, the shared floor. |
 | `inc/assets.php` | Cascade-ordered enqueue + the filterable font-preload mechanism. |
 | `inc/bindings.php` | Footer copyright-year + removable credit (reads the theme's own header, so it carries no theme string). |
 | `inc/admin.php` | The WP.org-compliant Get-started page + welcome notice (mechanism only; the copy is filtered in from skin). |
@@ -37,7 +37,7 @@ theme on the way in). If you must diverge, list the path in your theme's
 | `assets/css/core/base.css` | A11y scaffolding + the `--cl-*` semantic-token contract. |
 | `assets/css/core/print.css` | A generic ink-on-white print proof keyed only off core-block selectors. |
 
-### `scaffold` — Colophon lays it down once; then it's yours
+### `scaffold`, Colophon lays it down once; then it's yours
 
 The starting point for your design. `colophon new` copies these and rewrites the
 `Colophon`/`colophon`/`cl-` tokens to your theme's; after that **`sync` leaves
@@ -49,7 +49,7 @@ them alone**. They're where the design lives, and design is per-theme.
 `patterns/*.php`, `style.css`, `readme.txt`.
 
 **No `templates/front-page.html`, on purpose.** WordPress's `is_front_page()`
-returns true — and `front-page.html` wins over `index.html` — whenever a
+returns true, and `front-page.html` wins over `index.html`, whenever a
 request is the site's front page, which includes the default "Your latest
 posts" setting, not only a static page assigned as the front page. A
 `front-page.html` that only carries `wp:post-content` has no post context to
@@ -60,24 +60,24 @@ already handle both cases correctly, so the front page falls through to
 whichever applies rather than through a template that can only serve one of
 them.
 
-### `generated` — made fresh per theme, never copied
+### `generated`, made fresh per theme, never copied
 
 `colophon.json` (your identity record), `languages/{slug}.pot` (run `wp i18n
 make-pot`), `screenshot.png` (your 1200×900 capture).
 
 > **What "updatable" honestly covers.** `sync` propagates improvements to the
-> *engine and the a11y/CWV/cascade floor* — the `core` bucket. It does **not**
+> *engine and the a11y/CWV/cascade floor*, the `core` bucket. It does **not**
 > touch your design (templates, skin CSS, patterns, theme.json), because design
 > is the part that's supposed to differ. That's the right boundary: the shared
 > value is the standards and the plumbing, not the markup.
 
 ### No self-updater in Colophon core
 
-Earlier core versions carried an optional `inc/github-updater.php` — a
+Earlier core versions carried an optional `inc/github-updater.php`, a
 `file_exists()`-guarded self-update checker for themes distributed straight
 from a GitHub release, dormant until a theme named its repo via a filter in
 `inc/skin.php`. Colophon itself ships to WordPress.org and nowhere else, and a
-theme in the .org directory must not carry any self-update path — .org supplies
+theme in the .org directory must not carry any self-update path, .org supplies
 that mechanism, and WordPress.org theme review rejects submissions that ship
 one. Colophon's own submission was rejected on exactly this (themes.trac
 #276778) because a build-time exclusion (`.distignore` + `package-theme.sh
@@ -86,7 +86,7 @@ the manifest's `core` list, not merely excluded at packaging time.
 
 A theme that still wants a GitHub-release self-updater (one not bound for
 WordPress.org, e.g. a line still distributed only via GitHub releases) can keep
-its own copy — `sync` no longer tracks the path, so nothing here will touch or
+its own copy, `sync` no longer tracks the path, so nothing here will touch or
 remove it from a theme that already has one.
 
 ---
@@ -96,12 +96,12 @@ remove it from a theme that already has one.
 WordPress.org rejects a theme that reuses another's function prefix or text
 domain. Two mechanisms keep every theme unique without scattering the identity:
 
-**PHP — a `colophon_` function prefix, rewritten per theme.** Every function,
+**PHP, a `colophon_` function prefix, rewritten per theme.** Every function,
 constant and class defined in the global scope carries the theme's own prefix:
 `colophon_setup()` becomes `masthead_setup()`, `COLOPHON_SLUG` becomes
 `MASTHEAD_SLUG`, `Colophon_CLI_Command` becomes `Masthead_CLI_Command`.
 `inc/bootstrap.php` holds the `COLOPHON_*` identity constants, and the CLI rewrites
-all three prefix forms — the whole identity still lives in one file.
+all three prefix forms, the whole identity still lives in one file.
 
 This replaced a namespace (`namespace Colophon;`), chosen originally because
 callbacks registered as `__NAMESPACE__ . '\\fn'` meant one line re-pointed every
@@ -112,17 +112,17 @@ global scope, so a bare `function setup()` inside a namespace still reads as
 unprefixed to their tooling. Three substitution rules cost little, and the
 requirement is not negotiable.
 
-**CSS — a stable semantic-token namespace.** Core CSS can't reference
+**CSS, a stable semantic-token namespace.** Core CSS can't reference
 `--wp--preset--color--teal` (that's one skin's word). Instead core references
 `--cl-focus-ring`, `--cl-skip-bg`, `--cl-skip-fg`, `--cl-focus-ring-inverse`,
 and each skin **binds** those tokens to its own palette in `skin.css` (in an
 unlayered `:root` so the binding beats core's layered fallbacks). The `--cl-`
-namespace is shared across the whole line and is **never re-prefixed** — it's
+namespace is shared across the whole line and is **never re-prefixed**, it's
 common vocabulary, like `--wp--preset--`.
 
 ---
 
-## 3. The i18n literal — the one place "tidy" is a bug
+## 3. The i18n literal, the one place "tidy" is a bug
 
 Text domains in `__()`/`_e()`/`esc_html__()` are written as the **literal string**
 `'colophon'`, never the `SLUG` constant. `wp i18n make-pot` parses source
@@ -137,13 +137,13 @@ rewrites the literal too, so it survives a re-skin and stays a literal.
 `colophon new` and `colophon sync` apply these to every `core` file (and `new`
 also to `scaffold` files) as they're written into the target theme:
 
-1. `COLOPHON_` → `{SLUG}_` — constants. Runs first, before the quote-anchored
+1. `COLOPHON_` → `{SLUG}_`, constants. Runs first, before the quote-anchored
    rules below, so a callback string like `'colophon_setup'` is rewritten as one
    symbol rather than half-caught by rule 2.
-1. `Colophon_` → `{Studly}_` — classes.
-1. `colophon_` → `{slug}_` — functions.
-2. `'colophon` → `'{slug}` — catches the text-domain literal **and** every hook
-   name (`'colophon/setup'`, `'colophon/footer_credit'`, …) and the `SLUG`
+1. `Colophon_` → `{Studly}_`, classes.
+1. `colophon_` → `{slug}_`, functions.
+2. `'colophon` → `'{slug}`, catches the text-domain literal **and** every hook
+   name (`'colophon/setup'`, `'colophon/footer_credit_text'`, …) and the `SLUG`
    constant value, in one rule. The leading single-quote means prose mentioning
    "Colophon" is never touched.
 3. `@package colophon` → `@package {slug}`
@@ -152,7 +152,7 @@ also to `scaffold` files) as they're written into the target theme:
    in templates / skin CSS / patterns.
 
 Because callbacks use `__NAMESPACE__`, there is no second list of callback
-strings to keep in sync — rule 1 carries them all.
+strings to keep in sync, rule 1 carries them all.
 
 ---
 
@@ -166,10 +166,10 @@ strings to keep in sync — rule 1 carries them all.
 
 `reset` and `base` are core; `layout`, `components`, `blocks`, `utilities` are
 the skin's, populated in `skin.css`. Because the order is declared up front, rule
-arrival order is irrelevant — a later-loaded skin rule in `@layer components`
+arrival order is irrelevant, a later-loaded skin rule in `@layer components`
 still loses to nothing in `base`, and beats anything in `layout`. One caveat
 worth knowing: WordPress core ships some **unlayered** CSS, and unlayered always
-beats layered regardless of specificity — so the rare skin override that has to
+beats layered regardless of specificity, so the rare skin override that has to
 beat core CSS goes unlayered (or uses `!important`), on purpose.
 
 ---
@@ -180,7 +180,7 @@ Self-hosted, OFL-licensed, declared as `@font-face` in `theme.json`
 `settings.typography.fontFamilies[].fontFace` with `"fontDisplay": "swap"`. No
 `fonts.googleapis.com` link, no third-party connection. Every family stack lists
 a system fallback so type still cascades if a file is removed. Colophon's own
-default skin uses **system fonts only** (no bundled files) — a theme adds its
+default skin uses **system fonts only** (no bundled files), a theme adds its
 families, drops the WOFF2 + `OFL.txt` into `assets/fonts/<family>/`, and opts the
 LCP font into preload via the `colophon/preload_fonts` filter in `inc/skin.php`.
 
@@ -213,14 +213,14 @@ wp i18n make-pot . languages/<slug>.pot           # non-empty POT, correct domai
 ```
 
 A surviving `colophon`/`Colophon` identifier in a generated theme is a duplicate
-prefix/domain — a WP.org rejection. Those two greps are the whole safety net, and
+prefix/domain, a WP.org rejection. Those two greps are the whole safety net, and
 they're why the prefixing is concentrated, not scattered.
 
 ---
 
-## 8. Re-evaluation notes (v1.1.0 — proven against three themes)
+## 8. Re-evaluation notes (v1.1.0, proven against three themes)
 
-The core was re-evaluated after Quillwork, Masthead, and Margin were built on it.
+The core was re-evaluated after Quillwork, Masthead, and Gutter were built on it.
 What the three themes taught, and what changed:
 
 **Contrast is verified, never trusted.** Two design specs shipped contrast ratios
@@ -228,15 +228,15 @@ that were arithmetically wrong; one set was implemented and produced real WCAG
 failures (green data on a saturated blue band at 2.5:1). A later audit found a
 second, quieter failure mode: `theme.json`'s global `styles.elements.link` colour
 is tuned for light backgrounds, and a pattern with its own dark background
-(patterns/site-footer.php) inherited it anyway — 1.3:1 at rest, 1:1 on hover,
+(patterns/site-footer.php) inherited it anyway, 1.3:1 at rest, 1:1 on hover,
 because `elements.link`'s CSS targets the bare `<a>` tag directly and beats any
 colour set only on an ancestor. The fix is a discipline, made executable: `php
 bin/colophon contrast <fg> <bg>` prints the WCAG 2.1 ratio and the AA/AAA
 verdicts. **Every text/background pair a skin introduces or inherits is checked
-with this before it ships — no number from a spec is trusted on faith, and
+with this before it ships, no number from a spec is trusted on faith, and
 "the group's colour looks right" is not the same check as "every element inside
 it actually renders that colour."** It also catches wrong-direction fixes (a
-"darker" suggestion for dim-on-dark text makes contrast worse, not better — the
+"darker" suggestion for dim-on-dark text makes contrast worse, not better, the
 tool says so in one line).
 
 **The re-prefix now covers CSS-class strings.** `colophon new` originally rewrote
@@ -251,7 +251,7 @@ build-time files (`colophon.json`, `DESIGN-UPLIFT.md`, dev docs) stay out of a
 distributable `.zip`.
 
 **Conventions the band-heavy and motion-heavy themes needed** (documented, not yet
-abstracted into core — abstract them only when a fourth theme proves the shape):
+abstracted into core, abstract them only when a fourth theme proves the shape):
 
 - **Full-bleed chrome bands.** A newspaper's ticker / meta bar / section nav are
   full-width bands that sit outside the constrained `<main>` but inside the header
@@ -261,12 +261,12 @@ abstracted into core — abstract them only when a fourth theme proves the shape
   theme needs the same, promote a `--cl-page-gutter` token + a `.cl-band` utility
   into core base.css.
 - **Reduced-motion that re-lays-out.** The global reduced-motion guard in
-  `core/reset.css` freezes animation with `!important` — correct. But a skin whose
+  `core/reset.css` freezes animation with `!important`, correct. But a skin whose
   motion needs to *restructure* under reduced motion (a ticker becoming a stacked
   list, a marquee, a carousel) must put its restructure rules in an **unlayered**
-  `@media (prefers-reduced-motion: reduce)` block in `skin.css` — unlayered beats
+  `@media (prefers-reduced-motion: reduce)` block in `skin.css`, unlayered beats
   the layered reset, and you're changing layout, not re-enabling animation. The one
   place a motion skin reaches past the layer system on purpose.
-- **The broadsheet double-rule** (`3px double`) is pure CSS — `theme.json` border
+- **The broadsheet double-rule** (`3px double`) is pure CSS, `theme.json` border
   tokens don't express `double`. It lives in `skin.css`. Not a core gap; a note so
   the next editorial skin doesn't hunt for a token that isn't there.

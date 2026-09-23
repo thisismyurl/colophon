@@ -137,12 +137,14 @@ function colophon_enqueue_get_started_assets( string $hook_suffix ): void {
 add_action( 'admin_enqueue_scripts', 'colophon_enqueue_get_started_assets' );
 
 /**
- * Show the dismissible welcome notice while the flag is set.
+ * Show the welcome notice while the flag is set.
  *
  * Shown only to users who pass colophon_get_onboarding_capability(), and never on the Get-started
- * page itself. A standard `notice is-dismissible`, so core renders the close
- * button and handles keyboard dismissal; the persistent server-side dismissal
- * rides the nonce link.
+ * page itself. Deliberately NOT `is-dismissible` — that class gives core's own
+ * JS an X button that only hides the notice for the current page load, which
+ * would sit next to the real "Dismiss" link below and confuse anyone who
+ * clicks the X expecting it to stick. The nonce link is the only dismissal
+ * path, and it is persistent.
  */
 function colophon_render_welcome_notice(): void {
 	if ( ! current_user_can( colophon_get_onboarding_capability() ) ) {
@@ -162,7 +164,7 @@ function colophon_render_welcome_notice(): void {
 	$theme    = colophon_get_theme_name();
 	$dismiss  = wp_nonce_url( admin_url( 'admin-post.php?action=' . COLOPHON_DISMISS_ACTION ), COLOPHON_DISMISS_ACTION );
 	?>
-	<div class="notice notice-info is-dismissible colophon-welcome-notice">
+	<div class="notice notice-info colophon-welcome-notice">
 		<p>
 			<strong>
 				<?php
@@ -249,17 +251,17 @@ function colophon_get_started_content(): array {
 			),
 			array(
 				'title' => __( 'Make it sound like you.', 'colophon' ),
-				'body'  => esc_html__( 'In the Site Editor, open Styles to change colours and typefaces. Nothing you do there can break the theme — experiment freely.', 'colophon' ),
+				'body'  => esc_html__( 'In the Site Editor, open Styles to change colours and typefaces. Nothing you do there can break the theme, so experiment freely.', 'colophon' ),
 			),
 		),
 		'optimize'   => array(
-			esc_html__( "This theme is fast by design: reading is JavaScript-free (only the breaking-news dismiss control ships a small script), self-hosted fonts that don't phone home, and tuning against the Core Web Vitals search engines actually measure.", 'colophon' ),
-			esc_html__( 'It is built to WCAG 2.2 AA guidance — real focus outlines, a skip link, sensible heading order, and motion that respects a reduce-motion setting. Keep your own copy and images to that bar and the whole site stays welcoming.', 'colophon' ),
+			esc_html__( 'This theme is fast by design: no front-end JavaScript framework, no third-party requests, and tuning against the Core Web Vitals search engines actually measure.', 'colophon' ),
+			esc_html__( 'It is built with WCAG 2.2 AA in mind: real focus outlines, a skip link, sensible heading order, and motion that respects a reduce-motion setting. Keep your own copy and images to that bar and the whole site stays welcoming.', 'colophon' ),
 		),
 		'developers' => array(
 			/* translators: %s: linked developer-guide anchor. */
 			'text'  => __( 'This theme is built on Colophon, a small documented core meant to be reused. The %s walks through how to build your own theme on it.', 'colophon' ),
-			'url'   => apply_filters( COLOPHON_SLUG . '/developer_guide_url', 'https://thisismyurl.com/colophon/' ), // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
+			'url'   => apply_filters( COLOPHON_SLUG . '/developer_guide_url', 'https://github.com/thisismyurl/colophon' ), // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 			'label' => __( 'developer guide', 'colophon' ),
 		),
 	);

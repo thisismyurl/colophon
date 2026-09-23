@@ -324,11 +324,6 @@
 			"core/quote": {
 				"typography": {
 					"fontFamily": "var(--wp--preset--font-family--serif)"
-				},
-				"border": {
-					"color": "var(--wp--preset--color--base-rule)",
-					"style": "solid",
-					"width": "0 0 0 3px"
 				}
 			}
 		}

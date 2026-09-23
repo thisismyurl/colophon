@@ -88,7 +88,7 @@ add_action( 'init', 'colophon_skin_pattern_categories' );
 add_filter(
 	'colophon/get_started_content', // phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 	static function ( array $content ): array {
-		$content['lead'] = esc_html__( 'Colophon is a minimal, accessible WordPress theme that works on its own — and also serves as the foundation for a collection of niche editorial themes. Here is how to make it yours.', 'colophon' );
+		$content['lead'] = esc_html__( 'Colophon is a minimal, accessible WordPress theme that works on its own, and also serves as the foundation for a collection of niche editorial themes. Here is how to make it yours.', 'colophon' );
 
 		return $content;
 	}

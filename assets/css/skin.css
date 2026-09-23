@@ -112,6 +112,17 @@
    ===================================================================== */
 @layer blocks {
 
+	/* Quote — a single accent rule on the leading edge. theme.json's border
+	   support only emits physical top/right/bottom/left, which would put the
+	   rule on the wrong side in RTL. border-inline-start is the logical
+	   property that flips with writing direction, so it lives here instead. */
+	.wp-block-quote {
+		border-style: solid;
+		border-width: 0;
+		border-inline-start-width: 3px;
+		border-color: var(--wp--preset--color--base-rule);
+	}
+
 	/* Site title — no default underline on hover */
 	.wp-block-site-title a {
 		text-decoration: none;

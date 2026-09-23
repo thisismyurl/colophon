@@ -112,17 +112,6 @@
    ===================================================================== */
 @layer blocks {
 
-	/* Quote — a single accent rule on the leading edge. theme.json's border
-	   support only emits physical top/right/bottom/left, which would put the
-	   rule on the wrong side in RTL. border-inline-start is the logical
-	   property that flips with writing direction, so it lives here instead. */
-	.wp-block-quote {
-		border-style: solid;
-		border-width: 0;
-		border-inline-start-width: 3px;
-		border-color: var(--wp--preset--color--base-rule);
-	}
-
 	/* Site title — no default underline on hover */
 	.wp-block-site-title a {
 		text-decoration: none;
@@ -174,4 +163,23 @@
 		font-size: 9pt;
 		color: #555;
 	}
+}
+
+/* Quote — a single accent rule on the leading edge, deliberately OUTSIDE any
+   @layer. `add_theme_support('wp-block-styles')` loads WordPress's own quote
+   border (a plain, unlayered rule) and cascade layers give any unlayered
+   declaration priority over every layered one, regardless of specificity —
+   so a version of this rule inside @layer blocks can never win, no matter
+   how it's written. This has to stay unlayered to actually apply, and load
+   after wp-block-library's stylesheet (skin.css already does, as a theme
+   stylesheet) to win on source order once both are unlayered.
+   theme.json's own border support only emits physical top/right/bottom/left,
+   which put the rule on the wrong side in RTL, so it lives here as
+   border-inline-start instead: the logical property that flips correctly
+   with writing direction. */
+.wp-block-quote {
+	border-style: solid;
+	border-width: 0;
+	border-inline-start-width: 3px;
+	border-color: var(--wp--preset--color--base-rule);
 }

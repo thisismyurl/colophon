@@ -5,7 +5,7 @@ Tags: blog, full-site-editing, block-patterns, custom-colors, custom-logo, custo
 Requires at least: 6.7
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.6266.1253
+Stable tag: 1.6266.1322
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,13 +64,45 @@ Register them in theme.json under settings.typography.fontFamilies, add the font
 
 = How do I add custom block styles? =
 
-Register them in the skin_block_styles() function in inc/skin.php and add the CSS treatment in assets/css/skin.css. The CORE files do not need editing.
+Register them in the colophon_skin_block_styles() function in inc/skin.php and add the CSS treatment in assets/css/skin.css. The CORE files do not need editing.
 
 = Is it compatible with page builders? =
 
 Colophon is a block theme built for the WordPress Site Editor. Page builders that support the block editor work alongside it; legacy drag-and-drop builders that bypass the block system are not supported.
 
 == Changelog ==
+
+= 1.6266.1322 =
+A re-validation gate pass on 1.6266.1253 confirmed its fixes and found two
+new blockers plus one dead rule from that release itself, all fixed here:
+
+* The Theme Unit Test's "Markup: HTML Tags and Formatting" page runs a
+  poem through a bare <pre>, which pushed the page into horizontal
+  scroll (886px of overflow at 375px wide). Added overflow-x: auto to
+  pre elements.
+* 1.6266.1253's quote-block border fix never actually applied.
+  add_theme_support('wp-block-styles') loads WordPress's own unlayered
+  quote-border CSS, and cascade layers give any unlayered rule priority
+  over a layered one regardless of specificity, so a version of that
+  fix inside @layer blocks could never win. Moved it to an unlayered
+  rule at the end of skin.css, documented why it has to live there.
+  The RTL half of the original fix (removing the physical left border
+  from theme.json) was real and still holds; only the replacement
+  border was inert.
+* languages/colophon.pot had not been regenerated since three strings
+  changed in 1.6266.1253, so the changelog's claim of a regeneration
+  was inaccurate. Regenerated for real, after all other text in this
+  release was final.
+* readme.txt named the wrong function, skin_block_styles(), for
+  registering custom block styles. The real function is
+  colophon_skin_block_styles().
+* The Get-started page's navigation step described assigning a menu to
+  a "Primary Navigation" location, which is classic-theme terminology.
+  Colophon is a block theme; the step now describes adding pages to
+  the Navigation block in the Site Editor.
+* The header and footer navigation blocks had no ariaLabel, so a
+  screen reader announced them as "(none)" and " 2" instead of two
+  distinct landmarks. Labelled "Primary" and "Footer".
 
 = 1.6266.1253 =
 Prepared for submission to the WordPress.org theme directory: false claims
@@ -100,10 +132,10 @@ descriptive and translatable.
   which only emits physical left/right and put the rule on the wrong
   side in RTL languages. Moved to a border-inline-start rule in
   skin.css, which flips correctly with writing direction.
-* readme.txt and style.css claimed Kern, Parcel, and Wake are each "a
-  full standalone theme on WordPress.org." They are not yet; only
-  Masthead and Quillwork are live. Corrected, and Quillwork (previously
-  missing from this list) is now included.
+* readme.txt claimed Kern, Parcel, and Wake are each "a full standalone
+  theme on WordPress.org." They are not yet; only Masthead and
+  Quillwork are live. Corrected, and Quillwork (previously missing from
+  this list) is now included in both readme.txt and style.css.
 * Regenerated languages/colophon.pot against the current source.
 
 = 1.6265.1620 =
@@ -315,7 +347,7 @@ See 1.6252.1241 above for the fixes made in response.
 
 == Resources ==
 
-* assets/images/placeholder.png — a flat, solid-colour PNG generated for this
+* assets/images/placeholder.png: a flat, solid-colour PNG generated for this
   theme (no photographic or third-party content), used only as the default
   image in the Content Grid and Feature Section patterns so an unconfigured
   block never ships as a bare `<img>` with no `src`. Licensed GPLv2 or later,

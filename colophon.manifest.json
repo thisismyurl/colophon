@@ -1,7 +1,7 @@
 {
 	"_comment": "The machine-readable version of ARCHITECTURE.md §1. The `colophon` CLI reads this to know which paths it owns (core — overwritten by sync) versus which it only lays down once (scaffold — copied by `new`, then yours). See ARCHITECTURE.md for the human version and §4 for the substitution rules the CLI applies.",
 	"manifest_version": 1,
-	"core_version": "1.6266.1253",
+	"core_version": "1.6266.1322",
 	"tokens": {
 		"namespace": "Colophon",
 		"slug": "colophon",

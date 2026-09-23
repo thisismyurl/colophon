@@ -120,6 +120,14 @@
 		width: 100%;
 	}
 
+	/* Prevent a long unbroken line in preformatted text (a poem, ASCII art,
+	   code with no wrapping) from pushing the whole page into horizontal
+	   scroll. Content gets its own scrollbar instead. */
+	pre {
+		overflow-x: auto;
+		max-width: 100%;
+	}
+
 	/* Ensure media in content columns respects the layout */
 	.wp-block-image img,
 	.wp-block-cover img {

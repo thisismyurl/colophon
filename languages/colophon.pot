@@ -2,14 +2,14 @@
 # This file is distributed under the GNU General Public License v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Colophon 1.6265.1620\n"
+"Project-Id-Version: Colophon 1.6266.1322\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/colophon\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-23T12:48:50+00:00\n"
+"POT-Creation-Date: 2026-09-23T13:24:08+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: colophon\n"
@@ -90,7 +90,7 @@ msgid "Give people a way around."
 msgstr ""
 
 #: inc/admin.php:246
-msgid "A site without a menu is a room without doors. Open the Site Editor, edit the header, and assign your menu to Primary Navigation."
+msgid "A site without a menu is a room without doors. Open the Site Editor, edit the header, click the Navigation block, and add your pages or an existing menu to it."
 msgstr ""
 
 #: inc/admin.php:249
@@ -106,7 +106,7 @@ msgid "Make it sound like you."
 msgstr ""
 
 #: inc/admin.php:254
-msgid "In the Site Editor, open Styles to change colours and typefaces. Nothing you do there can break the theme — experiment freely."
+msgid "In the Site Editor, open Styles to change colours and typefaces. Nothing you do there can break the theme, so experiment freely."
 msgstr ""
 
 #: inc/admin.php:258
@@ -114,7 +114,7 @@ msgid "This theme is fast by design: no front-end JavaScript framework, no third
 msgstr ""
 
 #: inc/admin.php:259
-msgid "It is built with WCAG 2.2 AA in mind — real focus outlines, a skip link, sensible heading order, and motion that respects a reduce-motion setting. Keep your own copy and images to that bar and the whole site stays welcoming."
+msgid "It is built with WCAG 2.2 AA in mind: real focus outlines, a skip link, sensible heading order, and motion that respects a reduce-motion setting. Keep your own copy and images to that bar and the whole site stays welcoming."
 msgstr ""
 
 #. translators: %s: linked developer-guide anchor.
@@ -201,7 +201,7 @@ msgid "Full-bleed band"
 msgstr ""
 
 #: inc/skin.php:91
-msgid "Colophon is a minimal, accessible WordPress theme that works on its own — and also serves as the foundation for a collection of niche editorial themes. Here is how to make it yours."
+msgid "Colophon is a minimal, accessible WordPress theme that works on its own, and also serves as the foundation for a collection of niche editorial themes. Here is how to make it yours."
 msgstr ""
 
 #: patterns/content-grid.php

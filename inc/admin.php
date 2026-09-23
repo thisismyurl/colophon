@@ -243,7 +243,7 @@ function colophon_get_started_content(): array {
 			),
 			array(
 				'title' => __( 'Give people a way around.', 'colophon' ),
-				'body'  => esc_html__( 'A site without a menu is a room without doors. Open the Site Editor, edit the header, and assign your menu to Primary Navigation.', 'colophon' ),
+				'body'  => esc_html__( 'A site without a menu is a room without doors. Open the Site Editor, edit the header, click the Navigation block, and add your pages or an existing menu to it.', 'colophon' ),
 			),
 			array(
 				'title' => __( 'Start from a pattern, not a blank page.', 'colophon' ),

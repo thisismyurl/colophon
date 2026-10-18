@@ -13,6 +13,6 @@
  * @package colophon
  */
 ?>
-<!-- wp:paragraph {"style":{"color":{"text":"var:preset|color|base-mid"}}} -->
+<!-- wp:paragraph {"textColor":"base-mid"} -->
 <p class="has-base-mid-color has-text-color"><?php echo esc_html__( "This page doesn't exist. Try searching, or return to the front page.", 'colophon' ); ?></p>
 <!-- /wp:paragraph -->

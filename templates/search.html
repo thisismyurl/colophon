@@ -1,44 +1,33 @@
-<!-- Search results template for Colophon.
-     Shows "Results for: X" heading above a post list.
-     No-results state orients the user and re-offers the search form.
-     Pillar 6 (Resilience): the no-results state is an experience, not an empty page. -->
+
 
 <!-- wp:template-part {"slug":"header"} /-->
 
 <!-- wp:group {"tagName":"main","id":"main-content","className":"colophon-main colophon-search","layout":{"type":"constrained","contentSize":"720px"},"style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|20","left":"var:preset|spacing|5","right":"var:preset|spacing|5"}}}} -->
 <main id="main-content" class="wp-block-group colophon-main colophon-search" style="padding-top:var(--wp--preset--spacing--10);padding-bottom:var(--wp--preset--spacing--20);padding-left:var(--wp--preset--spacing--5);padding-right:var(--wp--preset--spacing--5)">
 
-	<!-- Search header. query-title renders a fully translated "Search results
-	     for: …" heading on its own — no separate hardcoded label needed. -->
 	<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|3","padding":{"bottom":"var:preset|spacing|8"},"margin":{"bottom":"var:preset|spacing|8"}},"border":{"bottom":{"color":"var:preset|color|base-rule","style":"solid","width":"1px"}}},"layout":{"type":"default"}} -->
-	<div class="wp-block-group" style="padding-bottom:var(--wp--preset--spacing--8);margin-bottom:var(--wp--preset--spacing--8);border-bottom:1px solid var(--wp--preset--color--base-rule)">
+	<div class="wp-block-group" style="padding-bottom:var(--wp--preset--spacing--8);margin-bottom:var(--wp--preset--spacing--8);border-bottom-color:var(--wp--preset--color--base-rule);border-bottom-style:solid;border-bottom-width:1px">
 
-		<!-- "textAlign":"left" removed — a literal left/right value doesn't flip
-		     for RTL, and left is already the natural default alignment in LTR,
-		     so dropping it changes nothing visually except in RTL, where it's
-		     now correct. -->
 		<!-- wp:query-title {"type":"search","level":1} /-->
 
 	</div>
 	<!-- /wp:group -->
 
-	<!-- Results list -->
 	<!-- wp:query {"queryId":1,"query":{"perPage":10,"postType":"post","order":"desc","orderBy":"relevance","inherit":true},"layout":{"type":"default"}} -->
 	<div class="wp-block-query">
 
 		<!-- wp:post-template {"layout":{"type":"default"}} -->
 
 			<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|3","padding":{"bottom":"var:preset|spacing|8"},"margin":{"bottom":"var:preset|spacing|8"}},"border":{"bottom":{"color":"var:preset|color|base-rule","style":"solid","width":"1px"}}},"layout":{"type":"default"}} -->
-			<div class="wp-block-group" style="padding-bottom:var(--wp--preset--spacing--8);margin-bottom:var(--wp--preset--spacing--8);border-bottom:1px solid var(--wp--preset--color--base-rule)">
-				<!-- wp:post-date {"style":{"typography":{"fontSize":"var:preset|font-size|xs"},"color":{"text":"var:preset|color|base-mid"}}} /-->
-				<!-- wp:post-title {"isLink":true,"style":{"typography":{"textDecoration":"none"},"color":{"text":"var:preset|color|base-black"}}} /-->
+			<div class="wp-block-group" style="padding-bottom:var(--wp--preset--spacing--8);margin-bottom:var(--wp--preset--spacing--8);border-bottom-color:var(--wp--preset--color--base-rule);border-bottom-style:solid;border-bottom-width:1px">
+				<!-- wp:post-date {"style":{"typography":{"fontSize":"var:preset|font-size|xs"}},"textColor":"base-mid"} /-->
+				<!-- wp:post-title {"isLink":true,"style":{"typography":{"textDecoration":"none"}},"textColor":"base-black"} /-->
 				<!-- wp:post-excerpt /-->
 			</div>
 			<!-- /wp:group -->
 
 		<!-- /wp:post-template -->
 
-		<!-- No results -->
 		<!-- wp:query-no-results -->
 			<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|8","bottom":"var:preset|spacing|8"},"blockGap":"var:preset|spacing|6"}},"layout":{"type":"default"}} -->
 			<div class="wp-block-group" style="padding-top:var(--wp--preset--spacing--8);padding-bottom:var(--wp--preset--spacing--8)">

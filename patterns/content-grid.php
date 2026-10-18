@@ -15,7 +15,7 @@
 // inserted and published without an editor swapping the picture first.
 $colophon_placeholder_src = get_template_directory_uri() . '/assets/images/placeholder.png';
 ?>
-<!-- wp:group {"tagName":"section","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|5","right":"var:preset|spacing|5"}},"color":{"background":"var:preset|color|base-ground"}},"layout":{"type":"constrained","contentSize":"1200px"}} -->
+<!-- wp:group {"tagName":"section","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|5","right":"var:preset|spacing|5"}}},"layout":{"type":"constrained","contentSize":"1200px"},"backgroundColor":"base-ground"} -->
 <section class="wp-block-group has-base-ground-background-color has-background" style="padding-top:var(--wp--preset--spacing--10);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--5);padding-right:var(--wp--preset--spacing--5)">
 
 	<!-- wp:columns {"style":{"spacing":{"blockGap":{"top":"var:preset|spacing|8","left":"var:preset|spacing|6"}}}} -->
@@ -31,7 +31,7 @@ $colophon_placeholder_src = get_template_directory_uri() . '/assets/images/place
 			<h3 class="wp-block-heading has-serif-font-family" style="margin-top:var(--wp--preset--spacing--5);margin-bottom:var(--wp--preset--spacing--3)"><?php echo esc_html__( 'First column heading', 'colophon' ); ?></h3>
 			<!-- /wp:heading -->
 
-			<!-- wp:paragraph {"style":{"typography":{"fontSize":"var:preset|font-size|sm"},"spacing":{"margin":{"bottom":"var:preset|spacing|4"}},"color":{"text":"var:preset|color|base-mid"}}} -->
+			<!-- wp:paragraph {"style":{"typography":{"fontSize":"var:preset|font-size|sm"},"spacing":{"margin":{"bottom":"var:preset|spacing|4"}}},"textColor":"base-mid"} -->
 			<p class="has-base-mid-color has-text-color" style="font-size:var(--wp--preset--font-size--sm)"><?php echo esc_html__( 'A short summary of the topic, written to give the reader a clear sense of what waits behind the link.', 'colophon' ); ?></p>
 			<!-- /wp:paragraph -->
 
@@ -51,7 +51,7 @@ $colophon_placeholder_src = get_template_directory_uri() . '/assets/images/place
 			<h3 class="wp-block-heading has-serif-font-family" style="margin-top:var(--wp--preset--spacing--5);margin-bottom:var(--wp--preset--spacing--3)"><?php echo esc_html__( 'Second column heading', 'colophon' ); ?></h3>
 			<!-- /wp:heading -->
 
-			<!-- wp:paragraph {"style":{"typography":{"fontSize":"var:preset|font-size|sm"},"spacing":{"margin":{"bottom":"var:preset|spacing|4"}},"color":{"text":"var:preset|color|base-mid"}}} -->
+			<!-- wp:paragraph {"style":{"typography":{"fontSize":"var:preset|font-size|sm"},"spacing":{"margin":{"bottom":"var:preset|spacing|4"}}},"textColor":"base-mid"} -->
 			<p class="has-base-mid-color has-text-color" style="font-size:var(--wp--preset--font-size--sm)"><?php echo esc_html__( 'A short summary of the topic, written to give the reader a clear sense of what waits behind the link.', 'colophon' ); ?></p>
 			<!-- /wp:paragraph -->
 
@@ -71,7 +71,7 @@ $colophon_placeholder_src = get_template_directory_uri() . '/assets/images/place
 			<h3 class="wp-block-heading has-serif-font-family" style="margin-top:var(--wp--preset--spacing--5);margin-bottom:var(--wp--preset--spacing--3)"><?php echo esc_html__( 'Third column heading', 'colophon' ); ?></h3>
 			<!-- /wp:heading -->
 
-			<!-- wp:paragraph {"style":{"typography":{"fontSize":"var:preset|font-size|sm"},"spacing":{"margin":{"bottom":"var:preset|spacing|4"}},"color":{"text":"var:preset|color|base-mid"}}} -->
+			<!-- wp:paragraph {"style":{"typography":{"fontSize":"var:preset|font-size|sm"},"spacing":{"margin":{"bottom":"var:preset|spacing|4"}}},"textColor":"base-mid"} -->
 			<p class="has-base-mid-color has-text-color" style="font-size:var(--wp--preset--font-size--sm)"><?php echo esc_html__( 'A short summary of the topic, written to give the reader a clear sense of what waits behind the link.', 'colophon' ); ?></p>
 			<!-- /wp:paragraph -->
 

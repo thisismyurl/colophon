@@ -2,7 +2,7 @@
 # This file is distributed under the GNU General Public License v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Colophon 1.6266.1322\n"
+"Project-Id-Version: Colophon 1.6291.1458\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/colophon\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"

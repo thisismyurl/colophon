@@ -1,50 +1,38 @@
-<!-- Single post template for Colophon.
-     Clean reading experience: header → post title → featured image →
-     post content → post navigation → footer. -->
+
 
 <!-- wp:template-part {"slug":"header"} /-->
 
 <!-- wp:group {"tagName":"main","id":"main-content","className":"colophon-main colophon-single","layout":{"type":"constrained","contentSize":"720px"},"style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|20","left":"var:preset|spacing|5","right":"var:preset|spacing|5"}}}} -->
 <main id="main-content" class="wp-block-group colophon-main colophon-single" style="padding-top:var(--wp--preset--spacing--10);padding-bottom:var(--wp--preset--spacing--20);padding-left:var(--wp--preset--spacing--5);padding-right:var(--wp--preset--spacing--5)">
 
-	<!-- Post header: date → title -->
 	<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|4","padding":{"bottom":"var:preset|spacing|8"}}},"layout":{"type":"default"}} -->
 	<div class="wp-block-group" style="padding-bottom:var(--wp--preset--spacing--8)">
 
-		<!-- wp:post-date {"style":{"typography":{"fontSize":"var:preset|font-size|xs"},"color":{"text":"var:preset|color|base-mid"}}} /-->
+		<!-- wp:post-date {"style":{"typography":{"fontSize":"var:preset|font-size|xs"}},"textColor":"base-mid"} /-->
 
 		<!-- wp:post-title {"level":1} /-->
 
 	</div>
 	<!-- /wp:group -->
 
-	<!-- Featured image: breaks to wide -->
 	<!-- wp:post-featured-image {"isLink":false,"align":"wide","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|10"}}}} /-->
 
-	<!-- Post content -->
 	<!-- wp:post-content {"layout":{"type":"constrained","contentSize":"720px"}} /-->
 
-	<!-- Post navigation -->
 	<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|10"},"blockGap":"0"}},"layout":{"type":"constrained","contentSize":"720px"}} -->
 	<div class="wp-block-group" style="padding-top:var(--wp--preset--spacing--10)">
 
 		<!-- wp:separator {"backgroundColor":"base-rule","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|8"}}}} -->
-		<hr class="wp-block-separator has-base-rule-background-color has-background" style="margin-bottom:var(--wp--preset--spacing--8)" />
+		<hr class="wp-block-separator has-text-color has-base-rule-color has-alpha-channel-opacity has-base-rule-background-color has-background" style="margin-bottom:var(--wp--preset--spacing--8)" />
 		<!-- /wp:separator -->
 
 		<!-- wp:post-navigation-link {"type":"previous","showTitle":true,"linkLabel":true} /-->
 
-		<!-- className carries the alignment instead of textAlign:"right" — that
-		     attribute is a literal left/right value that doesn't flip for RTL.
-		     .colophon-nav-next (assets/css/skin.css) uses text-align: end, which
-		     does. -->
 		<!-- wp:post-navigation-link {"type":"next","showTitle":true,"linkLabel":true,"className":"colophon-nav-next"} /-->
 
 	</div>
 	<!-- /wp:group -->
 
-	<!-- Comments: only wp:comments/wp:post-comments-form render anything when
-	     comments are closed or none exist yet — core handles that, not this markup. -->
 	<!-- wp:comments {"style":{"spacing":{"margin":{"top":"var:preset|spacing|10"}}},"layout":{"type":"constrained","contentSize":"720px"}} -->
 	<div class="wp-block-comments" style="margin-top:var(--wp--preset--spacing--10)">
 
@@ -65,7 +53,7 @@
 
 					<!-- wp:comment-author-name {"style":{"typography":{"fontWeight":"600"}}} /-->
 
-					<!-- wp:comment-date {"style":{"typography":{"fontSize":"var:preset|font-size|xs"},"color":{"text":"var:preset|color|base-mid"}}} /-->
+					<!-- wp:comment-date {"style":{"typography":{"fontSize":"var:preset|font-size|xs"}},"textColor":"base-mid"} /-->
 
 					<!-- wp:comment-content /-->
 

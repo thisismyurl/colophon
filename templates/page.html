@@ -1,6 +1,4 @@
-<!-- Page template for Colophon.
-     Standard WordPress page: About, Services, Contact, etc.
-     Content constrained to 720px for readable prose. -->
+
 
 <!-- wp:template-part {"slug":"header"} /-->
 
@@ -11,8 +9,6 @@
 
 	<!-- wp:post-content {"layout":{"type":"constrained","contentSize":"720px"}} /-->
 
-	<!-- Comments: only wp:comments/wp:post-comments-form render anything when
-	     comments are closed or none exist yet — core handles that, not this markup. -->
 	<!-- wp:comments {"style":{"spacing":{"margin":{"top":"var:preset|spacing|10"}}},"layout":{"type":"constrained","contentSize":"720px"}} -->
 	<div class="wp-block-comments" style="margin-top:var(--wp--preset--spacing--10)">
 
@@ -33,7 +29,7 @@
 
 					<!-- wp:comment-author-name {"style":{"typography":{"fontWeight":"600"}}} /-->
 
-					<!-- wp:comment-date {"style":{"typography":{"fontSize":"var:preset|font-size|xs"},"color":{"text":"var:preset|color|base-mid"}}} /-->
+					<!-- wp:comment-date {"style":{"typography":{"fontSize":"var:preset|font-size|xs"}},"textColor":"base-mid"} /-->
 
 					<!-- wp:comment-content /-->
 

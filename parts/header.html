@@ -1,22 +1,11 @@
-<!-- Header template part for Colophon.
-     Design principle: the starter header is minimal and functional.
-     Site title + navigation. No decorative elements.
-     Derived themes replace this with their own header personality.
 
-     No hand-rolled skip link here on purpose: WordPress core's
-     _block_template_add_skip_link() already injects one at render time,
-     targeting the first <main> element's existing id (every Colophon
-     template's <main id="main-content">), via a properly translated
-     esc_html__( 'Skip to content' ). A second, hardcoded-English copy here
-     would just duplicate it. -->
 
 <!-- wp:group {"tagName":"header","className":"colophon-site-header","style":{"spacing":{"padding":{"top":"var:preset|spacing|5","bottom":"var:preset|spacing|5","left":"var:preset|spacing|5","right":"var:preset|spacing|5"}}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between","verticalAlignment":"center"}} -->
 <header class="wp-block-group colophon-site-header" style="padding-top:var(--wp--preset--spacing--5);padding-bottom:var(--wp--preset--spacing--5);padding-left:var(--wp--preset--spacing--5);padding-right:var(--wp--preset--spacing--5)">
 
 	<!-- wp:group {"layout":{"type":"flex","flexWrap":"nowrap"}} -->
 	<div class="wp-block-group">
-		<!-- Renders nothing when no logo is set (core's own early return) — the
-		     default header is unchanged until an editor sets one. -->
+		
 		<!-- wp:site-logo {"width":48,"shouldSyncIcon":false} /-->
 
 		<!-- wp:site-title {"level":0,"isLink":true} /-->

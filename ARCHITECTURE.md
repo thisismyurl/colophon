@@ -270,3 +270,38 @@ abstracted into core, abstract them only when a fourth theme proves the shape):
 - **The broadsheet double-rule** (`3px double`) is pure CSS, `theme.json` border
   tokens don't express `double`. It lives in `skin.css`. Not a core gap; a note so
   the next editorial skin doesn't hunt for a token that isn't there.
+
+## 9. Template and pattern design notes
+
+Prose HTML comments must never appear inside block markup in `templates/`,
+`parts/` or `patterns/`. Core re-saves each block in the editor and compares
+the result with the stored markup; a comment inside a block's body makes that
+comparison fail and the editor reports "Block contains unexpected or invalid
+content" (WordPress.org review ticket #292760). `tools/check-templates.py`
+enforces this. The rationale that used to sit in those comments lives here.
+
+* **404:** the heading uses `base-mid`, not `base-rule`. `base-rule` is a
+  border tint that was never audited as a text colour and fails WCAG 1.4.3
+  (about 1.4:1). `base-mid` clears the 3:1 large-text floor in every style
+  variation.
+* **index.html:** it is the homepage on the default "Your latest posts"
+  setting (there is no front-page.html). The h1 comes from
+  `patterns/hidden-latest-posts-heading.php`, a translation-string carrier.
+* **page-blank.html:** no header or footer chrome, so it carries a visually
+  hidden h1 (WCAG 1.3.1 / 2.4.6) as the fallback heading.
+* **page.html / single.html:** `wp:comments` and `wp:post-comments-form`
+  render nothing when comments are closed or absent; core handles that.
+* **search.html:** `query-title` renders a translated "Search results for"
+  heading by itself. A literal `textAlign:"left"` was dropped because it does
+  not flip for RTL.
+* **single.html:** the next-post link is aligned with the
+  `.colophon-nav-next` class (`text-align: end` in skin.css), not
+  `textAlign:"right"`, for the same RTL reason.
+* **header.html:** the site logo block renders nothing until an editor sets a
+  logo. No hand-rolled skip link here; core supplies it.
+* **main-navigation pattern:** the inner `wp:navigation` already renders a
+  `<nav>`, so the wrapper stays a plain group. `tagName:"nav"` would nest a
+  second landmark.
+* **page-hero pattern:** the heading is level 2, because the pattern can land
+  on `page-blank.html`, which already has a hidden h1.
+

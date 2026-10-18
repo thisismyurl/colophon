@@ -15,6 +15,6 @@
  * @package colophon
  */
 ?>
-<!-- wp:paragraph {"style":{"typography":{"fontSize":"var:preset|font-size|sm"},"color":{"text":"var:preset|color|base-mid"}}} -->
+<!-- wp:paragraph {"style":{"typography":{"fontSize":"var:preset|font-size|sm"}},"textColor":"base-mid"} -->
 <p class="has-base-mid-color has-text-color" style="font-size:var(--wp--preset--font-size--sm)"><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php echo esc_html__( 'Home', 'colophon' ); ?></a></p>
 <!-- /wp:paragraph -->

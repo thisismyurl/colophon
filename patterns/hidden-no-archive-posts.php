@@ -13,6 +13,6 @@
  * @package colophon
  */
 ?>
-<!-- wp:paragraph {"style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10"}},"color":{"text":"var:preset|color|base-mid"}}} -->
+<!-- wp:paragraph {"style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10"}}},"textColor":"base-mid"} -->
 <p class="has-base-mid-color has-text-color" style="padding-top:var(--wp--preset--spacing--10);padding-bottom:var(--wp--preset--spacing--10)"><?php echo esc_html__( 'No posts found in this archive.', 'colophon' ); ?></p>
 <!-- /wp:paragraph -->

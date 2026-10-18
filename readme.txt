@@ -5,7 +5,7 @@ Tags: blog, full-site-editing, block-patterns, custom-colors, custom-logo, custo
 Requires at least: 6.7
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.6266.1322
+Stable tag: 1.6291.1458
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,31 @@ Register them in the colophon_skin_block_styles() function in inc/skin.php and a
 Colophon is a block theme built for the WordPress Site Editor. Page builders that support the block editor work alongside it; legacy drag-and-drop builders that bypass the block system are not supported.
 
 == Changelog ==
+
+= 1.6291.1458 =
+Fixes the "Block contains unexpected or invalid content" error reported in
+the Site Editor on review ticket #292760, and the "templates should be
+complete" warning from the Theme Review Action.
+
+* Removed every prose HTML comment from inside block markup in
+  templates/, parts/ and patterns/. Core's block validator compares a
+  block's stored markup with what it would save, and a stray comment
+  inside a block's body makes that comparison fail, so the editor flagged
+  the Group, Query and other blocks as invalid. The design notes those
+  comments carried now live in ARCHITECTURE.md.
+* Colours that use a theme palette colour are now stored the way core
+  saves them: as textColor / backgroundColor attributes, matching the
+  has-*-color classes already in the markup, instead of style.color
+  values that produced an inline style the markup did not contain.
+* Borders are written as border-*-color / -style / -width longhands, the
+  form core serialises, instead of a border-bottom shorthand.
+* Separator blocks carry the full set of classes core now saves
+  (has-text-color, has-*-color, has-alpha-channel-opacity).
+* The two hero-pattern buttons carry their font-size and font-family
+  classes on the button link, where core puts them.
+* Added tools/check-templates.py, a regression guard that fails on any
+  non-block comment inside block markup or on unbalanced block or HTML
+  tags.
 
 = 1.6266.1322 =
 A re-validation gate pass on 1.6266.1253 confirmed its fixes and found two

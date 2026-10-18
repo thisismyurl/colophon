@@ -15,7 +15,7 @@
 // inserted and published without an editor swapping the picture first.
 $colophon_placeholder_src = get_template_directory_uri() . '/assets/images/placeholder.png';
 ?>
-<!-- wp:group {"tagName":"section","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|5","right":"var:preset|spacing|5"}},"color":{"background":"var:preset|color|base-paper"}},"layout":{"type":"constrained","contentSize":"1200px"}} -->
+<!-- wp:group {"tagName":"section","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|10","left":"var:preset|spacing|5","right":"var:preset|spacing|5"}}},"layout":{"type":"constrained","contentSize":"1200px"},"backgroundColor":"base-paper"} -->
 <section class="wp-block-group has-base-paper-background-color has-background" style="padding-top:var(--wp--preset--spacing--10);padding-bottom:var(--wp--preset--spacing--10);padding-left:var(--wp--preset--spacing--5);padding-right:var(--wp--preset--spacing--5)">
 
 	<!-- wp:columns {"verticalAlignment":"center","style":{"spacing":{"blockGap":{"top":"var:preset|spacing|7","left":"var:preset|spacing|9"}}}} -->
@@ -35,7 +35,7 @@ $colophon_placeholder_src = get_template_directory_uri() . '/assets/images/place
 			<h2 class="wp-block-heading has-serif-font-family" style="margin-bottom:var(--wp--preset--spacing--5);font-size:var(--wp--preset--font-size--2-xl)"><?php echo esc_html__( 'A feature worth a closer look', 'colophon' ); ?></h2>
 			<!-- /wp:heading -->
 
-			<!-- wp:paragraph {"style":{"typography":{"lineHeight":"1.7"},"spacing":{"margin":{"bottom":"var:preset|spacing|5"}},"color":{"text":"var:preset|color|base-ink"}}} -->
+			<!-- wp:paragraph {"style":{"typography":{"lineHeight":"1.7"},"spacing":{"margin":{"bottom":"var:preset|spacing|5"}}},"textColor":"base-ink"} -->
 			<p class="has-base-ink-color has-text-color" style="line-height:1.7"><?php echo esc_html__( 'Two or three sentences of body copy that explain the feature in plain language. Enough to set context and earn the click, without crowding the page.', 'colophon' ); ?></p>
 			<!-- /wp:paragraph -->
 

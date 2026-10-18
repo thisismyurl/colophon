@@ -1,9 +1,6 @@
-<!-- Footer template part for Colophon.
-     Design principle: minimal footer with site title, navigation,
-     and a living copyright line via block binding.
-     Derived themes replace this with their own footer personality. -->
 
-<!-- wp:group {"tagName":"footer","className":"colophon-site-footer","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|8","left":"var:preset|spacing|5","right":"var:preset|spacing|5"}},"color":{"background":"var:preset|color|base-ground"}},"layout":{"type":"constrained","contentSize":"1200px"}} -->
+
+<!-- wp:group {"tagName":"footer","className":"colophon-site-footer","style":{"spacing":{"padding":{"top":"var:preset|spacing|10","bottom":"var:preset|spacing|8","left":"var:preset|spacing|5","right":"var:preset|spacing|5"}}},"layout":{"type":"constrained","contentSize":"1200px"},"backgroundColor":"base-ground"} -->
 <footer class="wp-block-group colophon-site-footer has-base-ground-background-color has-background" style="padding-top:var(--wp--preset--spacing--10);padding-bottom:var(--wp--preset--spacing--8);padding-left:var(--wp--preset--spacing--5);padding-right:var(--wp--preset--spacing--5)">
 
 	<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between","verticalAlignment":"center"},"style":{"spacing":{"blockGap":"var:preset|spacing|5"}}} -->
@@ -17,16 +14,15 @@
 	<!-- /wp:group -->
 
 	<!-- wp:separator {"backgroundColor":"base-rule","style":{"spacing":{"margin":{"top":"var:preset|spacing|8","bottom":"var:preset|spacing|6"}}}} -->
-	<hr class="wp-block-separator has-base-rule-background-color has-background" style="margin-top:var(--wp--preset--spacing--8);margin-bottom:var(--wp--preset--spacing--6)" />
+	<hr class="wp-block-separator has-text-color has-base-rule-color has-alpha-channel-opacity has-base-rule-background-color has-background" style="margin-top:var(--wp--preset--spacing--8);margin-bottom:var(--wp--preset--spacing--6)" />
 	<!-- /wp:separator -->
 
-	<!-- Copyright line -->
 	<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"},"style":{"spacing":{"blockGap":"var:preset|spacing|4"}}} -->
 	<div class="wp-block-group">
-		<!-- wp:paragraph {"className":"colophon-copyright","style":{"typography":{"fontSize":"var:preset|font-size|xs"},"color":{"text":"var:preset|color|base-mid"}},"metadata":{"bindings":{"content":{"source":"colophon/copyright"}}}} -->
+		<!-- wp:paragraph {"className":"colophon-copyright","style":{"typography":{"fontSize":"var:preset|font-size|xs"}},"metadata":{"bindings":{"content":{"source":"colophon/copyright"}}},"textColor":"base-mid"} -->
 		<p class="colophon-copyright has-base-mid-color has-text-color" style="font-size:var(--wp--preset--font-size--xs)"></p>
 		<!-- /wp:paragraph -->
-		<!-- wp:paragraph {"className":"colophon-footer-credit","style":{"typography":{"fontSize":"var:preset|font-size|xs"},"color":{"text":"var:preset|color|base-mid"}},"metadata":{"bindings":{"content":{"source":"colophon/footer-credit"}}}} -->
+		<!-- wp:paragraph {"className":"colophon-footer-credit","style":{"typography":{"fontSize":"var:preset|font-size|xs"}},"metadata":{"bindings":{"content":{"source":"colophon/footer-credit"}}},"textColor":"base-mid"} -->
 		<p class="colophon-footer-credit has-base-mid-color has-text-color" style="font-size:var(--wp--preset--font-size--xs)"></p>
 		<!-- /wp:paragraph -->
 	</div>
